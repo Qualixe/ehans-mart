@@ -68,6 +68,13 @@
     stroke: var(--brand-color);
 }
 
+/* home logo icon keeps its own colors (no stroke) */
+.app-menu-item .icon .app-menu-logo path,
+.app-menu-item:hover .icon .app-menu-logo path,
+.app-menu-item.active .icon .app-menu-logo path {
+    stroke: none;
+}
+
 .app-menu-item p {
     color: var(--muted);
     font-size: 10px;

@@ -7,6 +7,66 @@
     padding: 24px 0;
 }
 
+.explore-slider-section .card-slider-section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    /* container already gives side padding, keeps heading aligned with cards */
+    padding: 0;
+}
+
+.explore-slider-section .card-slider-section-btn {
+    margin-top: 0;
+    flex-shrink: 0;
+}
+
+/* explore-slider-section section-bg css start (premium light blush) */
+.explore-slider-section.section-bg {
+    position: relative;
+    background:
+        radial-gradient(60% 80% at 0% 0%, var(--section-bg-glow), transparent 70%),
+        radial-gradient(50% 70% at 100% 100%, var(--section-bg-glow), transparent 70%),
+        linear-gradient(135deg, var(--section-bg-start) 0%, var(--section-bg-end) 100%);
+    overflow: hidden;
+}
+
+/* thin soft red lines on top and bottom edge */
+.explore-slider-section.section-bg::before,
+.explore-slider-section.section-bg::after {
+    position: absolute;
+    content: "";
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--section-bg-line), transparent);
+}
+
+.explore-slider-section.section-bg::before {
+    top: 0;
+}
+
+.explore-slider-section.section-bg::after {
+    bottom: 0;
+}
+
+.explore-slider-section.section-bg .card-slider-section-btn .btn {
+    background-color: var(--white);
+}
+
+/* keep same hover as other buttons (dark bg + white text) */
+.explore-slider-section.section-bg .card-slider-section-btn .btn:hover {
+    color: var(--white);
+    background-color: var(--btn-color);
+}
+
+.explore-slider-section.section-bg .product-card {
+    border-color: transparent;
+    box-shadow: 0 8px 24px rgba(237, 32, 36, 0.08);
+}
+
+/* explore-slider-section section-bg css end */
+
 .card-slider-section.section-bg {
     padding: 42px 0;
     background: var(--item-bg);
@@ -16,72 +76,12 @@
     margin-bottom: 20px;
 }
 
-.card-slider-section-heading-wrap {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-    margin-bottom: 42px;
-}
-
-.card-slider-section-heading-wrap .img {
-    width: clamp(191px, 16vw, 192px);
-    height: 36px;
-    min-height: 36px;
-}
-
 .card-slider-section-heading .title {
     font-family: var(--heading-font);
     font-size: 22px;
     font-weight: 600;
     color: var(--brand-color);
 }
-
-/* count-down css start */
-.countdown {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    font-size: 14px;
-    line-height: 1;
-}
-
-.countdown-label {
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 1;
-}
-
-.countdown-time {
-    display: inline-flex;
-    align-items: flex-end;
-    gap: 4px;
-    font-variant-numeric: tabular-nums;
-}
-
-.countdown-days,
-.countdown-hours,
-.countdown-minutes,
-.countdown-seconds {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 1;
-}
-
-.countdown-unit {
-    font-size: 12px;
-    line-height: 1;
-}
-
-.countdown-separator {
-    margin: 0 1px;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 1;
-}
-
-/* count-down css end */
 
 .swiper.card-slider .swiper-wrapper {
     width: fit-content;
@@ -118,8 +118,7 @@
         padding: 0;
     }
 
-    .card-slider-section-heading,
-    .card-slider-section-heading-wrap {
+    .card-slider-section-heading {
         padding: 0 20px;
     }
 
@@ -153,25 +152,52 @@
         padding: 0;
     }
 
+    .explore-slider-section .card-slider-section-heading {
+        text-align: left;
+    }
+
+    .explore-slider-section .card-slider-section-heading .title {
+        white-space: nowrap;
+    }
+
+    .explore-slider-section .card-slider-section-btn .btn {
+        padding: 8px 14px;
+        font-size: 13px;
+    }
+
     /* card-slider section css end */
 }
 
 @media only screen and (max-width: 575px) {
 
     /* card-slider section css start */
-    .card-slider-section.section-bg {
-        padding: 24px 0;
-    }
 
-    .card-slider-section-heading,
-    .card-slider-section-heading-wrap {
+    .card-slider-section-heading {
         padding: 0 16px;
     }
 
-    .card-slider-section-heading-wrap {
+    /* long heading + button must fit in one row without overflowing the page */
+    .explore-slider-section .card-slider-section-heading {
         gap: 10px;
-        flex-direction: column;
-        margin-bottom: 24px;
+    }
+
+    .explore-slider-section .card-slider-section-heading .title {
+        min-width: 0;
+        font-size: 18px;
+        line-height: 1.2;
+        white-space: normal;
+    }
+
+    .explore-slider-section .card-slider-section-btn .btn {
+        gap: 5px;
+        padding: 7px 10px;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    .swiper-button-prev,
+    .swiper-button-next {
+        display: none;
     }
 
     /* card-slider section css end */

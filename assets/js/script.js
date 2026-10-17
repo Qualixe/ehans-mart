@@ -97,16 +97,20 @@ document.addEventListener("keydown", (e) => {
 const mobileMenu = document.querySelector(".mobile-menu-wrap");
 const mobileMenuContainer = document.querySelector(".mobile-menu-container");
 
+const hamburgers = document.querySelectorAll(".hamburger");
+
 function openMobileMenu(event) {
   event.stopPropagation();
   mobileMenu?.classList.add("active");
   mobileMenuContainer?.classList.add("active");
+  hamburgers.forEach((btn) => btn.classList.add("active"));
 }
 
 function closeMobileMenu(event) {
   event.stopPropagation();
   mobileMenu?.classList.remove("active");
   mobileMenuContainer?.classList.remove("active");
+  hamburgers.forEach((btn) => btn.classList.remove("active"));
 }
 
 document.querySelectorAll(".app-menu-open").forEach((btn) => {
@@ -226,32 +230,6 @@ document
 
 // cart-drawer js end---
 
-// cart-drawer slider js start--
-var swiper = new Swiper(".cart-drawer-slider", {
-  slidesPerView: 2.1,
-  spaceBetween: 5,
-  grabCursor: true,
-  loop: true,
-  speed: 500,
-  // autoplay: {
-  //   delay: 2500,
-  //   disableOnInteraction: false,
-  // },
-  navigation: {
-    nextEl: ".cart-drawer-slider-btn-next",
-    prevEl: ".cart-drawer-slider-btn-prev",
-  },
-});
-// cart-drawer slider js end--
-
-// cart-drawer progesss-bar js start--
-const progress = document.querySelector(".progress");
-progress.addEventListener("input", function () {
-  const value = this.value;
-  this.style.background = `linear-gradient(to right, #d55a3c 0%, #422c26 ${value}%,rgb(236 219 216) ${value}%)`;
-});
-// cart-drawer progesss-bar js end--
-
 // hero slider js start--
 var swiper = new Swiper(".hero-slider", {
   slidesPerView: 1,
@@ -287,7 +265,7 @@ var swiper = new Swiper(".category-slider", {
   slidesPerView: "auto",
   spaceBetween: 10,
   grabCursor: true,
-  loop: true,
+  loop: false,
   navigation: {
     nextEl: ".category-button-next",
     prevEl: ".category-button-prev",
@@ -295,103 +273,9 @@ var swiper = new Swiper(".category-slider", {
 });
 // category js end--
 
-// count-down js start--
-document.querySelectorAll(".countdown").forEach((countdown) => {
-  const endDate = new Date(countdown.dataset.end).getTime();
-
-  const daysEl = countdown.querySelector(".countdown-days");
-  const hoursEl = countdown.querySelector(".countdown-hours");
-  const minutesEl = countdown.querySelector(".countdown-minutes");
-  const secondsEl = countdown.querySelector(".countdown-seconds");
-
-  const updateCountdown = () => {
-    const remaining = endDate - Date.now();
-
-    if (remaining <= 0) {
-      daysEl.textContent = "00";
-      hoursEl.textContent = "00";
-      minutesEl.textContent = "00";
-      secondsEl.textContent = "00";
-      return;
-    }
-
-    const totalSeconds = Math.floor(remaining / 1000);
-
-    const days = Math.floor(totalSeconds / 86400);
-    const hours = Math.floor((totalSeconds % 86400) / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
-
-    daysEl.textContent = String(days).padStart(2, "0");
-    hoursEl.textContent = String(hours).padStart(2, "0");
-    minutesEl.textContent = String(minutes).padStart(2, "0");
-    secondsEl.textContent = String(seconds).padStart(2, "0");
-  };
-
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
-});
-// count-down js end--
-
-// card slider js start--
-var swiper = new Swiper(".card-slider", {
-  effect: "coverflow",
-  slidesPerView: 2,
-  centeredSlides: true,
-  grabCursor: true,
-  spaceBetween: 16,
-  loop: true,
-  speed: 500,
-  autoplay: false,
-  coverflowEffect: {
-    rotate: 25,
-    stretch: 0,
-    depth: 150,
-    modifier: 1,
-    slideShadows: false,
-  },
-  // autoplay: {
-  //   delay: 3500,
-  //   disableOnInteraction: false,
-  // },
-  breakpoints: {
-    1: {
-      effect: "coverflow",
-      slidesPerView: 2,
-      centeredSlides: true,
-      spaceBetween: 24,
-    },
-    576: {
-      effect: "coverflow",
-      slidesPerView: 2.2,
-      centeredSlides: true,
-      spaceBetween: 16,
-    },
-    768: {
-      effect: "slide",
-      slidesPerView: 3.2,
-      centeredSlides: false,
-      spaceBetween: 10,
-    },
-    993: {
-      effect: "slide",
-      slidesPerView: 3.8,
-      centeredSlides: false,
-      spaceBetween: 10,
-    },
-    1200: {
-      effect: "slide",
-      slidesPerView: 4,
-      centeredSlides: false,
-      spaceBetween: 10,
-    },
-  },
-});
-// card slider js end--
-
 // card slider js start--
 var swiper = new Swiper(".explore-slider", {
-  slidesPerView: 4.5,
+  slidesPerView: 4,
   centeredSlides: false,
   spaceBetween: 10,
   grabCursor: true,
@@ -416,654 +300,145 @@ var swiper = new Swiper(".explore-slider", {
       spaceBetween: 10,
     },
     993: {
-      slidesPerView: 4.5,
+      slidesPerView: 4,
       spaceBetween: 10,
     },
   },
 });
 // card slider js end--
 
-// tab-section js start--
-document.querySelectorAll(".tab-section-nav-item").forEach((tab) => {
-  tab.addEventListener("click", () => {
-    const target = tab.dataset.tab;
-
-    document
-      .querySelectorAll(".tab-section-nav-item")
-      .forEach((el) => el.classList.toggle("active", el === tab));
-
-    document
-      .querySelectorAll(".tab-section-panel")
-      .forEach((panel) =>
-        panel.classList.toggle("active", panel.id === target),
-      );
-  });
-});
-// tab-section js end--
-
-// image-category-slider js start--
-var swiper = new Swiper(".image-category-slider", {
-  slidesPerView: 4,
-  spaceBetween: 20,
-  grabCursor: true,
-  loop: false,
-  breakpoints: {
-    // when window width is >= 320px
-    1: {
-      spaceBetween: 10,
-      slidesPerView: 1.7,
-    },
-    // when window width is >= 576px
-    576: {
-      spaceBetween: 10,
-      slidesPerView: 2.2,
-    },
-    // when window width is >= 767px
-    768: {
-      spaceBetween: 16,
-      slidesPerView: 3.3,
-    },
-    // when window width is >= 993px
-    993: {
-      spaceBetween: 20,
-      slidesPerView: 4,
-    },
-  },
-});
-// image-category-slider js end--
-
-// shop-by-brand-slider js start--
-var swiper = new Swiper(".shop-by-brand-slider", {
-  slidesPerView: 5,
-  spaceBetween: 0,
-  grabCursor: true,
-  loop: true,
-  speed: 800,
-  navigation: {
-    nextEl: ".shop-by-brand-slider .swiper-button-next",
-    prevEl: ".shop-by-brand-slider .swiper-button-prev",
-  },
-  breakpoints: {
-    1: {
-      slidesPerView: 2,
-    },
-    576: {
-      slidesPerView: 3,
-    },
-    768: {
-      slidesPerView: 4,
-    },
-    993: {
-      slidesPerView: 5,
-    },
-  },
-});
-// shop-by-brand-slider js end--
-
-// community-review-section js start--
-// add / edit review here, section and popup are built from this list
-// wrap a word in {curly braces} inside caption to highlight it
-const communityReviews = [
-  {
-    video: "./assets/videos/review-1.mp4",
-    poster: "./assets/videos/review-1.jpg",
-    duration: 20,
-    caption: "See why {1000+} customers trust us",
-    reviewer: "Nusrat Jahan",
-    location: "Dhaka",
-    rating: 5,
-    text: "Wearing it daily for two weeks — heel pain is almost gone. Delivery came next day!",
-    views: 12400,
-    likes: 864,
-    product: {
-      title: "Orthotics Heel Protector",
-      img: "./assets/images/product-slider-img1.avif",
-      price: 1870,
-      previousPrice: 2200,
-      url: "product.html",
-    },
-  },
-  {
-    video: "./assets/videos/review-2.mp4",
-    poster: "./assets/videos/review-2.jpg",
-    duration: 11,
-    caption: "Comfort you can {feel} instantly",
-    reviewer: "Rakib Hasan",
-    location: "Chattogram",
-    rating: 5,
-    text: "Super soft sole, feels like walking on cloud. Ordered a second pair for my father.",
-    views: 9800,
-    likes: 621,
-    product: {
-      title: "Ehans Mart Cloud Comfort Arch Support Slippers",
-      img: "./assets/images/product-slider-img3.webp",
-      price: 1870,
-      previousPrice: 2200,
-      url: "product.html",
-    },
-  },
-  {
-    video: "./assets/videos/review-3.mp4",
-    poster: "./assets/videos/review-3.jpg",
-    duration: 6,
-    caption: "Real people. Real {reviews}",
-    reviewer: "Tanvir Ahmed",
-    location: "Sylhet",
-    rating: 4,
-    text: "Strap quality is great and the size fit perfectly. Packaging was premium too.",
-    views: 7300,
-    likes: 402,
-    product: {
-      title: "Ehans Mart Men's Comfort Dual Strap Sandals",
-      img: "./assets/images/product-slider-img5.webp",
-      price: 1870,
-      previousPrice: 2200,
-      url: "product.html",
-    },
-  },
-  {
-    video: "./assets/videos/review-4.mp4",
-    poster: "./assets/videos/review-4.jpg",
-    duration: 11,
-    caption: "Premium product {reviews}",
-    reviewer: "Farzana Akter",
-    location: "Khulna",
-    rating: 5,
-    text: "Fabric is so comfortable and the colour is exactly like the photos. Loved it!",
-    views: 15100,
-    likes: 1032,
-    product: {
-      title: "Ehans Mart Women's Comfort Dress",
-      img: "./assets/images/product-slider-img6.avif",
-      price: 870,
-      previousPrice: 1200,
-      url: "product.html",
-    },
-  },
-];
-
-const communityReviewTotal = "1000+";
-
-(() => {
-  const section = document.querySelector(".community-review-section");
-  const track = section?.querySelector(".community-review-items");
+// community-review popup js start--
+(function () {
+  const items = document.querySelectorAll(".community-review-item");
   const popup = document.querySelector(".community-review-popup");
-  const reviews = communityReviews;
 
-  if (!section || !track || !popup || !reviews.length) return;
+  if (!popup || !items.length) return;
 
-  const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const saveData = navigator.connection?.saveData === true;
-  const canAutoPreview = !reducedMotion && !saveData;
-  const likesKey = "ehans-community-review-likes";
-
-  // helpers
-  const esc = (str) =>
-    String(str).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
-  const highlight = (str) =>
-    esc(str).replace(/\{(.+?)\}/g, '<span class="highlight">$1</span>');
-  const plain = (str) => str.replace(/[{}]/g, "");
-  const money = (n) => "Tk" + Number(n).toLocaleString("en-US");
-  const compact = (n) =>
-    n >= 1000 ? (n / 1000).toFixed(n >= 10000 ? 0 : 1).replace(/\.0$/, "") + "K" : String(n);
-  const time = (s) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, "0")}`;
-  const initials = (name) =>
-    name.split(" ").map((p) => p[0]).slice(0, 2).join("").toUpperCase();
-  const discount = (p) =>
-    p.previousPrice > p.price ? Math.round((1 - p.price / p.previousPrice) * 100) : 0;
-
-  const icons = {
-    star: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.333l2.06 4.174 4.607.67-3.333 3.249.786 4.587L8 11.846l-4.12 2.167.787-4.587L1.333 6.177l4.607-.67L8 1.333Z" fill="currentColor"/></svg>',
-    verified: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.5l2.2 1.6 2.7-.1.8 2.6 2.2 1.6-.9 2.6.9 2.6-2.2 1.6-.8 2.6-2.7-.1L10 18.5l-2.2-1.6-2.7.1-.8-2.6-2.2-1.6.9-2.6-.9-2.6 2.2-1.6.8-2.6 2.7.1L10 1.5Z" fill="currentColor"/><path d="M6.8 10.2l2.1 2.1 4.3-4.4" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-    eye: '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M1.7 10S4.7 4.2 10 4.2 18.3 10 18.3 10 15.3 15.8 10 15.8 1.7 10 1.7 10Z" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="2.5" stroke="currentColor" stroke-width="1.5"/></svg>',
-    play: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 4.3v11.4c0 .6.7 1 1.2.6l8.4-5.7c.4-.3.4-.9 0-1.2L7.7 3.7c-.5-.4-1.2 0-1.2.6Z" fill="currentColor"/></svg>',
-    pause: '<svg viewBox="0 0 20 20" aria-hidden="true"><rect x="5" y="4" width="3.4" height="12" rx="1" fill="currentColor"/><rect x="11.6" y="4" width="3.4" height="12" rx="1" fill="currentColor"/></svg>',
-    sound: '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 8v4h3.5L11 16V4L6.5 8H3Z" fill="currentColor"/><path class="community-review-sound-waves" d="M14 7c1 .8 1 5.2 0 6M16.3 5c2 2 2 8 0 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path class="community-review-sound-off" d="M14 7.5l4 5M18 7.5l-4 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>',
-    close: '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 5l10 10M15 5 5 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
-    heart: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17.2s-6.8-4.1-6.8-9a3.8 3.8 0 0 1 6.8-2.3 3.8 3.8 0 0 1 6.8 2.3c0 4.9-6.8 9-6.8 9Z" stroke="currentColor" stroke-width="1.5"/></svg>',
-    share: '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="15" cy="5" r="2.2" stroke="currentColor" stroke-width="1.5"/><circle cx="15" cy="15" r="2.2" stroke="currentColor" stroke-width="1.5"/><circle cx="5" cy="10" r="2.2" stroke="currentColor" stroke-width="1.5"/><path d="M7 8.8 13 5.8M7 11.2l6 3" stroke="currentColor" stroke-width="1.5"/></svg>',
-    prev: '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M12.5 15.5 7 10l5.5-5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-    next: '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7.5 4.5 13 10l-5.5 5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-  };
-  const stars = (rating) =>
-    `<span class="community-review-stars" aria-label="${rating} out of 5 stars">${[1, 2, 3, 4, 5]
-      .map((i) => `<i class="${i <= rating ? "on" : ""}">${icons.star}</i>`)
-      .join("")}</span>`;
-
-  let likedSet = new Set();
-  try {
-    likedSet = new Set(JSON.parse(localStorage.getItem(likesKey) || "[]"));
-  } catch (e) {}
-  const saveLikes = () => {
-    try {
-      localStorage.setItem(likesKey, JSON.stringify([...likedSet]));
-    } catch (e) {}
-  };
-
-  // section
-  const summary = section.querySelector(".community-review-summary");
-  const avg = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
-  summary.innerHTML = `<strong>${avg.toFixed(1)}</strong>${stars(Math.round(avg))}<span>${communityReviewTotal} happy customers</span>`;
-  summary.hidden = false;
-
-  track.innerHTML = reviews
-    .map(
-      (r, i) => `
-    <div class="community-review-item-wrap" role="listitem">
-      <button class="community-review-item" type="button" data-review-index="${i}"
-        aria-label="Watch ${esc(r.reviewer)}'s review: ${esc(plain(r.caption))}">
-        <img class="community-review-item-poster" src="${r.poster}" alt="" loading="lazy" decoding="async">
-        <video class="community-review-item-video" data-src="${r.video}" muted loop playsinline preload="none"></video>
-        <span class="community-review-item-top">
-          <span class="community-review-chip">${icons.eye}${compact(r.views)}</span>
-          <span class="community-review-chip">${time(r.duration)}</span>
-        </span>
-        <span class="community-review-item-play">${icons.play}</span>
-        <span class="community-review-item-content">
-          <span class="community-review-reviewer">
-            <span class="community-review-avatar">${initials(r.reviewer)}</span>
-            <span class="community-review-reviewer-name">${esc(r.reviewer)}<i class="community-review-verified" title="Verified buyer">${icons.verified}</i></span>
-          </span>
-          ${stars(r.rating)}
-          <span class="community-review-item-text">${highlight(r.caption)}</span>
-          <span class="community-review-item-product">
-            <img src="${r.product.img}" alt="" loading="lazy" decoding="async">
-            <span class="community-review-item-product-title">${esc(r.product.title)}</span>
-            <span class="community-review-item-product-price">${money(r.product.price)}</span>
-          </span>
-        </span>
-      </button>
-    </div>`,
-    )
-    .join("");
-
-  const cards = [...track.querySelectorAll(".community-review-item")];
-  const previews = cards.map((c) => c.querySelector("video"));
-  let popupOpen = false;
-
-  function playPreview(video) {
-    if (popupOpen) return;
-    if (!video.src) video.src = video.dataset.src;
-    video.play().then(
-      () => video.closest(".community-review-item").classList.add("playing"),
-      () => {},
-    );
-  }
-  function pausePreview(video) {
-    video.pause();
-    video.closest(".community-review-item").classList.remove("playing");
-  }
-
-  // only previews that are actually on screen download & play
-  const visible = new Set();
-  if (canAutoPreview && "IntersectionObserver" in window) {
-    const io = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((e) => {
-          const v = e.target.querySelector("video");
-          if (e.isIntersecting) {
-            visible.add(v);
-            playPreview(v);
-          } else {
-            visible.delete(v);
-            pausePreview(v);
-          }
-        }),
-      { threshold: 0.6 },
-    );
-    cards.forEach((c) => io.observe(c));
-  } else {
-    // reduced motion / data saver: preview only on hover
-    cards.forEach((c, i) => {
-      c.addEventListener("pointerenter", () => playPreview(previews[i]));
-      c.addEventListener("pointerleave", () => pausePreview(previews[i]));
-    });
-  }
-
-  // desktop arrows
-  const arrows = section.querySelectorAll(".community-review-arrow");
-  const updateArrows = () => {
-    const max = track.scrollWidth - track.clientWidth - 2;
-    arrows[0].disabled = track.scrollLeft <= 2;
-    arrows[1].disabled = track.scrollLeft >= max;
-    section.classList.toggle("scrollable", max > 0);
-  };
-  arrows.forEach((btn) =>
-    btn.addEventListener("click", () =>
-      track.scrollBy({ left: (btn.classList.contains("next") ? 1 : -1) * track.clientWidth * 0.8, behavior: "smooth" }),
-    ),
+  const slides = [...popup.querySelectorAll(".community-review-popup-slide")];
+  const videos = slides.map((slide) =>
+    slide.querySelector(".community-review-popup-video"),
   );
-  track.addEventListener("scroll", updateArrows, { passive: true });
-  addEventListener("resize", updateArrows, { passive: true });
-  updateArrows();
-
-  // popup
-  popup.innerHTML = `
-    <span class="community-review-popup-close-window-btn"></span>
-    <button class="community-review-popup-nav-btn prev" type="button" aria-label="previous review">${icons.prev}</button>
-    <div class="community-review-popup-card">
-      <div class="community-review-popup-video-wrap">
-        <div class="community-review-popup-progress">${reviews.map(() => '<span class="community-review-popup-progress-bar"><i></i></span>').join("")}</div>
-        <div class="community-review-popup-top">
-          <div class="community-review-reviewer">
-            <span class="community-review-avatar"></span>
-            <span class="community-review-popup-reviewer-text">
-              <span class="community-review-reviewer-name"><b></b><i class="community-review-verified" title="Verified buyer">${icons.verified}</i></span>
-              <small class="community-review-popup-location"></small>
-            </span>
-          </div>
-          <div class="community-review-popup-top-btns">
-            <button class="community-review-popup-icon-btn community-review-popup-play-btn" type="button" aria-label="pause">${icons.pause}</button>
-            <button class="community-review-popup-icon-btn community-review-popup-mute-btn" type="button" aria-label="mute">${icons.sound}</button>
-            <button class="community-review-popup-icon-btn community-review-popup-close-btn" type="button" aria-label="close">${icons.close}</button>
-          </div>
-        </div>
-        <video class="community-review-popup-video" playsinline preload="auto"></video>
-        <span class="community-review-popup-loader" aria-hidden="true"></span>
-        <span class="community-review-popup-state" aria-hidden="true"></span>
-        <div class="community-review-popup-side">
-          <button class="community-review-popup-side-btn community-review-popup-like-btn" type="button" aria-pressed="false" aria-label="like">${icons.heart}<span></span></button>
-          <button class="community-review-popup-side-btn community-review-popup-share-btn" type="button" aria-label="share">${icons.share}<span>Share</span></button>
-        </div>
-        <div class="community-review-popup-bottom">
-          <p class="community-review-popup-caption"></p>
-          <div class="community-review-popup-review"></div>
-        </div>
-      </div>
-      <div class="community-review-popup-product">
-        <a class="community-review-popup-product-img" href="#"><img alt=""></a>
-        <div class="community-review-popup-product-info">
-          <a class="community-review-popup-product-title" href="#"></a>
-          <div class="community-review-popup-product-price"><span class="curr"></span><span class="prev"></span><span class="off"></span></div>
-        </div>
-      </div>
-      <div class="community-review-popup-btn-wrap">
-        <a class="community-review-popup-btn community-review-popup-btn-ghost community-review-popup-view-btn" href="#">View product</a>
-        <button class="community-review-popup-btn community-review-popup-add-btn" type="button">Add to cart</button>
-      </div>
-    </div>
-    <button class="community-review-popup-nav-btn next" type="button" aria-label="next review">${icons.next}</button>
-    <div class="community-review-popup-toast" role="status" aria-live="polite"></div>`;
-
-  const $ = (sel) => popup.querySelector(sel);
-  const video = $(".community-review-popup-video");
-  const stage = $(".community-review-popup-video-wrap");
-  const bars = [...popup.querySelectorAll(".community-review-popup-progress-bar i")];
-  const toggleBtn = $(".community-review-popup-play-btn");
-  const muteBtn = $(".community-review-popup-mute-btn");
-  const likeBtn = $(".community-review-popup-like-btn");
-  const addBtn = $(".community-review-popup-add-btn");
-  const toast = $(".community-review-popup-toast");
-  const navPrev = $(".community-review-popup-nav-btn.prev");
-  const navNext = $(".community-review-popup-nav-btn.next");
-  const preloader = document.createElement("video");
-  preloader.preload = "auto";
-  preloader.muted = true;
+  const progressBars = [
+    ...popup.querySelectorAll(".community-review-popup-progress-bar"),
+  ];
+  const prevBtn = popup.querySelector(".community-review-popup-nav-btn.prev");
+  const nextBtn = popup.querySelector(".community-review-popup-nav-btn.next");
+  const muteBtn = popup.querySelector(".community-review-popup-mute-btn");
+  const productImg = popup.querySelector(
+    ".community-review-popup-product-img img",
+  );
+  const productTitle = popup.querySelector(
+    ".community-review-popup-product-title",
+  );
+  const productPrice = popup.querySelector(
+    ".community-review-popup-product-price .curr",
+  );
+  const productPrevPrice = popup.querySelector(
+    ".community-review-popup-product-price .prev",
+  );
 
   let current = 0;
-  let muted = false; // opening is a user click, so sound is allowed
-  let paused = false;
-  let raf = 0;
-  let lastFocus = null;
-  let toastTimer = 0;
+  let muted = true;
 
-  function showToast(msg) {
-    toast.textContent = msg;
-    toast.classList.add("show");
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => toast.classList.remove("show"), 1800);
-  }
-
-  function tick() {
-    if (video.duration) bars[current].style.width = (video.currentTime / video.duration) * 100 + "%";
-    raf = requestAnimationFrame(tick);
-  }
-
-  function setPaused(state) {
-    paused = state;
-    popup.classList.toggle("paused", paused);
-    toggleBtn.innerHTML = paused ? icons.play : icons.pause;
-    toggleBtn.setAttribute("aria-label", paused ? "play" : "pause");
-    if (paused) video.pause();
-    else play();
-  }
-
-  function setMuted(state) {
-    muted = state;
-    video.muted = muted;
-    muteBtn.classList.toggle("muted", muted);
-    muteBtn.setAttribute("aria-label", muted ? "unmute" : "mute");
-  }
-
-  function play() {
-    video.muted = muted;
-    video.play().catch(() => {
-      // autoplay with sound blocked → retry muted
-      if (!muted) {
-        setMuted(true);
-        video.play().catch(() => {});
-      }
+  function pauseAll() {
+    videos.forEach((video) => {
+      video.pause();
+      video.currentTime = 0;
     });
-  }
-
-  function renderLike() {
-    const r = reviews[current];
-    const liked = likedSet.has(current);
-    likeBtn.classList.toggle("liked", liked);
-    likeBtn.setAttribute("aria-pressed", liked);
-    likeBtn.querySelector("span").textContent = compact(r.likes + (liked ? 1 : 0));
   }
 
   function goTo(index) {
-    if (index < 0 || index >= reviews.length) return;
+    if (index < 0 || index >= slides.length) return;
+
+    pauseAll();
     current = index;
-    const r = reviews[index];
 
-    bars.forEach((bar, i) => (bar.style.width = i < index ? "100%" : "0%"));
-    popup.classList.add("loading");
-    video.poster = r.poster;
-    video.src = r.video;
-    paused = false;
-    popup.classList.remove("paused");
-    toggleBtn.innerHTML = icons.pause;
-    play();
+    slides.forEach((slide, i) => slide.classList.toggle("active", i === index));
 
-    // warm up the next video so swiping feels instant
-    const next = reviews[index + 1];
-    if (next && preloader.dataset.src !== next.video) {
-      preloader.dataset.src = next.video;
-      preloader.src = next.video;
-    }
+    progressBars.forEach((bar, i) => {
+      bar.classList.toggle("completed", i < index);
+      bar.querySelector("i").style.width = i < index ? "100%" : "0%";
+    });
 
-    $(".community-review-avatar").textContent = initials(r.reviewer);
-    $(".community-review-reviewer-name b").textContent = r.reviewer;
-    $(".community-review-popup-location").textContent = `Verified buyer · ${r.location}`;
-    $(".community-review-popup-caption").innerHTML = highlight(r.caption);
-    $(".community-review-popup-review").innerHTML = `${stars(r.rating)}<p>${esc(r.text)}</p>`;
+    const slide = slides[index];
+    productImg.src = slide.dataset.productImg;
+    productTitle.textContent = slide.dataset.productTitle;
+    productPrice.textContent = slide.dataset.productPrice;
+    productPrevPrice.textContent = slide.dataset.productPreviousPrice;
 
-    const p = r.product;
-    popup.querySelectorAll(".community-review-popup-product-img, .community-review-popup-product-title, .community-review-popup-view-btn").forEach((a) => (a.href = p.url));
-    $(".community-review-popup-product-img img").src = p.img;
-    $(".community-review-popup-product-title").textContent = p.title;
-    $(".community-review-popup-product-price .curr").textContent = money(p.price);
-    $(".community-review-popup-product-price .prev").textContent = p.previousPrice ? money(p.previousPrice) : "";
-    const off = discount(p);
-    $(".community-review-popup-product-price .off").textContent = off ? `-${off}%` : "";
-    addBtn.classList.remove("added");
-    addBtn.textContent = "Add to cart";
+    prevBtn.disabled = index === 0;
+    nextBtn.disabled = index === slides.length - 1;
 
-    renderLike();
-    navPrev.disabled = index === 0;
-    navNext.disabled = index === reviews.length - 1;
-    history.replaceState(null, "", `#review-${index + 1}`);
+    const video = videos[index];
+    video.muted = muted;
+    video.currentTime = 0;
+    video.play().catch(() => {});
   }
 
   function openPopup(index) {
-    lastFocus = document.activeElement;
-    popupOpen = true;
-    previews.forEach(pausePreview);
     document.body.classList.add("active");
     popup.classList.add("active");
-    popup.setAttribute("aria-hidden", "false");
-    setMuted(muted);
     goTo(index);
-    cancelAnimationFrame(raf);
-    raf = requestAnimationFrame(tick);
-    $(".community-review-popup-close-btn").focus({ preventScroll: true });
   }
 
   function closePopup() {
-    if (!popupOpen) return;
-    popupOpen = false;
     popup.classList.remove("active");
-    popup.setAttribute("aria-hidden", "true");
     document.body.classList.remove("active");
-    cancelAnimationFrame(raf);
-    video.pause();
-    video.removeAttribute("src");
-    video.load();
-    history.replaceState(null, "", location.pathname + location.search);
-    visible.forEach(playPreview);
-    lastFocus?.focus({ preventScroll: true });
+    pauseAll();
   }
 
-  // video events
-  video.addEventListener("waiting", () => popup.classList.add("loading"));
-  video.addEventListener("playing", () => popup.classList.remove("loading"));
-  video.addEventListener("canplay", () => popup.classList.remove("loading"));
-  video.addEventListener("ended", () => {
-    bars[current].style.width = "100%";
-    current < reviews.length - 1 ? goTo(current + 1) : closePopup();
-  });
-
-  // open from cards
-  cards.forEach((card, i) => card.addEventListener("click", () => openPopup(i)));
-
-  // buttons
-  popup.querySelectorAll(".community-review-popup-close-window-btn, .community-review-popup-close-btn").forEach((el) => el.addEventListener("click", closePopup));
-  navPrev.addEventListener("click", () => goTo(current - 1));
-  navNext.addEventListener("click", () => goTo(current + 1));
-  toggleBtn.addEventListener("click", () => setPaused(!paused));
-  muteBtn.addEventListener("click", () => setMuted(!muted));
-
-  likeBtn.addEventListener("click", () => {
-    likedSet.has(current) ? likedSet.delete(current) : likedSet.add(current);
-    saveLikes();
-    renderLike();
-    if (likedSet.has(current)) {
-      likeBtn.classList.remove("pop");
-      void likeBtn.offsetWidth;
-      likeBtn.classList.add("pop");
-    }
-  });
-
-  $(".community-review-popup-share-btn").addEventListener("click", async () => {
-    const r = reviews[current];
-    const url = `${location.origin}${location.pathname}#review-${current + 1}`;
-    try {
-      if (navigator.share) {
-        await navigator.share({ title: r.product.title, text: plain(r.caption), url });
-      } else {
-        await navigator.clipboard.writeText(url);
-        showToast("Link copied");
-      }
-    } catch (e) {}
-  });
-
-  addBtn.addEventListener("click", () => {
-    if (addBtn.classList.contains("added")) return;
-    document.querySelectorAll(".cart-count").forEach((el) => {
-      el.textContent = (parseInt(el.textContent, 10) || 0) + 1;
+  items.forEach((item) => {
+    item.addEventListener("click", () => {
+      openPopup(Number(item.dataset.reviewIndex) || 0);
     });
-    addBtn.classList.add("added");
-    addBtn.textContent = "Added ✓";
-    showToast("Added to cart");
   });
 
-  // gestures: tap left/right, hold to pause, swipe to navigate, swipe down to close
-  let startX = 0, startY = 0, holdTimer = 0, held = false, pointerActive = false;
-  stage.addEventListener("pointerdown", (e) => {
-    if (e.target.closest("button, a")) return;
-    pointerActive = true;
-    held = false;
-    startX = e.clientX;
-    startY = e.clientY;
-    holdTimer = setTimeout(() => {
-      held = true;
-      video.pause();
-      popup.classList.add("holding");
-    }, 220);
-  });
-  const endPointer = (e) => {
-    if (!pointerActive) return;
-    pointerActive = false;
-    clearTimeout(holdTimer);
-    popup.classList.remove("holding");
-    const dx = e.clientX - startX;
-    const dy = e.clientY - startY;
-    if (held) {
-      if (!paused) play();
-      return;
-    }
-    if (dy > 90 && Math.abs(dy) > Math.abs(dx)) return closePopup();
-    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) return goTo(current + (dx < 0 ? 1 : -1));
-    if (Math.abs(dx) < 10 && Math.abs(dy) < 10) {
-      const rect = stage.getBoundingClientRect();
-      e.clientX - rect.left < rect.width * 0.35 ? goTo(current - 1) : goTo(current + 1);
-    }
-  };
-  stage.addEventListener("pointerup", endPointer);
-  stage.addEventListener("pointercancel", () => {
-    pointerActive = false;
-    clearTimeout(holdTimer);
-    popup.classList.remove("holding");
-    if (held && !paused) play();
+  popup
+    .querySelector(".community-review-popup-close-window-btn")
+    .addEventListener("click", closePopup);
+  popup
+    .querySelector(".community-review-popup-close-btn")
+    .addEventListener("click", closePopup);
+
+  prevBtn.addEventListener("click", () => goTo(current - 1));
+  nextBtn.addEventListener("click", () => goTo(current + 1));
+
+  muteBtn.addEventListener("click", () => {
+    muted = !muted;
+    videos[current].muted = muted;
+    muteBtn.classList.toggle("unmuted", !muted);
   });
 
-  // keyboard + focus trap
-  document.addEventListener("keydown", (e) => {
-    if (!popupOpen) return;
-    if (e.key === "Escape") closePopup();
-    else if (e.key === "ArrowRight") goTo(current + 1);
-    else if (e.key === "ArrowLeft") goTo(current - 1);
-    else if (e.key === " " && !e.target.closest("button, a")) {
-      e.preventDefault();
-      setPaused(!paused);
-    } else if (e.key.toLowerCase() === "m") setMuted(!muted);
-    else if (e.key === "Tab") {
-      const focusables = [...popup.querySelectorAll("button:not(:disabled), a[href]")];
-      const first = focusables[0];
-      const last = focusables[focusables.length - 1];
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
+  popup.querySelectorAll(".community-review-popup-share-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (navigator.share) {
+        navigator.share({ title: document.title, url: window.location.href });
       }
-    }
+    });
   });
 
-  // pause everything when the tab is hidden
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) {
-      video.pause();
-      previews.forEach((v) => v.pause());
-    } else if (popupOpen) {
-      if (!paused) play();
-    } else {
-      visible.forEach(playPreview);
-    }
+  videos.forEach((video, i) => {
+    video.addEventListener("timeupdate", () => {
+      if (i !== current || !video.duration) return;
+      progressBars[i].querySelector("i").style.width =
+        (video.currentTime / video.duration) * 100 + "%";
+    });
+
+    video.addEventListener("ended", () => {
+      if (i === current && current < slides.length - 1) {
+        goTo(current + 1);
+      }
+    });
   });
 
-  // deep link: index.html#review-2 opens that review
-  const match = location.hash.match(/^#review-(\d+)$/);
-  if (match && reviews[match[1] - 1]) {
-    muted = true; // no user gesture yet, so start muted
-    openPopup(match[1] - 1);
-  }
+  document.addEventListener("keydown", (e) => {
+    if (!popup.classList.contains("active")) return;
+    if (e.key === "Escape") closePopup();
+    if (e.key === "ArrowRight") goTo(current + 1);
+    if (e.key === "ArrowLeft") goTo(current - 1);
+  });
 })();
-// community-review-section js end--
+// community-review popup js end--
 
 // collection-category-slider js start--
 var swiper = new Swiper(".collection-category-slider", {
@@ -1299,17 +674,118 @@ const getBundleOffer = (quantity) => {
 };
 // product bundle js end--
 
-// product add-to-cart js start--
-const addToCart = (btn, event) => {
+// cart js start--
+// cart is saved in localStorage, so it stays same on every page
+const cartKey = "ehans-mart-cart";
+const cartItemsWrap = document.querySelector(".cart-drawer-items");
+
+const getCart = () => {
+  try {
+    return JSON.parse(localStorage.getItem(cartKey)) || [];
+  } catch (e) {
+    return [];
+  }
+};
+
+const saveCart = (cart) => {
+  try {
+    localStorage.setItem(cartKey, JSON.stringify(cart));
+  } catch (e) {}
+  renderCart(cart);
+};
+
+const parsePrice = (text) => Number(String(text).replace(/[^0-9.]/g, "")) || 0;
+
+const escapeHTML = (text) =>
+  String(text).replace(/[&<>"']/g, (char) => `&#${char.charCodeAt(0)};`);
+
+const trashIcon = `<svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.375 2H0.375C0.275544 2 0.180161 2.03951 0.109835 2.10983C0.0395088 2.18016 0 2.27554 0 2.375C0 2.47446 0.0395088 2.56984 0.109835 2.64017C0.180161 2.71049 0.275544 2.75 0.375 2.75H1V11.875C1 12.1071 1.09219 12.3296 1.25628 12.4937C1.42038 12.6578 1.64294 12.75 1.875 12.75H9.875C10.1071 12.75 10.3296 12.6578 10.4937 12.4937C10.6578 12.3296 10.75 12.1071 10.75 11.875V2.75H11.375C11.4745 2.75 11.5698 2.71049 11.6402 2.64017C11.7105 2.56984 11.75 2.47446 11.75 2.375C11.75 2.27554 11.7105 2.18016 11.6402 2.10983C11.5698 2.03951 11.4745 2 11.375 2ZM10 11.875C10 11.9082 9.98683 11.9399 9.96339 11.9634C9.93995 11.9868 9.90815 12 9.875 12H1.875C1.84185 12 1.81005 11.9868 1.78661 11.9634C1.76317 11.9399 1.75 11.9082 1.75 11.875V2.75H10V11.875ZM3 0.375C3 0.275544 3.03951 0.180161 3.10984 0.109835C3.18016 0.0395088 3.27554 0 3.375 0H8.375C8.47446 0 8.56984 0.0395088 8.64017 0.109835C8.71049 0.180161 8.75 0.275544 8.75 0.375C8.75 0.474456 8.71049 0.569839 8.64017 0.640165C8.56984 0.710491 8.47446 0.75 8.375 0.75H3.375C3.27554 0.75 3.18016 0.710491 3.10984 0.640165C3.03951 0.569839 3 0.474456 3 0.375Z" fill="black" /></svg>`;
+
+function renderCart(cart = getCart()) {
+  const count = cart.reduce((sum, item) => sum + item.qty, 0);
+  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+  document.querySelectorAll(".cart-count").forEach((el) => {
+    el.textContent = count;
+  });
+
+  cartDrawer?.classList.toggle("blank", cart.length === 0);
+
+  const title = document.querySelector(".cart-drawer-title span");
+  if (title) title.textContent = `(${count} ${count === 1 ? "item" : "items"})`;
+
+  const totalPrice = document.querySelector(".cart-drawer-total-price");
+  if (totalPrice) totalPrice.textContent = formatPrice(total);
+
+  if (!cartItemsWrap) return;
+
+  cartItemsWrap.innerHTML = cart
+    .map(
+      (item, index) => `
+      <div class="cart-drawer-item" data-index="${index}">
+        <div class="cart-drawer-item-img">
+          <img src="${escapeHTML(item.img)}" alt="${escapeHTML(item.title)}">
+        </div>
+        <div class="cart-drawer-item-content-wrap">
+          <div class="cart-drawer-item-content-inner">
+            <div class="cart-drawer-item-content">
+              <a href="${escapeHTML(item.url)}" class="cart-drawer-item-title">${escapeHTML(item.title)}</a>
+              <div class="content-btm">
+                <div class="cart-drawer-item-qty-btn-wrap">
+                  <button class="cart-drawer-item-qty-btn" type="button" data-cart-action="minus" aria-label="decrease quantity">-</button>
+                  <input type="text" class="cart-drawer-item-qty-input" value="${item.qty}" readonly>
+                  <button class="cart-drawer-item-qty-btn" type="button" data-cart-action="plus" aria-label="increase quantity">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="cart-drawer-item-remove-btn-wrap">
+            <button class="cart-drawer-item-remove-btn" type="button" data-cart-action="remove" aria-label="remove item">${trashIcon}</button>
+            <p class="cart-drawer-item-price">${formatPrice(item.price * item.qty)}</p>
+          </div>
+        </div>
+      </div>`,
+    )
+    .join("");
+}
+
+// add product (same product again = quantity up)
+function addItemToCart(item, qty = 1) {
+  const cart = getCart();
+  const existing = cart.find((cartItem) => cartItem.id === item.id);
+
+  if (existing) existing.qty += qty;
+  else cart.push({ ...item, qty });
+
+  saveCart(cart);
+}
+
+// plus / minus / remove inside cart drawer
+cartItemsWrap?.addEventListener("click", ({ target }) => {
+  const btn = target.closest("[data-cart-action]");
+  if (!btn) return;
+
+  const cart = getCart();
+  const index = Number(btn.closest(".cart-drawer-item").dataset.index);
+  const item = cart[index];
+  if (!item) return;
+
+  if (btn.dataset.cartAction === "plus") item.qty += 1;
+  if (btn.dataset.cartAction === "minus") item.qty = Math.max(1, item.qty - 1);
+  if (btn.dataset.cartAction === "remove") cart.splice(index, 1);
+
+  saveCart(cart);
+});
+
+// button feedback: loading → Added ✓ → open cart drawer
+const addToCart = (btn, event, item, qty = 1) => {
   if (btn.classList.contains("loading")) return;
 
   const btnText = btn.innerHTML;
   btn.classList.add("loading");
 
   setTimeout(() => {
-    document.querySelectorAll(".cart-count").forEach((count) => {
-      count.textContent = (parseInt(count.textContent, 10) || 0) + getBundleQuantity();
-    });
+    addItemToCart(item, qty);
 
     btn.classList.remove("loading");
     btn.classList.add("added");
@@ -1323,12 +799,80 @@ const addToCart = (btn, event) => {
   }, 500);
 };
 
+// product page + sticky bar add to cart (selected bundle quantity & price)
+const getProductPageItem = () => {
+  const productSection = document.querySelector(".product-section");
+  const quantity = getBundleQuantity();
+  const offer = getBundleOffer(quantity);
+  const unitPrice = Number(productSection.dataset.price) * (1 - offer.discount / 100);
+  const title = document.querySelector(".product-title").textContent.trim();
+  const img = document.querySelector(".product-slider .swiper-slide:not(.swiper-slide-duplicate) img");
+
+  return {
+    item: {
+      id: `${title}-${unitPrice}`,
+      title,
+      img: img?.getAttribute("src") || "",
+      price: unitPrice,
+      url: "product.html",
+    },
+    quantity,
+  };
+};
+
 document
   .querySelectorAll(".product-add-to-cart-btn, .sticky-add-to-cart-section .btn")
   .forEach((btn) => {
-    btn.addEventListener("click", (event) => addToCart(btn, event));
+    btn.addEventListener("click", (event) => {
+      const { item, quantity } = getProductPageItem();
+      addToCart(btn, event, item, quantity);
+    });
   });
-// product add-to-cart js end--
+
+// product card add to cart (any page)
+document.addEventListener("click", (event) => {
+  const btn = event.target.closest(".product-card .card-btn .btn");
+  if (!btn) return;
+  event.preventDefault();
+
+  const card = btn.closest(".product-card");
+  const title = card.querySelector(".card-title")?.textContent.trim() || "";
+  const img = card.querySelector(".card_img")?.getAttribute("src") || "";
+
+  addToCart(btn, event, {
+    id: img || title,
+    title,
+    img,
+    price: parsePrice(card.querySelector(".latest-price")?.textContent),
+    url: card.querySelector(".card-title")?.getAttribute("href") || "product.html",
+  });
+});
+
+// community review popup add to cart
+document.addEventListener("click", (event) => {
+  const btn = event.target.closest(".community-review-popup-btn-wrap .btn");
+  if (!btn) return;
+  event.preventDefault();
+
+  const popup = btn.closest(".community-review-popup");
+  const title = popup.querySelector(".community-review-popup-product-title")?.textContent.trim() || "";
+  const img = popup.querySelector(".community-review-popup-product-img img")?.getAttribute("src") || "";
+
+  addItemToCart({
+    id: img || title,
+    title,
+    img,
+    price: parsePrice(popup.querySelector(".community-review-popup-product-price .curr")?.textContent),
+    url: "product.html",
+  });
+
+  // close popup, then show cart
+  popup.querySelector(".community-review-popup-close-btn")?.click();
+  openCartDrawer(event);
+});
+
+renderCart();
+// cart js end--
 
 // product-delivery-countdown js start--
 (() => {
@@ -1565,18 +1109,47 @@ document.addEventListener("click", ({ target }) => {
 });
 // review-tab-section js end--
 
-// Sticky Add to Cart
+// sticky-add-to-cart js start--
 (() => {
   const stickyCart = document.querySelector(".sticky-add-to-cart-section");
   if (!stickyCart) return;
 
+  // show only after the main add to cart button is scrolled out of view
+  const mainBtn = document.querySelector(".product-add-to-cart-btn");
+
   const updateStickyCart = () => {
-    stickyCart.classList.toggle("fixed", window.scrollY > 300);
+    const passed = mainBtn
+      ? mainBtn.getBoundingClientRect().bottom < 0
+      : window.scrollY > 300;
+    stickyCart.classList.toggle("show", passed);
   };
 
   updateStickyCart();
   window.addEventListener("scroll", updateStickyCart, { passive: true });
+  window.addEventListener("resize", updateStickyCart, { passive: true });
+
+  // sticky price follows the selected bundle
+  const productSection = document.querySelector(".product-section");
+  const latestPrice = stickyCart.querySelector(".latest-price");
+  const previousPrice = stickyCart.querySelector(".previous-price");
+  if (!productSection?.dataset.price || !latestPrice) return;
+
+  const updateStickyPrice = () => {
+    const quantity = getBundleQuantity();
+    const offer = getBundleOffer(quantity);
+    const fullPrice = Number(productSection.dataset.price) * quantity;
+    const comparePrice = parsePrice(document.querySelector(".product-price-wrap .previous-price")?.textContent) * quantity;
+
+    latestPrice.textContent = formatPrice(fullPrice * (1 - offer.discount / 100));
+    if (previousPrice) previousPrice.textContent = formatPrice(offer.discount ? fullPrice : comparePrice);
+  };
+
+  updateStickyPrice();
+  document.querySelectorAll(".bundle-item input").forEach((input) => {
+    input.addEventListener("change", updateStickyPrice);
+  });
 })();
+// sticky-add-to-cart js end--
 
 // Footer dropdown responsive accordion js start --
 document.addEventListener("DOMContentLoaded", () => {

@@ -20,16 +20,67 @@
     gap: 12px;
 }
 
+/* hamburger css start */
 .navbar-left .hamburger {
     display: none;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    width: 40px;
+    height: 40px;
+    padding: 0 8px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
 }
 
-.navbar-left .hamburger svg path {
-    stroke: var(--brand-color);
+.hamburger .hamburger-line {
+    display: block;
+    width: 24px;
+    height: 2px;
+    border-radius: 2px;
+    background-color: var(--black);
+    transform-origin: center;
+    transition: transform .35s cubic-bezier(.65, 0, .35, 1), opacity .25s ease, width .3s ease;
 }
+
+/* middle line is shorter */
+.hamburger .hamburger-line:nth-child(2) {
+    width: 18px;
+}
+
+/* hover: lines move in a small wave, middle line grows to full width */
+.hamburger:hover .hamburger-line:nth-child(1) {
+    transform: translateX(3px);
+}
+
+.hamburger:hover .hamburger-line:nth-child(2) {
+    width: 24px;
+}
+
+.hamburger:hover .hamburger-line:nth-child(3) {
+    transform: translateX(-3px);
+}
+
+/* active (menu open): lines turn into a cross */
+.hamburger.active .hamburger-line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.hamburger.active .hamburger-line:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* hamburger css end */
 
 .navbar-logo {
-    width: 90px;
+    width: 150px;
 }
 
 .navbar-search {
@@ -923,8 +974,8 @@
 
     .home-header .navbar-search {
         padding: 10px 16px;
-        background: #D4C3AE;
-        box-shadow: 0 1px 0 #D4C3AE;
+        background: var(--hero-top-bg);
+        box-shadow: 0 1px 0 var(--hero-top-bg);
     }
 
     .navbar-link-area {
@@ -939,7 +990,7 @@
 
     /* header css start */
     .navbar-logo {
-        width: 70px;
+        width: 120px;
     }
 
     .search-bar-top {
