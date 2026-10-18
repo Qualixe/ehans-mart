@@ -31,7 +31,7 @@
 }
 
 .swiper.product-slider {
-    width: calc(100% - 62px);
+    width: calc(100% - 80px);
     margin: 0;
     border-radius: 10px;
     overflow: hidden;
@@ -61,18 +61,20 @@
 }
 
 .swiper.product-slider-thumb {
-    width: 54px;
+    width: 72px;
     height: 645px;
     margin: 0;
     padding: 1px;
 }
 
 .product-slider-thumb .swiper-slide {
-    width: 52px;
-    height: 52px;
+    width: 70px;
+    height: 70px;
     cursor: pointer;
     opacity: .75;
     border: 1px solid transparent;
+    border-radius: 8px;
+    overflow: hidden;
     transition: all ease .3s;
     user-select: none;
 }
@@ -88,6 +90,8 @@
 
 .product-slider-thumb .product-slider-img {
     height: 100%;
+    border-radius: 7px;
+    overflow: hidden;
     background-color: var(--white);
 }
 
@@ -302,16 +306,19 @@
 
 /* product-stock css end */
 
-/* product bundle css start */
+/* product bundle css start (novacart structure + tazaf design) */
 .bundle-wrapper {
-    margin: 22px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 22px 0 22px;
 }
 
 .bundle-wrapper-title {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 14px;
+    margin-bottom: 2px;
     font-family: var(--paragraph-font);
     font-size: 18px;
     font-weight: 400;
@@ -328,7 +335,11 @@
 
 .bundle-item {
     position: relative;
-    margin-bottom: 22px;
+}
+
+/* item with badge gets space on top for the pill */
+.bundle-item:has(.bundle-badge) {
+    padding-top: 10px;
 }
 
 .bundle-item input {
@@ -340,14 +351,15 @@
 .bundle-label {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
     min-height: 60px;
-    padding: 12px 25px 12px 10px;
-    border: 1px solid var(--product-line);
-    border-radius: 5px;
-    background-color: var(--white);
+    padding: 15px;
+    border: 1px solid var(--border-color2);
+    border-radius: 8px;
+    background-color: var(--item-bg3);
+    box-shadow: 0 3px 12px rgb(213 213 213 / 41%);
     cursor: pointer;
-    transition: all ease .2s;
+    transition: all ease .3s;
 }
 
 .bundle-item-promo .bundle-label {
@@ -356,30 +368,32 @@
 }
 
 .bundle-label:hover {
-    border-color: #bbbbbb;
+    border-color: var(--brand-color);
 }
 
 .bundle-item input:checked+.bundle-label {
-    background-color: var(--product-selected);
-    border-color: var(--product-dark);
+    background-color: var(--item-bg);
+    border-color: var(--brand-color);
+    cursor: auto;
 }
 
+/* radio like native radio with brand accent */
 .bundle-radio {
     position: relative;
     width: 18px;
     height: 18px;
     flex-shrink: 0;
-    border: 1px solid var(--product-dark);
+    border: 2px solid #8a8a8a;
     border-radius: 50%;
     background-color: var(--white);
+    transition: border-color .2s ease;
 }
 
-.bundle-item input:checked+.bundle-label .bundle-radio::after {
-    position: absolute;
-    content: "";
-    inset: 3px;
-    border-radius: 50%;
-    background-color: var(--product-dark);
+/* selected: brand fill + white inner ring = always centered dot */
+.bundle-item input:checked+.bundle-label .bundle-radio {
+    border-color: var(--brand-color);
+    background-color: var(--brand-color);
+    box-shadow: inset 0 0 0 3px var(--white);
 }
 
 .bundle-content {
@@ -394,28 +408,32 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 6px;
     font-family: var(--heading-font);
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 1;
-    color: var(--product-dark);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--black);
+    text-transform: capitalize;
 }
 
 .bundle-savings {
-    padding: 3px 10px;
-    border-radius: 2px;
-    background-color: var(--product-accent);
+    display: block;
+    padding: 5px 10px;
+    border-radius: 50px;
+    background-color: var(--brand-color);
     color: var(--white);
     font-family: var(--paragraph-font);
-    font-size: 10px;
-    font-weight: 700;
-    line-height: 1.2;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+    text-transform: capitalize;
 }
 
 .bundle-single-price {
     font-family: var(--paragraph-font);
-    font-size: 9px;
+    font-size: 12px;
     color: var(--muted);
 }
 
@@ -436,38 +454,44 @@
 
 .bundle-previous-price {
     color: var(--product-accent);
-    font-size: 12px;
+    font-size: 13px;
     text-decoration: line-through;
 }
 
 .bundle-total-price {
-    color: var(--product-dark);
-    font-size: 14px;
-    font-weight: 700;
+    color: var(--black);
+    font-size: 16px;
+    font-weight: 600;
 }
 
+/* green pill badge on top right */
 .bundle-badge {
     position: absolute;
-    top: -12px;
-    right: -9px;
+    top: 0;
+    right: 10px;
     z-index: 1;
-    padding: 3px 7px;
-    background-color: #000000;
+    display: block;
+    padding: 5px 10px;
+    border-radius: 50px;
+    background-color: var(--color-green);
     color: var(--white);
-    font-family: var(--heading-font);
-    font-size: 13px;
-    font-weight: 700;
-    transform: rotate(3deg);
+    font-family: var(--paragraph-font);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
     pointer-events: none;
 }
 
 .bundle-promo {
-    padding: 5px 20px 4px;
-    border-radius: 0 0 5px 5px;
-    background-color: #000000;
+    padding: 6px 15px;
+    border: 1px solid var(--color-green);
+    border-top: 0;
+    border-radius: 0 0 8px 8px;
+    background-color: var(--color-green);
     color: var(--white);
     font-family: var(--paragraph-font);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 600;
 }
 
@@ -476,7 +500,7 @@
 /* product-btn-wrap css start */
 .product-btn-wrap {
     display: grid;
-    gap: 22px;
+    gap: 10px;
     margin-top: 4px;
 }
 
@@ -494,6 +518,7 @@
     font-weight: 400;
     letter-spacing: 1px;
     text-transform: uppercase;
+    overflow: hidden;
     transition: all ease .2s;
 }
 
@@ -507,16 +532,40 @@
     color: var(--white);
 }
 
+/* add to cart: fills with brand background on hover */
 .product-btn-wrap .product-add-to-cart-btn:hover {
-    background-color: var(--white);
-    color: var(--product-accent);
-    box-shadow: 0 0 0 1px var(--product-accent);
+    background-color: var(--product-accent);
+    color: var(--white);
 }
 
 .product-btn-wrap .product-buy-now-btn:hover {
     background-color: var(--product-accent);
     color: var(--white);
-    box-shadow: inset 0 0 0 2px var(--white), 0 0 0 1px var(--product-accent);
+}
+
+/* other buttons: same shine as product-card add to cart */
+.product-btn-wrap .product-buy-now-btn:hover::before,
+.product-contact-btn-wrap .btn:hover::before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: -100%;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .2), transparent);
+    animation: product-btn-shimmer .6s ease-out;
+    pointer-events: none;
+}
+
+@keyframes product-btn-shimmer {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
 }
 
 .product-btn-wrap .btn.loading,
@@ -584,7 +633,6 @@
 
 .product-contact-btn-wrap .btn:hover {
     color: var(--white);
-    box-shadow: inset 0 0 0 2px var(--white);
 }
 
 .product-contact-btn-wrap .product-call-btn:hover {
@@ -597,59 +645,493 @@
 
 /* product-btn-wrap css end */
 
-/* product-delivery-countdown css start */
-.product-delivery-countdown {
+/* product-buy-with css start */
+.product-buy-with {
+    margin: 22px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.product-buy-with-title {
+    font-family: var(--heading-font);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--brand-color);
+    text-transform: capitalize;
+}
+
+.product-buy-with-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    background: var(--item-bg2);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all ease .2s;
+}
+
+.product-buy-with-item:hover,
+.product-buy-with-item:has(.product-buy-with-checkbox:checked) {
+    border-color: var(--brand-color);
+}
+
+.product-buy-with-checkbox {
+    appearance: auto;
+    -webkit-appearance: auto;
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: var(--brand-color);
+    cursor: pointer;
+}
+
+.product-buy-with-img {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--white);
+}
+
+.product-buy-with-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-buy-with-name {
+    flex: 1;
+    min-width: 0;
+    font-family: var(--paragraph-font);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--black);
+}
+
+.product-buy-with-price {
+    flex-shrink: 0;
+    font-family: var(--paragraph-font);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--black);
+    white-space: nowrap;
+}
+
+/* product-buy-with css end */
+
+/* product-upsell css start (coral template upsell) */
+.product-upsell {
+    margin: 22px 0 0 0;
+}
+
+.product-upsell-title-main {
+    margin-bottom: 4px;
+    font-family: var(--heading-font);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--brand-color);
+    text-transform: capitalize;
+}
+
+.product-upsell-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--product-line);
+}
+
+.product-upsell-item:last-child {
+    border-bottom: 0;
+}
+
+.product-upsell-img {
+    flex-shrink: 0;
+    width: 72px;
+    height: 72px;
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--white);
+}
+
+.product-upsell-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-upsell-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.product-upsell-title {
+    width: 100%;
+    font-family: var(--paragraph-font);
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.35;
+    color: var(--black);
+}
+
+.product-upsell-bottom {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 24px;
-    margin: 22px 0 10px;
-    padding: 10px 20px;
-    border: 1px solid rgba(0, 0, 0, .1);
-    border-radius: 10px;
+    gap: 10px;
+}
+
+.product-upsell-price {
+    white-space: nowrap;
     font-family: var(--paragraph-font);
-    color: var(--product-text);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--black);
 }
 
-.product-delivery-countdown-item {
-    display: flex;
+.product-upsell .product-upsell-btn {
+    display: inline-flex;
     align-items: center;
-    gap: 12px;
+    justify-content: center;
+    gap: 6px;
+    width: auto;
+    min-width: 84px;
+    padding: 8px 16px;
+    border: 1px solid var(--product-accent);
+    border-radius: 4px;
+    background-color: var(--product-accent);
+    color: var(--white);
+    font-family: var(--heading-font);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .5px;
+    text-transform: uppercase;
 }
 
-.product-delivery-countdown-item .icon {
-    display: flex;
-    width: 30px;
-    height: 30px;
-    flex-shrink: 0;
+.product-upsell .product-upsell-btn:hover {
+    border-color: var(--black);
+    background-color: var(--black);
+    color: var(--white);
 }
 
-.product-delivery-countdown-item .icon svg {
+/* product-upsell css end */
+
+/* quick-view css start (coral template quick view drawer) */
+.quick-view {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     width: 100%;
     height: 100%;
+    z-index: 999999;
+    background: rgba(0, 0, 0, .45);
+    opacity: 0;
+    visibility: hidden;
+    transition: all ease .3s;
 }
 
-.product-delivery-countdown-label {
-    margin-bottom: 5px;
+.quick-view.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.quick-view-close-window-btn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
+.quick-view-inner {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    bottom: 12px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 24px);
+    max-width: 545px;
+    border-radius: 12px;
+    background: var(--white);
+    overflow: hidden;
+    transform: translateX(calc(100% + 24px));
+    transition: transform .4s cubic-bezier(.4, 0, .2, 1);
+}
+
+.quick-view.active .quick-view-inner {
+    transform: translateX(0);
+}
+
+.quick-view-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-shrink: 0;
+    padding: 20px 32px;
+    border-bottom: 1px solid var(--product-line);
+}
+
+.quick-view-title {
+    font-family: var(--heading-font);
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--black);
+}
+
+.quick-view-close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    color: var(--black);
+}
+
+.quick-view-content {
+    flex: 1;
+    min-height: 0;
+    padding: 12px 32px 32px;
+    overflow-y: auto;
+}
+
+/* horizontal image scroller (2.2 images visible) */
+.quick-view-images {
+    display: flex;
+    gap: 5px;
+    margin: 0 -32px 0 0;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+}
+
+.quick-view-images::-webkit-scrollbar {
+    display: none;
+}
+
+.quick-view-images img {
+    flex: 0 0 45%;
+    width: 45%;
+    min-width: 0;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    scroll-snap-align: start;
+    background: var(--item-bg2);
+}
+
+/* image slider wrap + arrows */
+.quick-view-images-wrap {
+    position: relative;
+}
+
+.quick-view-images {
+    cursor: grab;
+    user-select: none;
+}
+
+.quick-view-images.dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
+}
+
+.quick-view-images img {
+    pointer-events: none;
+}
+
+.quick-view .quick-view-images-btn {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--white);
+    color: var(--black);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .15);
+    transform: translateY(-50%);
+    transition: opacity .2s ease;
+}
+
+.quick-view-images-btn.prev {
+    left: 10px;
+}
+
+.quick-view-images-btn.next {
+    right: -12px;
+}
+
+.quick-view .quick-view-images-btn:disabled {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.quick-view-vendor {
+    margin-top: 28px;
     font-size: 14px;
+    color: var(--muted);
+}
+
+.quick-view-price {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.quick-view-price p {
+    font-size: 17px;
     line-height: 1.2;
 }
 
-.product-delivery-countdown-value {
-    font-size: 14px;
-    font-weight: 700;
-    font-variant-numeric: tabular-nums;
+.quick-view-price .previous-price {
+    color: var(--product-accent);
+    text-decoration: line-through;
 }
 
-.product-delivery-countdown-arrow {
-    font-size: 22px;
+/* variant options (coral size buttons) */
+.quick-view-variant {
+    margin-top: 28px;
 }
 
-/* product-delivery-countdown css end */
+.quick-view-variant-label {
+    font-size: 15px;
+    color: var(--black);
+}
+
+.quick-view-variant-label .value {
+    margin-left: 6px;
+    color: var(--muted);
+}
+
+.quick-view-variant-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 14px;
+}
+
+.quick-view .quick-view-variant-btn {
+    width: auto;
+    min-width: 66px;
+    padding: 10px 16px;
+    border: 1px solid var(--product-line);
+    border-radius: 2px;
+    background: var(--white);
+    color: var(--black);
+    font-family: var(--paragraph-font);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1;
+    text-transform: none;
+}
+
+.quick-view .quick-view-variant-btn:hover {
+    border-color: var(--black);
+    background: var(--white);
+    color: var(--black);
+}
+
+.quick-view .quick-view-variant-btn.active {
+    border-color: var(--black);
+    background: var(--black);
+    color: var(--white);
+}
+
+.quick-view-actions {
+    display: flex;
+    gap: 5px;
+    margin-top: 40px;
+}
+
+.quick-view-quantity {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    width: 105px;
+    height: 48px;
+    border: 1px solid var(--product-line);
+}
+
+.quick-view-quantity button {
+    flex: 1;
+    height: 100%;
+    font-size: 16px;
+    color: var(--black);
+}
+
+.quick-view-quantity-count {
+    min-width: 30px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.quick-view .quick-view-add-btn,
+.quick-view .quick-view-details-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px;
+    border-radius: 4px;
+    font-family: var(--heading-font);
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+}
+
+.quick-view .quick-view-add-btn {
+    flex: 1;
+    width: auto;
+    border: 1px solid var(--product-accent);
+    background-color: var(--product-accent);
+    color: var(--white);
+}
+
+.quick-view .quick-view-add-btn:hover {
+    border-color: var(--black);
+    background-color: var(--black);
+    color: var(--white);
+}
+
+.quick-view .quick-view-details-btn {
+    width: 100%;
+    margin-top: 5px;
+    border: 1px solid var(--black);
+    background-color: var(--white);
+    color: var(--black);
+}
+
+.quick-view .quick-view-details-btn:hover {
+    background-color: var(--black);
+    color: var(--white);
+}
+
+/* quick-view css end */
 
 /* product-tab css start */
 .product-tab {
-    margin-top: 16px;
+    margin-top: 22px;
 }
 
 .product-tab-nav {
@@ -1339,8 +1821,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
     transition: all ease .3s;
+    border-radius: 50%;
+    box-shadow: 0 3px 12px rgb(0 0 0 / 30%);
+    background: var(--white);
 }
 
 .product-slider-modal-close svg {
@@ -1374,12 +1858,6 @@
     /* product section css start */
     .product-title {
         font-size: 30px;
-    }
-
-    .product-delivery-countdown-item {
-        flex-direction: column;
-        gap: 5px;
-        text-align: center;
     }
 
     .swiper.product-slider-thumb {
@@ -1447,8 +1925,8 @@
     }
 
     .product-slider-thumb .swiper-slide {
-        width: 54px;
-        height: 54px;
+        width: 62px;
+        height: 62px;
     }
 
     .product-content-area {
@@ -1480,17 +1958,15 @@
 
     .bundle-label {
         gap: 10px;
-        padding: 12px 14px 12px 10px;
+        padding: 12px;
     }
 
     .bundle-title {
-        gap: 6px;
-        font-size: 17px;
+        font-size: 15px;
     }
 
     .bundle-badge {
-        right: -4px;
-        font-size: 10px;
+        font-size: 11px;
     }
 
     .product-btn-wrap {
@@ -1512,12 +1988,42 @@
         height: 17px;
     }
 
-    .product-delivery-countdown {
-        gap: 12px;
-        padding: 14px 15px;
+    /* product section css end */
+
+    /* quick-view css start */
+    .quick-view-inner {
+        top: 8px;
+        right: 8px;
+        bottom: 8px;
+        width: calc(100% - 16px);
     }
 
-    /* product section css end */
+    .quick-view-top {
+        padding: 16px 20px;
+    }
+
+    .quick-view-title {
+        font-size: 18px;
+    }
+
+    .quick-view-content {
+        padding: 12px 20px 24px;
+    }
+
+    .quick-view-images {
+        margin-right: -20px;
+    }
+
+    .quick-view-images img {
+        flex-basis: 70%;
+        width: 70%;
+    }
+
+    .quick-view-actions {
+        margin-top: 28px;
+    }
+
+    /* quick-view css end */
 
     /* buy-now-popup css start */
     .buy-now-popup {

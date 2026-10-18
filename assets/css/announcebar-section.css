@@ -1,7 +1,19 @@
 /* announcebar-section css start */
 .announcebar-section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9991;
     background: var(--brand-color);
     padding: 10px 0;
+    transition: transform .4s cubic-bezier(.4, 0, .2, 1);
+}
+
+/* hidden after scrolling, shows again only at the very top */
+.page-scroll-down .announcebar-section,
+.page-scroll-up .announcebar-section {
+    transform: translateY(-100%);
 }
 
 .announcebar-text {

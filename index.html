@@ -88,7 +88,11 @@
 												stroke-linejoin="round"></path>
 										</svg>
 									</span>
-									<input type="text">
+									<input type="search" class="search-input" placeholder="Search products..." autocomplete="off"
+										aria-label="search products">
+									<button class="search-input-clear" type="button" aria-label="clear search" hidden>
+										<svg width="10" height="10" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 15L15 3M15 15L3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
+									</button>
 								</div>
 							</form>
 							<button class="search-bar-close">
@@ -99,164 +103,36 @@
 								</svg>
 							</button>
 						</div>
-						<div class="search-bar-btm active">
-							<div class="search-history">
-								<div class="search-history-items">
-									<div class="search-history-item">
-										<p class="search-history-item-title">most searched</p>
-										<div class="search-tags">
-											<a href="#!">Wall paintings
-												<span class="icon">
-													<svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
-														<path d="M3.5 8.5L8.5 3.5" stroke="currentColor" stroke-linecap="round"
-															stroke-linejoin="round"></path>
-														<path d="M4.00006 3.49997H8.50006V7.99997" stroke="currentColor" stroke-linecap="round"
-															stroke-linejoin="round"></path>
-													</svg>
-												</span>
-											</a>
-											<a href="#!">Bedsheets
-												<span class="icon">
-													<svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
-														<path d="M3.5 8.5L8.5 3.5" stroke="currentColor" stroke-linecap="round"
-															stroke-linejoin="round"></path>
-														<path d="M4.00006 3.49997H8.50006V7.99997" stroke="currentColor" stroke-linecap="round"
-															stroke-linejoin="round"></path>
-													</svg>
-												</span>
-											</a>
-											<a href="#!">Rugs & Carpets
-												<span class="icon">
-													<svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
-														<path d="M3.5 8.5L8.5 3.5" stroke="currentColor" stroke-linecap="round"
-															stroke-linejoin="round"></path>
-														<path d="M4.00006 3.49997H8.50006V7.99997" stroke="currentColor" stroke-linecap="round"
-															stroke-linejoin="round"></path>
-													</svg>
-												</span>
-											</a>
-											<a href="#!">Storage & Organization
-												<span class="icon">
-													<svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
-														<path d="M3.5 8.5L8.5 3.5" stroke="currentColor" stroke-linecap="round"
-															stroke-linejoin="round"></path>
-														<path d="M4.00006 3.49997H8.50006V7.99997" stroke="currentColor" stroke-linecap="round"
-															stroke-linejoin="round"></path>
-													</svg>
-												</span>
-											</a>
-											<a href="#!">Lamps and lightings
-												<span class="icon">
-													<svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
-														<path d="M3.5 8.5L8.5 3.5" stroke="currentColor" stroke-linecap="round"
-															stroke-linejoin="round"></path>
-														<path d="M4.00006 3.49997H8.50006V7.99997" stroke="currentColor" stroke-linecap="round"
-															stroke-linejoin="round"></path>
-													</svg>
-												</span>
-											</a>
-										</div>
+						<div class="search-bar-btm">
+							<!-- default view: recent + popular + categories -->
+							<div class="search-default">
+								<div class="search-block search-recent" hidden>
+									<div class="search-block-head">
+										<p class="search-block-title">recent searches</p>
+										<button class="search-recent-clear" type="button">clear</button>
 									</div>
-									<div class="search-history-item">
-										<p class="search-history-item-title">Explore best category</p>
-										<div class="search-categories">
-											<a href="#!" class="search-category">
-												<div class="search-category-img">
-													<img src="./assets/images/search-cetagory-img1.webp" alt="search-cetagory-img1.webp">
-												</div>
-												<div class="search-category-content">
-													<p class="title">Bedsheets</p>
-												</div>
-											</a>
-											<a href="#!" class="search-category">
-												<div class="search-category-img">
-													<img src="./assets/images/search-cetagory-img1.webp" alt="search-cetagory-img1.webp">
-												</div>
-												<div class="search-category-content">
-													<p class="title">Bedsheets</p>
-												</div>
-											</a>
-											<a href="#!" class="search-category">
-												<div class="search-category-img">
-													<img src="./assets/images/search-cetagory-img1.webp" alt="search-cetagory-img1.webp">
-												</div>
-												<div class="search-category-content">
-													<p class="title">Bedsheets</p>
-												</div>
-											</a>
-											<a href="#!" class="search-category">
-												<div class="search-category-img">
-													<img src="./assets/images/search-cetagory-img1.webp" alt="search-cetagory-img1.webp">
-												</div>
-												<div class="search-category-content">
-													<p class="title">Bedsheets</p>
-												</div>
-											</a>
-											<a href="#!" class="search-category">
-												<div class="search-category-img">
-													<img src="./assets/images/search-cetagory-img1.webp" alt="search-cetagory-img1.webp">
-												</div>
-												<div class="search-category-content">
-													<p class="title">Bedsheets</p>
-												</div>
-											</a>
-											<a href="#!" class="search-category">
-												<div class="search-category-img">
-													<img src="./assets/images/search-cetagory-img1.webp" alt="search-cetagory-img1.webp">
-												</div>
-												<div class="search-category-content">
-													<p class="title">Bedsheets</p>
-												</div>
-											</a>
-										</div>
-									</div>
+									<div class="search-tags search-recent-tags"></div>
+								</div>
+								<div class="search-block">
+									<p class="search-block-title">popular searches</p>
+									<div class="search-tags search-popular-tags"></div>
+								</div>
+								<div class="search-block">
+									<p class="search-block-title">shop by category</p>
+									<div class="search-categories"></div>
 								</div>
 							</div>
-							<div class="search-result-area">
-								<div class="search-result">
-									<p class="search-result-title">Search Results:</p>
-									<div class="search-result-items">
-										<a href="#!" class="search-result-item">
-											<div class="search-result-img">
-												<img src="./assets/images/search-cetagory-img1.webp" alt="search-cetagory-img1.webp">
-											</div>
-											<div class="search-result-content">
-												<p class="title">new premium Bedsheets</p>
-												<p class="price"><span class="lp">tk12,000</span><span class="pp">tk1440</span></p>
-											</div>
-										</a>
-										<a href="#!" class="search-result-item">
-											<div class="search-result-img">
-												<img src="./assets/images/search-cetagory-img1.webp" alt="search-cetagory-img1.webp">
-											</div>
-											<div class="search-result-content">
-												<p class="title">new premium Bedsheets</p>
-												<p class="price"><span class="lp">tk12,000</span><span class="pp">tk1440</span></p>
-											</div>
-										</a>
-										<a href="#!" class="search-result-item">
-											<div class="search-result-img">
-												<img src="./assets/images/search-cetagory-img1.webp" alt="search-cetagory-img1.webp">
-											</div>
-											<div class="search-result-content">
-												<p class="title">new premium Bedsheets</p>
-												<p class="price"><span class="lp">tk12,000</span><span class="pp">tk1440</span></p>
-											</div>
-										</a>
-										<a href="#!" class="search-result-item">
-											<div class="search-result-img">
-												<img src="./assets/images/search-cetagory-img1.webp" alt="search-cetagory-img1.webp">
-											</div>
-											<div class="search-result-content">
-												<p class="title">new premium Bedsheets</p>
-												<p class="price"><span class="lp">tk12,000</span><span class="pp">tk1440</span></p>
-											</div>
-										</a>
-									</div>
-									<div class="search-result-btn">
-										<a href="#!" class="btn">view all results</a>
-									</div>
-								</div>
+							<!-- results view -->
+							<div class="search-results" hidden>
+								<p class="search-results-count"></p>
+								<div class="search-result-items" role="listbox"></div>
+								<a href="collections.html" class="btn search-view-all">view all results</a>
+							</div>
+							<!-- no result view -->
+							<div class="search-empty" hidden>
+								<p class="search-empty-title">No products found</p>
+								<p class="search-empty-text">Try a different word, or browse a popular search below.</p>
+								<div class="search-tags search-empty-tags"></div>
 							</div>
 						</div>
 					</div>
@@ -2007,6 +1883,7 @@
 							<div class="card-slider-item">
 								<div class="product-card card_hover">
 									<div class="card-image-wrap">
+										<span class="card-badge">- 19%</span>
 										<div class="card-rattings">
 											<span class="icon">
 												<svg viewBox="0 0 16 16" fill="none" aria-hidden="true" class="pdp-star-icon is-filled">
@@ -2036,7 +1913,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk2200</p>
 											<p class="latest-price">tk1870</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2078,7 +1954,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk2200</p>
 											<p class="latest-price">tk1870</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2120,7 +1995,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk2200</p>
 											<p class="latest-price">tk1870</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2133,6 +2007,7 @@
 							<div class="card-slider-item">
 								<div class="product-card card_hover">
 									<div class="card-image-wrap">
+										<span class="card-badge">- 19%</span>
 										<div class="card-rattings">
 											<span class="icon">
 												<svg viewBox="0 0 16 16" fill="none" aria-hidden="true" class="pdp-star-icon is-filled">
@@ -2162,7 +2037,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk2200</p>
 											<p class="latest-price">tk1870</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2204,7 +2078,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk1200</p>
 											<p class="latest-price">tk870</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2246,7 +2119,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk1200</p>
 											<p class="latest-price">tk1070</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2278,6 +2150,7 @@
 							<div class="card-slider-item">
 								<div class="product-card card_hover">
 									<div class="card-image-wrap">
+										<span class="card-badge">- 19%</span>
 										<div class="card-rattings">
 											<span class="icon">
 												<svg viewBox="0 0 16 16" fill="none" aria-hidden="true" class="pdp-star-icon is-filled">
@@ -2307,7 +2180,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk2200</p>
 											<p class="latest-price">tk1870</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2349,7 +2221,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk2200</p>
 											<p class="latest-price">tk1870</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2391,7 +2262,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk2200</p>
 											<p class="latest-price">tk1870</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2404,6 +2274,7 @@
 							<div class="card-slider-item">
 								<div class="product-card card_hover">
 									<div class="card-image-wrap">
+										<span class="card-badge">- 19%</span>
 										<div class="card-rattings">
 											<span class="icon">
 												<svg viewBox="0 0 16 16" fill="none" aria-hidden="true" class="pdp-star-icon is-filled">
@@ -2433,7 +2304,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk2200</p>
 											<p class="latest-price">tk1870</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2475,7 +2345,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk1200</p>
 											<p class="latest-price">tk870</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2517,7 +2386,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk1200</p>
 											<p class="latest-price">tk1070</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2549,6 +2417,7 @@
 							<div class="card-slider-item">
 								<div class="product-card card_hover">
 									<div class="card-image-wrap">
+										<span class="card-badge">- 19%</span>
 										<div class="card-rattings">
 											<span class="icon">
 												<svg viewBox="0 0 16 16" fill="none" aria-hidden="true" class="pdp-star-icon is-filled">
@@ -2578,7 +2447,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk2200</p>
 											<p class="latest-price">tk1870</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2620,7 +2488,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk2200</p>
 											<p class="latest-price">tk1870</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2662,7 +2529,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk2200</p>
 											<p class="latest-price">tk1870</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2675,6 +2541,7 @@
 							<div class="card-slider-item">
 								<div class="product-card card_hover">
 									<div class="card-image-wrap">
+										<span class="card-badge">- 19%</span>
 										<div class="card-rattings">
 											<span class="icon">
 												<svg viewBox="0 0 16 16" fill="none" aria-hidden="true" class="pdp-star-icon is-filled">
@@ -2704,7 +2571,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk2200</p>
 											<p class="latest-price">tk1870</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2746,7 +2612,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk1200</p>
 											<p class="latest-price">tk870</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2788,7 +2653,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk1200</p>
 											<p class="latest-price">tk1070</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2820,6 +2684,7 @@
 							<div class="card-slider-item">
 								<div class="product-card card_hover">
 									<div class="card-image-wrap">
+										<span class="card-badge">- 19%</span>
 										<div class="card-rattings">
 											<span class="icon">
 												<svg viewBox="0 0 16 16" fill="none" aria-hidden="true" class="pdp-star-icon is-filled">
@@ -2849,7 +2714,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk2200</p>
 											<p class="latest-price">tk1870</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2891,7 +2755,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk2200</p>
 											<p class="latest-price">tk1870</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2933,7 +2796,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk2200</p>
 											<p class="latest-price">tk1870</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2946,6 +2808,7 @@
 							<div class="card-slider-item">
 								<div class="product-card card_hover">
 									<div class="card-image-wrap">
+										<span class="card-badge">- 19%</span>
 										<div class="card-rattings">
 											<span class="icon">
 												<svg viewBox="0 0 16 16" fill="none" aria-hidden="true" class="pdp-star-icon is-filled">
@@ -2975,7 +2838,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk2200</p>
 											<p class="latest-price">tk1870</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -3017,7 +2879,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk1200</p>
 											<p class="latest-price">tk870</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -3059,7 +2920,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk1200</p>
 											<p class="latest-price">tk1070</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>

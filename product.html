@@ -104,7 +104,11 @@
 												stroke-linejoin="round"></path>
 										</svg>
 									</span>
-									<input type="text">
+									<input type="search" class="search-input" placeholder="Search products..." autocomplete="off"
+										aria-label="search products">
+									<button class="search-input-clear" type="button" aria-label="clear search" hidden>
+										<svg width="10" height="10" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 15L15 3M15 15L3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
+									</button>
 								</div>
 							</form>
 							<button class="search-bar-close">
@@ -115,164 +119,36 @@
 								</svg>
 							</button>
 						</div>
-						<div class="search-bar-btm active">
-							<div class="search-history">
-								<div class="search-history-items">
-									<div class="search-history-item">
-										<p class="search-history-item-title">most searched</p>
-										<div class="search-tags">
-											<a href="#!">Wall paintings
-												<span class="icon">
-													<svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
-														<path d="M3.5 8.5L8.5 3.5" stroke="currentColor" stroke-linecap="round"
-															stroke-linejoin="round"></path>
-														<path d="M4.00006 3.49997H8.50006V7.99997" stroke="currentColor" stroke-linecap="round"
-															stroke-linejoin="round"></path>
-													</svg>
-												</span>
-											</a>
-											<a href="#!">Bedsheets
-												<span class="icon">
-													<svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
-														<path d="M3.5 8.5L8.5 3.5" stroke="currentColor" stroke-linecap="round"
-															stroke-linejoin="round"></path>
-														<path d="M4.00006 3.49997H8.50006V7.99997" stroke="currentColor" stroke-linecap="round"
-															stroke-linejoin="round"></path>
-													</svg>
-												</span>
-											</a>
-											<a href="#!">Rugs & Carpets
-												<span class="icon">
-													<svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
-														<path d="M3.5 8.5L8.5 3.5" stroke="currentColor" stroke-linecap="round"
-															stroke-linejoin="round"></path>
-														<path d="M4.00006 3.49997H8.50006V7.99997" stroke="currentColor" stroke-linecap="round"
-															stroke-linejoin="round"></path>
-													</svg>
-												</span>
-											</a>
-											<a href="#!">Storage & Organization
-												<span class="icon">
-													<svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
-														<path d="M3.5 8.5L8.5 3.5" stroke="currentColor" stroke-linecap="round"
-															stroke-linejoin="round"></path>
-														<path d="M4.00006 3.49997H8.50006V7.99997" stroke="currentColor" stroke-linecap="round"
-															stroke-linejoin="round"></path>
-													</svg>
-												</span>
-											</a>
-											<a href="#!">Lamps and lightings
-												<span class="icon">
-													<svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
-														<path d="M3.5 8.5L8.5 3.5" stroke="currentColor" stroke-linecap="round"
-															stroke-linejoin="round"></path>
-														<path d="M4.00006 3.49997H8.50006V7.99997" stroke="currentColor" stroke-linecap="round"
-															stroke-linejoin="round"></path>
-													</svg>
-												</span>
-											</a>
-										</div>
+						<div class="search-bar-btm">
+							<!-- default view: recent + popular + categories -->
+							<div class="search-default">
+								<div class="search-block search-recent" hidden>
+									<div class="search-block-head">
+										<p class="search-block-title">recent searches</p>
+										<button class="search-recent-clear" type="button">clear</button>
 									</div>
-									<div class="search-history-item">
-										<p class="search-history-item-title">Explore best category</p>
-										<div class="search-categories">
-											<a href="#!" class="search-category">
-												<div class="search-category-img">
-													<img src="./assets/images/search-cetagory-img1.webp" alt="search-cetagory-img1.webp">
-												</div>
-												<div class="search-category-content">
-													<p class="title">Bedsheets</p>
-												</div>
-											</a>
-											<a href="#!" class="search-category">
-												<div class="search-category-img">
-													<img src="./assets/images/search-cetagory-img1.webp" alt="search-cetagory-img1.webp">
-												</div>
-												<div class="search-category-content">
-													<p class="title">Bedsheets</p>
-												</div>
-											</a>
-											<a href="#!" class="search-category">
-												<div class="search-category-img">
-													<img src="./assets/images/search-cetagory-img1.webp" alt="search-cetagory-img1.webp">
-												</div>
-												<div class="search-category-content">
-													<p class="title">Bedsheets</p>
-												</div>
-											</a>
-											<a href="#!" class="search-category">
-												<div class="search-category-img">
-													<img src="./assets/images/search-cetagory-img1.webp" alt="search-cetagory-img1.webp">
-												</div>
-												<div class="search-category-content">
-													<p class="title">Bedsheets</p>
-												</div>
-											</a>
-											<a href="#!" class="search-category">
-												<div class="search-category-img">
-													<img src="./assets/images/search-cetagory-img1.webp" alt="search-cetagory-img1.webp">
-												</div>
-												<div class="search-category-content">
-													<p class="title">Bedsheets</p>
-												</div>
-											</a>
-											<a href="#!" class="search-category">
-												<div class="search-category-img">
-													<img src="./assets/images/search-cetagory-img1.webp" alt="search-cetagory-img1.webp">
-												</div>
-												<div class="search-category-content">
-													<p class="title">Bedsheets</p>
-												</div>
-											</a>
-										</div>
-									</div>
+									<div class="search-tags search-recent-tags"></div>
+								</div>
+								<div class="search-block">
+									<p class="search-block-title">popular searches</p>
+									<div class="search-tags search-popular-tags"></div>
+								</div>
+								<div class="search-block">
+									<p class="search-block-title">shop by category</p>
+									<div class="search-categories"></div>
 								</div>
 							</div>
-							<div class="search-result-area">
-								<div class="search-result">
-									<p class="search-result-title">Search Results:</p>
-									<div class="search-result-items">
-										<a href="#!" class="search-result-item">
-											<div class="search-result-img">
-												<img src="./assets/images/search-cetagory-img1.webp" alt="search-cetagory-img1.webp">
-											</div>
-											<div class="search-result-content">
-												<p class="title">new premium Bedsheets</p>
-												<p class="price"><span class="lp">tk12,000</span><span class="pp">tk1440</span></p>
-											</div>
-										</a>
-										<a href="#!" class="search-result-item">
-											<div class="search-result-img">
-												<img src="./assets/images/search-cetagory-img1.webp" alt="search-cetagory-img1.webp">
-											</div>
-											<div class="search-result-content">
-												<p class="title">new premium Bedsheets</p>
-												<p class="price"><span class="lp">tk12,000</span><span class="pp">tk1440</span></p>
-											</div>
-										</a>
-										<a href="#!" class="search-result-item">
-											<div class="search-result-img">
-												<img src="./assets/images/search-cetagory-img1.webp" alt="search-cetagory-img1.webp">
-											</div>
-											<div class="search-result-content">
-												<p class="title">new premium Bedsheets</p>
-												<p class="price"><span class="lp">tk12,000</span><span class="pp">tk1440</span></p>
-											</div>
-										</a>
-										<a href="#!" class="search-result-item">
-											<div class="search-result-img">
-												<img src="./assets/images/search-cetagory-img1.webp" alt="search-cetagory-img1.webp">
-											</div>
-											<div class="search-result-content">
-												<p class="title">new premium Bedsheets</p>
-												<p class="price"><span class="lp">tk12,000</span><span class="pp">tk1440</span></p>
-											</div>
-										</a>
-									</div>
-									<div class="search-result-btn">
-										<a href="#!" class="btn">view all results</a>
-									</div>
-								</div>
+							<!-- results view -->
+							<div class="search-results" hidden>
+								<p class="search-results-count"></p>
+								<div class="search-result-items" role="listbox"></div>
+								<a href="collections.html" class="btn search-view-all">view all results</a>
+							</div>
+							<!-- no result view -->
+							<div class="search-empty" hidden>
+								<p class="search-empty-title">No products found</p>
+								<p class="search-empty-text">Try a different word, or browse a popular search below.</p>
+								<div class="search-tags search-empty-tags"></div>
 							</div>
 						</div>
 					</div>
@@ -1801,25 +1677,6 @@
 	<!-- header end -->
 
 	<main>
-		<!-- product-breadcrumb start -->
-		<div class="product-breadcrumb">
-			<div class="container">
-				<ul class="breadcrumb">
-					<li><a href="index.html">Home</a> <span class="breadcrumb-icon">
-							<svg aria-hidden="true" focusable="false" class="icon icon-caret" viewBox="0 0 10 6">
-								<path fill-rule="evenodd" clip-rule="evenodd"
-									d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z"
-									fill="black">
-								</path>
-							</svg>
-						</span>
-					</li>
-					<li><span class="active">Product Details</span> <span class="breadcrumb-icon"></span></li>
-				</ul>
-			</div>
-		</div>
-		<!-- product-breadcrumb end -->
-
 		<!-- product section start -->
 		<section class="product-section" data-price="290" data-stock="62" data-stock-max="90">
 			<div class="container">
@@ -1950,7 +1807,7 @@
 											stroke-linecap="round" stroke-linejoin="round"></path>
 									</svg>
 								</span>
-								and 109 people purchased
+								and 109 people watching
 							</p>
 						</div>
 
@@ -2009,8 +1866,7 @@
 							</div>
 							<div class="bundle-item bundle-item-promo">
 								<span class="bundle-badge">🔥Exclusive Deal</span>
-								<input type="radio" name="bundle" value="3" id="3_bundle" data-discount="15" data-free-delivery
-									checked>
+								<input type="radio" name="bundle" value="3" id="3_bundle" data-discount="15" data-free-delivery checked>
 								<label class="bundle-label" for="3_bundle">
 									<span class="bundle-radio"></span>
 									<span class="bundle-content">
@@ -2052,37 +1908,79 @@
 							</div>
 						</div>
 
-						<!-- product-delivery-countdown start -->
-						<div class="product-delivery-countdown">
-							<div class="product-delivery-countdown-item">
-								<span class="icon">
-									<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-										<rect x="2.5" y="2.5" width="19" height="19" rx="5" stroke="currentColor" stroke-width="1.4"></rect>
-										<path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"
-											stroke-linejoin="round"></path>
-									</svg>
-								</span>
-								<div class="product-delivery-countdown-content">
-									<p class="product-delivery-countdown-label">Order in</p>
-									<p class="product-delivery-countdown-value order-countdown-timer">00 : 00 : 00</p>
+						<!-- product-buy-with start -->
+						<div class="product-buy-with">
+							<h4 class="product-buy-with-title">Buy it with</h4>
+							<label class="product-buy-with-item">
+								<input type="checkbox" class="product-buy-with-checkbox" data-id="ehans-290"
+									data-title="সুপার ক্লিনিং ন্যানো ম্যাজিক ইরেজার" data-img="./assets/images/ehans-product-290-1.jpg"
+									data-price="350">
+								<div class="product-buy-with-img">
+									<img src="./assets/images/ehans-product-290-1.jpg" alt="সুপার ক্লিনিং ন্যানো ম্যাজিক ইরেজার">
+								</div>
+								<span class="product-buy-with-name">সুপার ক্লিনিং ন্যানো ম্যাজিক ইরেজার</span>
+								<span class="product-buy-with-price">Tk 350.00</span>
+							</label>
+							<label class="product-buy-with-item">
+								<input type="checkbox" class="product-buy-with-checkbox" data-id="ehans-260"
+									data-title="দাগ ও তেল দূরকারী শক্তিশালী কিচেন ফোম স্প্রে"
+									data-img="./assets/images/ehans-product-260-1.jpg" data-price="530">
+								<div class="product-buy-with-img">
+									<img src="./assets/images/ehans-product-260-1.jpg" alt="দাগ ও তেল দূরকারী শক্তিশালী কিচেন ফোম স্প্রে">
+								</div>
+								<span class="product-buy-with-name">দাগ ও তেল দূরকারী শক্তিশালী কিচেন ফোম স্প্রে</span>
+								<span class="product-buy-with-price">Tk 530.00</span>
+							</label>
+						</div>
+						<!-- product-buy-with end -->
+
+						<!-- product-upsell start -->
+						<div class="product-upsell">
+							<h4 class="product-upsell-title-main">Complete your home care</h4>
+							<div class="product-upsell-item" data-id="ehans-263" data-variant-name="Pack" data-variants="1 Pc:450, 2 Pcs:860, 3 Pcs:1250" data-title="(6Pcs) ড্রয়ার গুছানোর প্লাস্টিক স্টোরেজ পার্টিশন" data-price="450"
+								data-previous-price="890" data-url="product.html"
+								data-images="./assets/images/ehans-product-263-1.jpg, ./assets/images/ehans-product-263-2.jpg, ./assets/images/ehans-product-263-3.jpg">
+								<div class="product-upsell-img">
+									<img src="./assets/images/ehans-product-263-1.jpg" alt="(6Pcs) ড্রয়ার গুছানোর প্লাস্টিক স্টোরেজ পার্টিশন">
+								</div>
+								<div class="product-upsell-content">
+									<p class="product-upsell-title">(6Pcs) ড্রয়ার গুছানোর প্লাস্টিক স্টোরেজ পার্টিশন</p>
+									<div class="product-upsell-bottom">
+										<p class="product-upsell-price">Tk 450.00</p>
+										<button class="btn product-upsell-btn quick-view-open" type="button">add <span>+</span></button>
+									</div>
 								</div>
 							</div>
-							<span class="product-delivery-countdown-arrow">→</span>
-							<div class="product-delivery-countdown-item">
-								<span class="icon">
-									<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-										<rect x="3" y="4.5" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.4"></rect>
-										<path d="M3 9.5h18M8 2.5v4M16 2.5v4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
-										</path>
-									</svg>
-								</span>
-								<div class="product-delivery-countdown-content">
-									<p class="product-delivery-countdown-label">Deliver at</p>
-									<p class="product-delivery-countdown-value order-shipping-day">Monday</p>
+							<div class="product-upsell-item" data-id="ehans-264" data-variant-name="Pack" data-variants="1 Pc:250, 2 Pcs:480, 3 Pcs:700" data-title="ফ্রিজ ধুলোমুক্ত রাখার কভার" data-price="250"
+								data-previous-price="500" data-url="product.html"
+								data-images="./assets/images/ehans-product-264-1.jpg, ./assets/images/ehans-product-264-2.jpg, ./assets/images/ehans-product-264-3.jpg">
+								<div class="product-upsell-img">
+									<img src="./assets/images/ehans-product-264-1.jpg" alt="ফ্রিজ ধুলোমুক্ত রাখার কভার">
+								</div>
+								<div class="product-upsell-content">
+									<p class="product-upsell-title">ফ্রিজ ধুলোমুক্ত রাখার কভার</p>
+									<div class="product-upsell-bottom">
+										<p class="product-upsell-price">Tk 250.00</p>
+										<button class="btn product-upsell-btn quick-view-open" type="button">add <span>+</span></button>
+									</div>
+								</div>
+							</div>
+							<div class="product-upsell-item" data-id="ehans-273" data-variant-name="Pack" data-variants="1 Pc:290, 2 Pcs:560, 3 Pcs:820" data-title="পিভিসি কিচেন সিলিকন ডিশ ওয়াশিং হ্যান্ড গ্লাভস" data-price="290"
+								data-previous-price="490" data-url="product.html"
+								data-images="./assets/images/ehans-product-273-1.jpg, ./assets/images/ehans-product-273-2.jpg, ./assets/images/ehans-product-273-3.jpg">
+								<div class="product-upsell-img">
+									<img src="./assets/images/ehans-product-273-1.jpg" alt="পিভিসি কিচেন সিলিকন ডিশ ওয়াশিং হ্যান্ড গ্লাভস">
+								</div>
+								<div class="product-upsell-content">
+									<p class="product-upsell-title">পিভিসি কিচেন সিলিকন ডিশ ওয়াশিং হ্যান্ড গ্লাভস</p>
+									<div class="product-upsell-bottom">
+										<p class="product-upsell-price">Tk 290.00</p>
+										<button class="btn product-upsell-btn quick-view-open" type="button">add <span>+</span></button>
+									</div>
 								</div>
 							</div>
 						</div>
-						<!-- product-delivery-countdown end -->
+						<!-- product-upsell end -->
 
 						<!-- product-tab start -->
 						<div class="product-tab">
@@ -2094,11 +1992,14 @@
 							</div>
 							<div class="product-tab-panel active" id="product-tab-description">
 								<p><strong>✨ BeeWax Furniture Polish</strong></p>
-								<p>পুরানো বা মলিন ফার্নিচারকে আবারও চকচকে ও সুন্দর দেখাতে ব্যবহার করুন BeeWax Furniture Polish। সহজে ব্যবহারযোগ্য এই পলিশ
+								<p>পুরানো বা মলিন ফার্নিচারকে আবারও চকচকে ও সুন্দর দেখাতে ব্যবহার করুন BeeWax Furniture Polish। সহজে
+									ব্যবহারযোগ্য এই পলিশ
 									ফার্নিচারের উপরিভাগে ঘষে লাগালেই কাঠের মলিনভাব কমিয়ে উজ্জ্বল ও ফ্রেশ লুক দিতে সাহায্য করে।</p>
-								<p><strong>🪑 যেসব ফার্নিচারে ব্যবহার করতে পারবেন:</strong> কাঠের ফার্নিচার, বেতের ফার্নিচার, ম্যালামাইন বোর্ড, টেবিল, চেয়ার,
+								<p><strong>🪑 যেসব ফার্নিচারে ব্যবহার করতে পারবেন:</strong> কাঠের ফার্নিচার, বেতের ফার্নিচার, ম্যালামাইন
+									বোর্ড, টেবিল, চেয়ার,
 									আলমারি ও অন্যান্য ফার্নিচার।</p>
-								<p><strong>🧽 ব্যবহার পদ্ধতি:</strong> ফার্নিচারের উপরিভাগ পরিষ্কার করে অল্প পরিমাণ পলিশ নিন। এরপর কাপড় বা উপযুক্ত প্যাড দিয়ে
+								<p><strong>🧽 ব্যবহার পদ্ধতি:</strong> ফার্নিচারের উপরিভাগ পরিষ্কার করে অল্প পরিমাণ পলিশ নিন। এরপর কাপড়
+									বা উপযুক্ত প্যাড দিয়ে
 									হালকা হাতে ভালোভাবে ঘষে লাগিয়ে দিন। প্রয়োজন অনুযায়ী আবারও পলিশ করুন।</p>
 							</div>
 							<div class="product-tab-panel" id="product-tab-specification">
@@ -2245,9 +2146,11 @@
 								<p class="buy-now-popup-product-title">বি-ওয়াক্স ফার্নিচার পলিস</p>
 								<p class="buy-now-popup-product-offer"></p>
 								<div class="buy-now-popup-quantity">
-									<button class="buy-now-popup-quantity-decrease" type="button" aria-label="decrease quantity">−</button>
+									<button class="buy-now-popup-quantity-decrease" type="button"
+										aria-label="decrease quantity">−</button>
 									<span class="buy-now-popup-quantity-count">1</span>
-									<button class="buy-now-popup-quantity-increase" type="button" aria-label="increase quantity">+</button>
+									<button class="buy-now-popup-quantity-increase" type="button"
+										aria-label="increase quantity">+</button>
 								</div>
 							</div>
 							<p class="buy-now-popup-product-price"></p>
@@ -2293,6 +2196,51 @@
 			</div>
 		</div>
 		<!-- buy-now-popup end -->
+
+		<!-- quick-view start -->
+		<div class="quick-view">
+			<span class="quick-view-close-window-btn"></span>
+			<div class="quick-view-inner">
+				<div class="quick-view-top">
+					<p class="quick-view-title"></p>
+					<button class="quick-view-close-btn" type="button" aria-label="close quick view">
+						<svg width="12" height="12" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+							<path d="M3 15L15 3M15 15L3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+						</svg>
+					</button>
+				</div>
+				<div class="quick-view-content">
+					<div class="quick-view-images-wrap">
+						<div class="quick-view-images"></div>
+						<button class="quick-view-images-btn prev" type="button" aria-label="previous image">
+							<svg width="14" height="14" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M12.5 15.5 7 10l5.5-5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+						</button>
+						<button class="quick-view-images-btn next" type="button" aria-label="next image">
+							<svg width="14" height="14" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7.5 4.5 13 10l-5.5 5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+						</button>
+					</div>
+					<p class="quick-view-vendor">Ehans Mart</p>
+					<div class="quick-view-price">
+						<p class="latest-price"></p>
+						<p class="previous-price"></p>
+					</div>
+					<div class="quick-view-variant">
+						<p class="quick-view-variant-label"><span class="name">Pack</span> <span class="value"></span></p>
+						<div class="quick-view-variant-options"></div>
+					</div>
+					<div class="quick-view-actions">
+						<div class="quick-view-quantity">
+							<button class="quick-view-quantity-decrease" type="button" aria-label="decrease quantity">−</button>
+							<span class="quick-view-quantity-count">1</span>
+							<button class="quick-view-quantity-increase" type="button" aria-label="increase quantity">+</button>
+						</div>
+						<button class="btn quick-view-add-btn" type="button">add to cart</button>
+					</div>
+					<a href="product.html" class="btn quick-view-details-btn">view details <span>→</span></a>
+				</div>
+			</div>
+		</div>
+		<!-- quick-view end -->
 
 		<!-- product-slider-modal start -->
 		<div class="product-slider-modal">
@@ -2570,6 +2518,7 @@
 							<div class="card-slider-item">
 								<div class="product-card card_hover">
 									<div class="card-image-wrap">
+										<span class="card-badge">- 19%</span>
 										<div class="card-rattings">
 											<span class="icon">
 												<svg viewBox="0 0 16 16" fill="none" aria-hidden="true" class="pdp-star-icon is-filled">
@@ -2599,7 +2548,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk2200</p>
 											<p class="latest-price">tk1870</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2641,7 +2589,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk2200</p>
 											<p class="latest-price">tk1870</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2683,7 +2630,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk2200</p>
 											<p class="latest-price">tk1870</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2696,6 +2642,7 @@
 							<div class="card-slider-item">
 								<div class="product-card card_hover">
 									<div class="card-image-wrap">
+										<span class="card-badge">- 19%</span>
 										<div class="card-rattings">
 											<span class="icon">
 												<svg viewBox="0 0 16 16" fill="none" aria-hidden="true" class="pdp-star-icon is-filled">
@@ -2725,7 +2672,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk2200</p>
 											<p class="latest-price">tk1870</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2751,8 +2697,7 @@
 										</div>
 										<div class="card-img">
 											<a class="main-img" href="product.html">
-												<img class="card_img" src="./assets/images/ehans-product-279-1.jpg"
-													alt="লাভ বো স্প্রিং ক্লিপ">
+												<img class="card_img" src="./assets/images/ehans-product-279-1.jpg" alt="লাভ বো স্প্রিং ক্লিপ">
 											</a>
 											<a class="hover-img" href="product.html">
 												<img class="card_hover_img" src="./assets/images/ehans-product-279-2.jpg"
@@ -2767,7 +2712,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk1200</p>
 											<p class="latest-price">tk870</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2809,7 +2753,6 @@
 										<div class="card-price-wrap">
 											<p class="previous-price">tk1200</p>
 											<p class="latest-price">tk1070</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2827,17 +2770,21 @@
 		<!-- card-slider section end-->
 
 		<!-- card-slider section start-->
-		<section class="card-slider-section section-bg">
+		<section class="explore-slider-section">
 			<div class="container">
 				<div class="card-slider-section-heading">
 					<h2 class="title">Recently Viewed Products</h2>
+					<div class="card-slider-section-btn">
+						<a href="#!" class="btn">Explore more</a>
+					</div>
 				</div>
-				<div class="swiper card-slider">
+				<div class="swiper explore-slider">
 					<div class="swiper-wrapper">
 						<div class="swiper-slide">
 							<div class="card-slider-item">
 								<div class="product-card card_hover">
 									<div class="card-image-wrap">
+										<span class="card-badge">- 19%</span>
 										<div class="card-rattings">
 											<span class="icon">
 												<svg viewBox="0 0 16 16" fill="none" aria-hidden="true" class="pdp-star-icon is-filled">
@@ -2851,23 +2798,22 @@
 										</div>
 										<div class="card-img">
 											<a class="main-img" href="product.html">
-												<img class="card_img" src="./assets/images/ehans-product-281-1.jpg"
-													alt="বাটারফ্লাই ফেয়ারি হেয়ার ক্লিপ">
+												<img class="card_img" src="./assets/images/ehans-product-269-1.jpg"
+													alt="কিচেন ফেস প্রোটেকশন মাস্ক">
 											</a>
 											<a class="hover-img" href="product.html">
-												<img class="card_hover_img" src="./assets/images/ehans-product-281-2.jpg"
-													alt="বাটারফ্লাই ফেয়ারি হেয়ার ক্লিপ">
+												<img class="card_hover_img" src="./assets/images/ehans-product-269-2.jpg"
+													alt="কিচেন ফেস প্রোটেকশন মাস্ক">
 											</a>
 										</div>
 									</div>
 									<div class="card-content">
 										<div class="card-title-wrap">
-											<a href="product.html" class="card-title">বাটারফ্লাই ফেয়ারি হেয়ার ক্লিপ</a>
+											<a href="product.html" class="card-title">কিচেন ফেস প্রোটেকশন মাস্ক</a>
 										</div>
 										<div class="card-price-wrap">
 											<p class="previous-price">tk2200</p>
 											<p class="latest-price">tk1870</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2893,23 +2839,22 @@
 										</div>
 										<div class="card-img">
 											<a class="main-img" href="product.html">
-												<img class="card_img" src="./assets/images/ehans-product-283-1.jpg"
-													alt="লিলি ফুল প্রিন্সেস বো হেয়ার ক্লিপ">
+												<img class="card_img" src="./assets/images/ehans-product-287-1.jpg"
+													alt="রেগুলার কিচেন এপ্রোন">
 											</a>
 											<a class="hover-img" href="product.html">
-												<img class="card_hover_img" src="./assets/images/ehans-product-283-2.jpg"
-													alt="লিলি ফুল প্রিন্সেস বো হেয়ার ক্লিপ">
+												<img class="card_hover_img" src="./assets/images/ehans-product-287-2.jpg"
+													alt="রেগুলার কিচেন এপ্রোন">
 											</a>
 										</div>
 									</div>
 									<div class="card-content">
 										<div class="card-title-wrap">
-											<a href="product.html" class="card-title">লিলি ফুল প্রিন্সেস বো হেয়ার ক্লিপ</a>
+											<a href="product.html" class="card-title">রেগুলার কিচেন এপ্রোন</a>
 										</div>
 										<div class="card-price-wrap">
 											<p class="previous-price">tk2200</p>
 											<p class="latest-price">tk1870</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2935,23 +2880,64 @@
 										</div>
 										<div class="card-img">
 											<a class="main-img" href="product.html">
-												<img class="card_img" src="./assets/images/ehans-product-285-1.jpg"
-													alt="হেয়ার অয়েল অ্যাপ্লিকেটর চিরুনি">
+												<img class="card_img" src="./assets/images/ehans-product-274-1.jpg"
+													alt="প্রিমিয়াম কিচেন এপ্রোন">
 											</a>
 											<a class="hover-img" href="product.html">
-												<img class="card_hover_img" src="./assets/images/ehans-product-285-2.jpg"
-													alt="হেয়ার অয়েল অ্যাপ্লিকেটর চিরুনি">
+												<img class="card_hover_img" src="./assets/images/ehans-product-274-2.jpg"
+													alt="প্রিমিয়াম কিচেন এপ্রোন">
 											</a>
 										</div>
 									</div>
 									<div class="card-content">
 										<div class="card-title-wrap">
-											<a href="product.html" class="card-title">হেয়ার অয়েল অ্যাপ্লিকেটর চিরুনি</a>
+											<a href="product.html" class="card-title">প্রিমিয়াম কিচেন এপ্রোন</a>
 										</div>
 										<div class="card-price-wrap">
 											<p class="previous-price">tk2200</p>
 											<p class="latest-price">tk1870</p>
-											<span class="card-badge">- 19%</span>
+										</div>
+										<div class="card-btn">
+											<a href="#!" class="btn">add to cart</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="swiper-slide">
+							<div class="card-slider-item">
+								<div class="product-card card_hover">
+									<div class="card-image-wrap">
+										<span class="card-badge">- 19%</span>
+										<div class="card-rattings">
+											<span class="icon">
+												<svg viewBox="0 0 16 16" fill="none" aria-hidden="true" class="pdp-star-icon is-filled">
+													<path
+														d="M8 1.333l2.06 4.174 4.607.67-3.333 3.249.786 4.587L8 11.846l-4.12 2.167.787-4.587L1.333 6.177l4.607-.67L8 1.333Z"
+														fill="currentColor"></path>
+												</svg>
+											</span>
+											<span class="rattings-count">4.8</span>
+											<span class="rattings-number">(495 +)</span>
+										</div>
+										<div class="card-img">
+											<a class="main-img" href="product.html">
+												<img class="card_img" src="./assets/images/ehans-product-293-1.jpg"
+													alt="২ ইন ১ স্মার্ট অয়েল ডিসপেনসার বোতল">
+											</a>
+											<a class="hover-img" href="product.html">
+												<img class="card_hover_img" src="./assets/images/ehans-product-293-2.jpg"
+													alt="২ ইন ১ স্মার্ট অয়েল ডিসপেনসার বোতল">
+											</a>
+										</div>
+									</div>
+									<div class="card-content">
+										<div class="card-title-wrap">
+											<a href="product.html" class="card-title">২ ইন ১ স্মার্ট অয়েল ডিসপেনসার বোতল</a>
+										</div>
+										<div class="card-price-wrap">
+											<p class="previous-price">tk2200</p>
+											<p class="latest-price">tk1870</p>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -2977,65 +2963,22 @@
 										</div>
 										<div class="card-img">
 											<a class="main-img" href="product.html">
-												<img class="card_img" src="./assets/images/ehans-product-294-1.jpg"
-													alt="কানের দুলের সাপোর্ট স্টিকার">
+												<img class="card_img" src="./assets/images/ehans-product-260-1.jpg"
+													alt="দাগ ও তেল দূরকারী শক্তিশালী কিচেন ফোম স্প্রে">
 											</a>
 											<a class="hover-img" href="product.html">
-												<img class="card_hover_img" src="./assets/images/ehans-product-294-2.jpg"
-													alt="কানের দুলের সাপোর্ট স্টিকার">
+												<img class="card_hover_img" src="./assets/images/ehans-product-260-2.jpg"
+													alt="দাগ ও তেল দূরকারী শক্তিশালী কিচেন ফোম স্প্রে">
 											</a>
 										</div>
 									</div>
 									<div class="card-content">
 										<div class="card-title-wrap">
-											<a href="product.html" class="card-title">কানের দুলের সাপোর্ট স্টিকার</a>
-										</div>
-										<div class="card-price-wrap">
-											<p class="previous-price">tk2200</p>
-											<p class="latest-price">tk1870</p>
-											<span class="card-badge">- 19%</span>
-										</div>
-										<div class="card-btn">
-											<a href="#!" class="btn">add to cart</a>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="swiper-slide">
-							<div class="card-slider-item">
-								<div class="product-card card_hover">
-									<div class="card-image-wrap">
-										<div class="card-rattings">
-											<span class="icon">
-												<svg viewBox="0 0 16 16" fill="none" aria-hidden="true" class="pdp-star-icon is-filled">
-													<path
-														d="M8 1.333l2.06 4.174 4.607.67-3.333 3.249.786 4.587L8 11.846l-4.12 2.167.787-4.587L1.333 6.177l4.607-.67L8 1.333Z"
-														fill="currentColor"></path>
-												</svg>
-											</span>
-											<span class="rattings-count">4.8</span>
-											<span class="rattings-number">(495 +)</span>
-										</div>
-										<div class="card-img">
-											<a class="main-img" href="product.html">
-												<img class="card_img" src="./assets/images/ehans-product-298-1.jpg"
-													alt="V-Shape ফেস মাস্ক">
-											</a>
-											<a class="hover-img" href="product.html">
-												<img class="card_hover_img" src="./assets/images/ehans-product-298-2.jpg"
-													alt="V-Shape ফেস মাস্ক">
-											</a>
-										</div>
-									</div>
-									<div class="card-content">
-										<div class="card-title-wrap">
-											<a href="product.html" class="card-title">V-Shape ফেস মাস্ক</a>
+											<a href="product.html" class="card-title">দাগ ও তেল দূরকারী শক্তিশালী কিচেন ফোম স্প্রে</a>
 										</div>
 										<div class="card-price-wrap">
 											<p class="previous-price">tk1200</p>
 											<p class="latest-price">tk870</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -3061,23 +3004,22 @@
 										</div>
 										<div class="card-img">
 											<a class="main-img" href="product.html">
-												<img class="card_img" src="./assets/images/ehans-product-296-1.jpg"
-													alt="প্রিমিয়াম মাউস ট্র্যাপ">
+												<img class="card_img" src="./assets/images/ehans-product-273-1.jpg"
+													alt="পিভিসি কিচেন সিলিকন ডিশ ওয়াশিং হ্যান্ড গ্লাভস">
 											</a>
 											<a class="hover-img" href="product.html">
-												<img class="card_hover_img" src="./assets/images/ehans-product-296-2.jpg"
-													alt="প্রিমিয়াম মাউস ট্র্যাপ">
+												<img class="card_hover_img" src="./assets/images/ehans-product-273-2.jpg"
+													alt="পিভিসি কিচেন সিলিকন ডিশ ওয়াশিং হ্যান্ড গ্লাভস">
 											</a>
 										</div>
 									</div>
 									<div class="card-content">
 										<div class="card-title-wrap">
-											<a href="product.html" class="card-title">প্রিমিয়াম মাউস ট্র্যাপ</a>
+											<a href="product.html" class="card-title">পিভিসি কিচেন সিলিকন ডিশ ওয়াশিং হ্যান্ড গ্লাভস</a>
 										</div>
 										<div class="card-price-wrap">
 											<p class="previous-price">tk1200</p>
 											<p class="latest-price">tk1070</p>
-											<span class="card-badge">- 19%</span>
 										</div>
 										<div class="card-btn">
 											<a href="#!" class="btn">add to cart</a>
@@ -3087,9 +3029,8 @@
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="card-slider-section-btn">
-					<a href="#!" class="btn">View All products</a>
+					<div class="explore-slider-button-next swiper-button-next"></div>
+					<div class="explore-slider-button-prev swiper-button-prev"></div>
 				</div>
 			</div>
 		</section>
@@ -3260,13 +3201,26 @@
 				</div>
 				<div class="sticky-prduct-content">
 					<p class="sticky-add-to-cart-title">বি-ওয়াক্স ফার্নিচার পলিস</p>
-					<div class="sticky-prduct-price">
-						<p class="previous-price">Tk 490.00</p>
-						<p class="latest-price">Tk 290.00</p>
-					</div>
+					<p class="sticky-add-to-cart-variant"></p>
 				</div>
-				<div class="sticky-bar-btn-wrap">
-					<button class="btn sticky-add-to-cart-btn" type="button"><span>add to cart</span></button>
+				<div class="sticky-add-to-cart-purchase">
+					<div class="sticky-prduct-price">
+						<p class="latest-price">Tk 290.00</p>
+						<p class="previous-price">Tk 490.00</p>
+					</div>
+					<div class="sticky-quantity">
+						<button class="sticky-quantity-decrease" type="button" aria-label="decrease quantity">−</button>
+						<input class="sticky-quantity-input" type="number" min="1" value="1" inputmode="numeric" aria-label="quantity">
+						<button class="sticky-quantity-increase" type="button" aria-label="increase quantity">+</button>
+					</div>
+					<div class="sticky-bar-btn-wrap">
+						<button class="btn sticky-add-to-cart-btn" type="button">
+							<span class="btn-label">
+								<span class="btn-label-text">add to cart</span>
+								<span class="btn-label-text" aria-hidden="true">add to cart</span>
+							</span>
+						</button>
+					</div>
 				</div>
 			</div>
 		</section>

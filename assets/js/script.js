@@ -40,57 +40,372 @@ document.querySelectorAll(".search-roller").forEach((roller) => {
 });
 // navbar search roller js end --
 
-// navbar sticky search js start----
-let lastScroll = 0;
-
-window.addEventListener("load", handleScroll);
-window.addEventListener("scroll", handleScroll);
-
-function handleScroll() {
-  const scrolling = window.scrollY;
+// smart sticky header js start ---
+// scroll down → announce bar + header hide
+// scroll up a little → only header shows
+// at the very top → announce bar + header show
+(() => {
   const header = document.querySelector(".header");
-  const home_nav_active = document.querySelector(".home-nav-active");
+  if (!header) return;
 
-  lastScroll = scrolling;
+  const announce = document.querySelector(".announcebar-section");
 
-  if ((scrolling > 80) & header.classList.contains("home-nav-active")) {
-    home_nav_active.classList.add("home-nav");
-  } else if ((scrolling < 80) & header.classList.contains("home-nav-active")) {
-    home_nav_active.classList.remove("home-nav");
-  }
-}
-// navbar sticky search js end----
+  // header uses transform, so fixed popups inside it would be trapped in the header box.
+  // move them to body so they cover the full screen and sit above the announce bar
+  header
+    .querySelectorAll(".search-bar-wrap, .mobile-menu-wrap")
+    .forEach((popup) => document.body.appendChild(popup));
+  const root = document.documentElement;
+  const showAfterUp = 10; // px of upward scroll before header shows
+  const topZone = 5; // px from top that counts as "at top"
+
+  // body has `transition: all 2s` in main.css, padding must apply instantly
+  document.body.style.transition = "all ease 2s, padding-top 0s";
+
+  // both bars are fixed, so give the page the same space on top
+  const setSizes = () => {
+    const announceH = announce ? announce.offsetHeight : 0;
+    root.style.setProperty("--announce-h", `${announceH}px`);
+    root.style.setProperty("--header-h", `${header.offsetHeight}px`);
+    document.body.style.paddingTop = `${announceH + header.offsetHeight}px`;
+  };
+
+  setSizes();
+  window.addEventListener("resize", setSizes, { passive: true });
+  window.addEventListener("load", setSizes);
+
+  let lastY = window.scrollY;
+  let upDistance = 0;
+
+  const onScroll = () => {
+    const y = window.scrollY;
+    const diff = y - lastY;
+    lastY = y;
+
+    // keep bars as they are while a popup / drawer is open
+    if (document.body.classList.contains("active")) return;
+
+    if (y <= topZone) {
+      root.classList.remove("page-scroll-down", "page-scroll-up");
+      upDistance = 0;
+    } else if (diff > 0) {
+      root.classList.add("page-scroll-down");
+      root.classList.remove("page-scroll-up");
+      upDistance = 0;
+    } else if (diff < 0) {
+      upDistance -= diff;
+      if (upDistance >= showAfterUp) {
+        root.classList.add("page-scroll-up");
+        root.classList.remove("page-scroll-down");
+      }
+    }
+  };
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+})();
+// smart sticky header js end ---
 
 // navbar search open js start ---
-document.addEventListener("click", function (e) {
-  // Close Search
-  if (
-    e.target.closest(".search-bar-close") ||
-    e.target.closest(".search-bar-window-cls-btn")
-  ) {
-    document.querySelector(".search-bar-wrap")?.classList.remove("active");
-    document.body.classList.remove("active");
-    return;
-  }
+// product list used by search (bangla title + english tags for english search)
+const searchProducts = [
+  { id: 286, title: "কিউট বেবি ক্যাপ", category: "Baby Care", price: 600, oldPrice: 0, tags: "baby cap hat" },
+  { id: 243, title: "শিশুর মাথার সুরক্ষায় বেবি সেফটি হেলমেট", category: "Baby Care", price: 350, oldPrice: 590, tags: "baby safety helmet head" },
+  { id: 244, title: "শিশু কোলে নেওয়ার আরামদায়ক মাল্টি-ফাংশনাল কেরিয়ার ব্যাগ", category: "Baby Care", price: 750, oldPrice: 1100, tags: "baby carrier sling bag" },
+  { id: 251, title: "শিশুদের রোদ থেকে রক্ষার সান হ্যাট (টুপি)", category: "Baby Care", price: 450, oldPrice: 990, tags: "kids sun hat cap" },
+  { id: 252, title: "বাচ্চাদের নিরাপদ ভ্রমণের জন্য বেবি রাইডিং সেফটি বেল্ট", category: "Baby Care", price: 890, oldPrice: 990, tags: "baby riding safety belt harness" },
+  { id: 253, title: "বাচ্চাদের প্রিমিয়াম কোয়ালিটির টিফিন বক্স", category: "Baby Care", price: 1250, oldPrice: 1800, tags: "kids tiffin lunch box" },
+  { id: 277, title: "গাছের ডালপালা কাটিং টুল", category: "Garden & Outdoor", price: 240, oldPrice: 350, tags: "garden branch cutter pruner tool scissor" },
+  { id: 296, title: "প্রিমিয়াম মাউস ট্র্যাপ", category: "Home & Kitchen", price: 480, oldPrice: 0, tags: "mouse trap rat" },
+  { id: 290, title: "সুপার ক্লিনিং ন্যানো ম্যাজিক ইরেজার", category: "Home & Kitchen", price: 350, oldPrice: 0, tags: "magic eraser cleaning sponge" },
+  { id: 269, title: "কিচেন ফেস প্রোটেকশন মাস্ক", category: "Home & Kitchen", price: 450, oldPrice: 780, tags: "kitchen face mask shield" },
+  { id: 255, title: "ডোর ফোম - বাতাস, শব্দ ও পোকামাকড় প্রতিরোধক", category: "Home & Kitchen", price: 100, oldPrice: 220, tags: "door foam draft stopper" },
+  { id: 292, title: "বি-ওয়াক্স ফার্নিচার পলিস", category: "Home & Kitchen", price: 480, oldPrice: 0, tags: "beewax furniture polish wax wood" },
+  { id: 256, title: "আটোমেটিক দরজা বা জানালা বন্ধ করার ডিভাইস", category: "Home & Kitchen", price: 480, oldPrice: 790, tags: "automatic door closer" },
+  { id: 267, title: "প্রিমিয়াম রেফ্রিজারেটর চাইল্ড লক", category: "Home & Kitchen", price: 350, oldPrice: 550, tags: "fridge refrigerator child lock" },
+  { id: 287, title: "রেগুলার কিচেন এপ্রোন", category: "Home & Kitchen", price: 280, oldPrice: 400, tags: "kitchen apron" },
+  { id: 264, title: "ফ্রিজ ধুলোমুক্ত রাখার কভার", category: "Home & Kitchen", price: 250, oldPrice: 500, tags: "fridge cover dust" },
+  { id: 274, title: "প্রিমিয়াম কিচেন এপ্রোন", category: "Home & Kitchen", price: 500, oldPrice: 1250, tags: "premium kitchen apron" },
+  { id: 293, title: "২ ইন ১ স্মার্ট অয়েল ডিসপেনসার বোতল", category: "Home & Kitchen", price: 450, oldPrice: 650, tags: "oil dispenser bottle spray" },
+  { id: 260, title: "দাগ ও তেল দূরকারী শক্তিশালী কিচেন ফোম স্প্রে", category: "Home & Kitchen", price: 530, oldPrice: 790, tags: "kitchen foam cleaner spray" },
+  { id: 263, title: "(6Pcs) ড্রয়ার গুছানোর প্লাস্টিক স্টোরেজ পার্টিশন", category: "Home & Kitchen", price: 450, oldPrice: 890, tags: "drawer organizer partition storage" },
+  { id: 271, title: "মাল্টি-ফাংশনাল ক্যাবিনেট ও রেফ্রিজারেটর লক", category: "Home & Kitchen", price: 450, oldPrice: 900, tags: "cabinet fridge lock" },
+  { id: 273, title: "পিভিসি কিচেন সিলিকন ডিশ ওয়াশিং হ্যান্ড গ্লাভস", category: "Home & Kitchen", price: 290, oldPrice: 490, tags: "kitchen gloves dish washing" },
+  { id: 284, title: "সাদা চুল ঢাকার সহজ সমাধান", category: "Man’s Essentials", price: 380, oldPrice: 650, tags: "hair color white hair cover" },
+  { id: 298, title: "V-Shape ফেস মাস্ক", category: "Women’s Essentials", price: 380, oldPrice: 0, tags: "v shape face mask lifting" },
+  { id: 272, title: "ফেসিয়াল কটন থ্রেড হেয়ার রিমুভার", category: "Women’s Essentials", price: 480, oldPrice: 1200, tags: "facial thread hair remover" },
+  { id: 283, title: "লিলি ফুল প্রিন্সেস বো হেয়ার ক্লিপ", category: "Women’s Essentials", price: 550, oldPrice: 650, tags: "lily bow hair clip" },
+  { id: 294, title: "কানের দুলের সাপোর্ট স্টিকার", category: "Women’s Essentials", price: 350, oldPrice: 0, tags: "earring support sticker" },
+  { id: 285, title: "হেয়ার অয়েল অ্যাপ্লিকেটর চিরুনি", category: "Women’s Essentials", price: 380, oldPrice: 650, tags: "hair oil applicator comb" },
+  { id: 278, title: "লাল টিউলিপ বো হেয়ার ক্লিপ", category: "Women’s Essentials", price: 600, oldPrice: 750, tags: "red tulip bow hair clip" },
+  { id: 268, title: "সেফটিপিন বিহীন প্রিমিয়াম কাপড় ক্লিপিং গান", category: "Women’s Essentials", price: 980, oldPrice: 1650, tags: "clothing tag gun" },
+  { id: 279, title: "লাভ বো স্প্রিং ক্লিপ", category: "Women’s Essentials", price: 430, oldPrice: 550, tags: "love bow spring clip" },
+  { id: 280, title: "ক্রিস্টাল বাটারফ্লাই ট্যাসেল হেয়ারপিন", category: "Women’s Essentials", price: 650, oldPrice: 850, tags: "butterfly crystal tassel hairpin" },
+  { id: 281, title: "বাটারফ্লাই ফেয়ারি হেয়ার ক্লিপ", category: "Women’s Essentials", price: 550, oldPrice: 850, tags: "butterfly fairy hair clip" },
+];
 
-  // Open Search
-  if (e.target.closest(".navbar-search-open-btn")) {
-    document.querySelector(".search-bar-wrap")?.classList.add("active");
-    document.body.classList.add("active");
-  }
-});
+const searchCategories = [
+  ["Baby Care", "baby-care"],
+  ["Home & Kitchen", "home-kitchen"],
+  ["Garden & Outdoor", "garden-outdoor"],
+  ["Tools", "tools"],
+  ["Lifestyle", "lifestyle"],
+  ["Women’s Essentials", "womens-essentials"],
+  ["Man’s Essentials", "mens-essentials"],
+  ["Hair Accessories", "hair-accessories"],
+];
 
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    // Remove active from search wrap
-    document.querySelectorAll(".search-bar-wrap.active").forEach((el) => {
-      el.classList.remove("active");
+const searchPopular = ["apron", "hair clip", "fridge", "baby safety", "kitchen", "face mask"];
+
+(() => {
+  const wrap = document.querySelector(".search-bar-wrap");
+  if (!wrap) return;
+
+  const input = wrap.querySelector(".search-input");
+  const clearBtn = wrap.querySelector(".search-input-clear");
+  const form = wrap.querySelector(".search-form");
+  const defaultView = wrap.querySelector(".search-default");
+  const resultsView = wrap.querySelector(".search-results");
+  const emptyView = wrap.querySelector(".search-empty");
+  const resultItems = wrap.querySelector(".search-result-items");
+  const resultCount = wrap.querySelector(".search-results-count");
+  const recentBlock = wrap.querySelector(".search-recent");
+  const recentTags = wrap.querySelector(".search-recent-tags");
+  const recentKey = "ehans-mart-recent-search";
+  const maxResults = 6;
+
+  const esc = (text) =>
+    String(text).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+  const money = (n) =>
+    "Tk " +
+    Number(n).toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
     });
+  const normalize = (text) => String(text).toLowerCase().trim();
+  const imgOf = (p) => `./assets/images/ehans-product-${p.id}-1.jpg`;
 
-    // Remove active from body
+  const tagIcon =
+    '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M7.3 12.7a5.3 5.3 0 1 0 0-10.7 5.3 5.3 0 0 0 0 10.7ZM14 14l-2.9-2.9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+  const clockIcon =
+    '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.2" stroke="currentColor" stroke-width="1.4"/><path d="M8 4.8V8l2.2 1.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
+  const cartIcon =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L21 8H6"/></svg>';
+
+  const tagButtons = (list, icon) =>
+    list
+      .map((t) => `<button type="button" data-search="${esc(t)}">${icon}${esc(t)}</button>`)
+      .join("");
+
+  // recent searches (saved in browser)
+  const getRecent = () => {
+    try {
+      return JSON.parse(localStorage.getItem(recentKey)) || [];
+    } catch (e) {
+      return [];
+    }
+  };
+
+  const saveRecent = (term) => {
+    term = term.trim();
+    if (term.length < 2) return;
+    const list = [term, ...getRecent().filter((t) => normalize(t) !== normalize(term))].slice(0, 6);
+    try {
+      localStorage.setItem(recentKey, JSON.stringify(list));
+    } catch (e) {}
+  };
+
+  const renderRecent = () => {
+    const list = getRecent();
+    recentBlock.hidden = list.length === 0;
+    recentTags.innerHTML = tagButtons(list, clockIcon);
+  };
+
+  // default view content
+  wrap.querySelector(".search-popular-tags").innerHTML = tagButtons(searchPopular, tagIcon);
+  wrap.querySelector(".search-empty-tags").innerHTML = tagButtons(searchPopular, tagIcon);
+  wrap.querySelector(".search-categories").innerHTML = searchCategories
+    .map(
+      ([name, file]) => `
+      <a href="collections.html" class="search-category" data-search="${esc(name)}">
+        <div class="search-category-img"><img src="./assets/images/category-${file}.jpg" alt="${esc(name)}" loading="lazy"></div>
+        <div class="search-category-content"><p class="title">${esc(name)}</p></div>
+      </a>`,
+    )
+    .join("");
+
+  // every typed word must match title / category / tags
+  const findProducts = (query) => {
+    const words = normalize(query).split(/\s+/).filter(Boolean);
+    return searchProducts
+      .map((p) => {
+        const title = normalize(p.title);
+        const text = `${title} ${normalize(p.category)} ${normalize(p.tags)}`;
+        if (!words.every((w) => text.includes(w))) return null;
+        const score = words.reduce((s, w) => s + (title.includes(w) ? 2 : 1), 0);
+        return { p, score };
+      })
+      .filter(Boolean)
+      .sort((a, b) => b.score - a.score)
+      .map((r) => r.p);
+  };
+
+  const highlight = (title, query) => {
+    let html = esc(title);
+    normalize(query)
+      .split(/\s+/)
+      .filter(Boolean)
+      .forEach((w) => {
+        const safe = esc(w).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        html = html.replace(new RegExp(`(${safe})`, "gi"), "<mark>$1</mark>");
+      });
+    return html;
+  };
+
+  let focusIndex = -1;
+
+  const showView = (view) => {
+    defaultView.hidden = view !== "default";
+    resultsView.hidden = view !== "results";
+    emptyView.hidden = view !== "empty";
+  };
+
+  const render = () => {
+    const query = input.value.trim();
+    clearBtn.hidden = query.length === 0;
+    focusIndex = -1;
+
+    if (!query) {
+      renderRecent();
+      showView("default");
+      return;
+    }
+
+    const found = findProducts(query);
+    if (!found.length) {
+      showView("empty");
+      return;
+    }
+
+    resultCount.innerHTML = `<strong>${found.length}</strong> product${found.length > 1 ? "s" : ""} found for “${esc(query)}”`;
+    resultItems.innerHTML = found
+      .slice(0, maxResults)
+      .map((p) => {
+        const off = p.oldPrice > p.price ? Math.round((1 - p.price / p.oldPrice) * 100) : 0;
+        return `
+        <a href="product.html" class="search-result-item" role="option" data-id="${p.id}">
+          <div class="search-result-img"><img src="${imgOf(p)}" alt="${esc(p.title)}" loading="lazy"></div>
+          <div class="search-result-content">
+            <p class="search-result-category">${esc(p.category)}</p>
+            <p class="search-result-title">${highlight(p.title, query)}</p>
+            <div class="search-result-price">
+              <span class="curr">${money(p.price)}</span>
+              ${off ? `<span class="prev">${money(p.oldPrice)}</span><span class="off">-${off}%</span>` : ""}
+            </div>
+          </div>
+          <button class="search-result-add" type="button" aria-label="add to cart">${cartIcon}</button>
+        </a>`;
+      })
+      .join("");
+    showView("results");
+  };
+
+  // debounce typing
+  let typingTimer = 0;
+  input.addEventListener("input", () => {
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(render, 120);
+  });
+
+  const setQuery = (term) => {
+    input.value = term;
+    render();
+    input.focus();
+  };
+
+  clearBtn.addEventListener("click", () => setQuery(""));
+
+  wrap.querySelector(".search-recent-clear").addEventListener("click", () => {
+    try {
+      localStorage.removeItem(recentKey);
+    } catch (e) {}
+    renderRecent();
+  });
+
+  // tags & categories fill the search box
+  wrap.addEventListener("click", (e) => {
+    const tag = e.target.closest("[data-search]");
+    if (!tag || !wrap.contains(tag)) return;
+    e.preventDefault();
+    setQuery(tag.dataset.search);
+  });
+
+  // result: cart button adds to cart, item click saves recent search
+  resultItems.addEventListener("click", (e) => {
+    const item = e.target.closest(".search-result-item");
+    if (!item) return;
+    const addBtn = e.target.closest(".search-result-add");
+    saveRecent(input.value);
+
+    if (addBtn) {
+      e.preventDefault();
+      const p = searchProducts.find((x) => String(x.id) === item.dataset.id);
+      addItemToCart({
+        id: `ehans-${p.id}`,
+        title: p.title,
+        img: imgOf(p),
+        price: p.price,
+        url: "product.html",
+      });
+      addBtn.classList.add("added");
+      setTimeout(() => addBtn.classList.remove("added"), 1200);
+    }
+  });
+
+  // keyboard: ↑ ↓ to move, Enter to open
+  input.addEventListener("keydown", (e) => {
+    const items = [...resultItems.querySelectorAll(".search-result-item")];
+    if (resultsView.hidden || !items.length) return;
+    if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+
+    e.preventDefault();
+    focusIndex = (focusIndex + (e.key === "ArrowDown" ? 1 : -1) + items.length) % items.length;
+    items.forEach((el, i) => el.classList.toggle("focused", i === focusIndex));
+    items[focusIndex].scrollIntoView({ block: "nearest" });
+  });
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const items = [...resultItems.querySelectorAll(".search-result-item")];
+    if (resultsView.hidden || !items.length) return;
+    saveRecent(input.value);
+    window.location.href = items[Math.max(focusIndex, 0)].getAttribute("href");
+  });
+
+  // open / close
+  const openSearch = () => {
+    wrap.classList.add("active");
+    document.body.classList.add("active");
+    render();
+    setTimeout(() => input.focus(), 150);
+  };
+
+  const closeSearch = () => {
+    wrap.classList.remove("active");
     document.body.classList.remove("active");
-  }
-});
+  };
+
+  document.addEventListener("click", (e) => {
+    if (e.target.closest(".search-bar-close") || e.target.closest(".search-bar-window-cls-btn")) {
+      closeSearch();
+      return;
+    }
+    if (e.target.closest(".navbar-search-open-btn")) openSearch();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && wrap.classList.contains("active")) closeSearch();
+  });
+})();
 // navbar search open js end ---
 
 // mobile-menu sidebar js start---
@@ -275,7 +590,7 @@ var swiper = new Swiper(".category-slider", {
 
 // card slider js start--
 var swiper = new Swiper(".explore-slider", {
-  slidesPerView: 4,
+  slidesPerView: 5,
   centeredSlides: false,
   spaceBetween: 10,
   grabCursor: true,
@@ -301,6 +616,10 @@ var swiper = new Swiper(".explore-slider", {
     },
     993: {
       slidesPerView: 4,
+      spaceBetween: 10,
+    },
+    1200: {
+      slidesPerView: 5,
       spaceBetween: 10,
     },
   },
@@ -627,7 +946,10 @@ const formatPrice = (price) =>
   const stock = Number(productSection.dataset.stock);
   const stockMax = Number(productSection.dataset.stockMax) || stock;
 
-  stockBar.style.setProperty("--stock", `${Math.min(100, (stock / stockMax) * 100)}%`);
+  stockBar.style.setProperty(
+    "--stock",
+    `${Math.min(100, (stock / stockMax) * 100)}%`,
+  );
 })();
 // product-stock js end--
 
@@ -645,13 +967,16 @@ const formatPrice = (price) =>
     const fullPrice = price * quantity;
     const totalPrice = fullPrice * (1 - discount / 100);
 
-    item.querySelector(".bundle-total-price").textContent = formatPrice(totalPrice);
+    item.querySelector(".bundle-total-price").textContent =
+      formatPrice(totalPrice);
 
     const previousPrice = item.querySelector(".bundle-previous-price");
-    if (previousPrice && discount) previousPrice.textContent = formatPrice(fullPrice);
+    if (previousPrice && discount)
+      previousPrice.textContent = formatPrice(fullPrice);
 
     const singlePrice = item.querySelector(".bundle-single-price");
-    if (singlePrice && quantity > 1) singlePrice.textContent = `${formatPrice(totalPrice / quantity)}/Pcs`;
+    if (singlePrice && quantity > 1)
+      singlePrice.textContent = `${formatPrice(totalPrice / quantity)}/Pcs`;
   });
 })();
 
@@ -804,9 +1129,12 @@ const getProductPageItem = () => {
   const productSection = document.querySelector(".product-section");
   const quantity = getBundleQuantity();
   const offer = getBundleOffer(quantity);
-  const unitPrice = Number(productSection.dataset.price) * (1 - offer.discount / 100);
+  const unitPrice =
+    Number(productSection.dataset.price) * (1 - offer.discount / 100);
   const title = document.querySelector(".product-title").textContent.trim();
-  const img = document.querySelector(".product-slider .swiper-slide:not(.swiper-slide-duplicate) img");
+  const img = document.querySelector(
+    ".product-slider .swiper-slide:not(.swiper-slide-duplicate) img",
+  );
 
   return {
     item: {
@@ -821,13 +1149,30 @@ const getProductPageItem = () => {
 };
 
 document
-  .querySelectorAll(".product-add-to-cart-btn, .sticky-add-to-cart-section .btn")
+  .querySelectorAll(".product-add-to-cart-btn")
   .forEach((btn) => {
     btn.addEventListener("click", (event) => {
       const { item, quantity } = getProductPageItem();
       addToCart(btn, event, item, quantity);
+      addBuyWithItems();
     });
   });
+
+// buy it with: checked products go to cart with main product, then unchecked
+function addBuyWithItems() {
+  document
+    .querySelectorAll(".product-buy-with-checkbox:checked")
+    .forEach((checkbox) => {
+      addItemToCart({
+        id: checkbox.dataset.id,
+        title: checkbox.dataset.title,
+        img: checkbox.dataset.img,
+        price: Number(checkbox.dataset.price),
+        url: "product.html",
+      });
+      checkbox.checked = false;
+    });
+}
 
 // product card add to cart (any page)
 document.addEventListener("click", (event) => {
@@ -844,7 +1189,8 @@ document.addEventListener("click", (event) => {
     title,
     img,
     price: parsePrice(card.querySelector(".latest-price")?.textContent),
-    url: card.querySelector(".card-title")?.getAttribute("href") || "product.html",
+    url:
+      card.querySelector(".card-title")?.getAttribute("href") || "product.html",
   });
 });
 
@@ -855,14 +1201,23 @@ document.addEventListener("click", (event) => {
   event.preventDefault();
 
   const popup = btn.closest(".community-review-popup");
-  const title = popup.querySelector(".community-review-popup-product-title")?.textContent.trim() || "";
-  const img = popup.querySelector(".community-review-popup-product-img img")?.getAttribute("src") || "";
+  const title =
+    popup
+      .querySelector(".community-review-popup-product-title")
+      ?.textContent.trim() || "";
+  const img =
+    popup
+      .querySelector(".community-review-popup-product-img img")
+      ?.getAttribute("src") || "";
 
   addItemToCart({
     id: img || title,
     title,
     img,
-    price: parsePrice(popup.querySelector(".community-review-popup-product-price .curr")?.textContent),
+    price: parsePrice(
+      popup.querySelector(".community-review-popup-product-price .curr")
+        ?.textContent,
+    ),
     url: "product.html",
   });
 
@@ -874,48 +1229,191 @@ document.addEventListener("click", (event) => {
 renderCart();
 // cart js end--
 
-// product-delivery-countdown js start--
+// quick-view js start--
 (() => {
-  const countdownTimer = document.querySelector(".order-countdown-timer");
-  const shippingDay = document.querySelector(".order-shipping-day");
-  if (!countdownTimer || !shippingDay) return;
+  const quickView = document.querySelector(".quick-view");
+  if (!quickView) return;
 
-  const resetHour = 24; // countdown resets at midnight
-  const leadDays = 2; // delivery after 2 days
+  const qvTitle = quickView.querySelector(".quick-view-title");
+  const qvImages = quickView.querySelector(".quick-view-images");
+  const qvPrevBtn = quickView.querySelector(".quick-view-images-btn.prev");
+  const qvNextBtn = quickView.querySelector(".quick-view-images-btn.next");
+  const qvLatest = quickView.querySelector(".quick-view-price .latest-price");
+  const qvPrevious = quickView.querySelector(".quick-view-price .previous-price");
+  const qvVariant = quickView.querySelector(".quick-view-variant");
+  const qvVariantName = quickView.querySelector(".quick-view-variant-label .name");
+  const qvVariantValue = quickView.querySelector(".quick-view-variant-label .value");
+  const qvVariantOptions = quickView.querySelector(".quick-view-variant-options");
+  const qvCount = quickView.querySelector(".quick-view-quantity-count");
+  const qvAddBtn = quickView.querySelector(".quick-view-add-btn");
+  const qvDetails = quickView.querySelector(".quick-view-details-btn");
 
-  const getNextResetTime = () => {
-    const reset = new Date();
-    reset.setHours(resetHour, 0, 0, 0);
-    if (reset <= new Date()) reset.setDate(reset.getDate() + 1);
-    return reset;
+  let product = null;
+  let variants = [];
+  let selected = null;
+  let comparePrice = 0;
+  let quantity = 1;
+
+  // "1 Pc:450, 2 Pcs:860" → [{ label, price }]
+  const parseVariants = (text = "") =>
+    text
+      .split(",")
+      .map((part) => part.split(":").map((v) => v.trim()))
+      .filter(([label, price]) => label && price)
+      .map(([label, price]) => ({ label, price: Number(price) }));
+
+  const selectVariant = (index) => {
+    selected = variants[index];
+    qvVariantValue.textContent = selected.label;
+    qvLatest.textContent = formatPrice(selected.price);
+    // old price follows pack size ("2 Pcs" → 2 × old price)
+    const packCount = parseInt(selected.label, 10) || 1;
+    qvPrevious.textContent = comparePrice ? formatPrice(comparePrice * packCount) : "";
+    qvVariantOptions
+      .querySelectorAll(".quick-view-variant-btn")
+      .forEach((btn, i) => btn.classList.toggle("active", i === index));
   };
 
-  const updateShippingDay = () => {
-    const date = new Date();
-    date.setDate(date.getDate() + leadDays);
-    shippingDay.textContent = date.toLocaleDateString("en-US", { weekday: "long" });
+  // image slider arrows show/hide at the ends
+  const updateImageArrows = () => {
+    const max = qvImages.scrollWidth - qvImages.clientWidth - 2;
+    qvPrevBtn.disabled = qvImages.scrollLeft <= 2;
+    qvNextBtn.disabled = qvImages.scrollLeft >= max;
   };
 
-  let deadline = getNextResetTime();
-
-  const updateCountdown = () => {
-    let diff = deadline - new Date();
-
-    if (diff <= 0) {
-      deadline = getNextResetTime();
-      diff = deadline - new Date();
-      updateShippingDay();
-    }
-
-    const pad = (time) => String(Math.floor(time)).padStart(2, "0");
-    countdownTimer.textContent = `${pad(diff / 3600000)} : ${pad((diff / 60000) % 60)} : ${pad((diff / 1000) % 60)}`;
+  const slideImages = (dir) => {
+    const img = qvImages.querySelector("img");
+    const step = img ? img.getBoundingClientRect().width + 5 : qvImages.clientWidth;
+    qvImages.scrollBy({ left: dir * step, behavior: "smooth" });
   };
 
-  updateShippingDay();
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
+  const openQuickView = (item) => {
+    const images = item.dataset.images.split(",").map((src) => src.trim());
+
+    product = {
+      id: item.dataset.id,
+      title: item.dataset.title,
+      img: images[0],
+      price: Number(item.dataset.price),
+      url: item.dataset.url || "product.html",
+    };
+    quantity = 1;
+
+    qvTitle.textContent = product.title;
+    qvImages.innerHTML = images
+      .map((src) => `<img src="${escapeHTML(src)}" alt="${escapeHTML(product.title)}" draggable="false">`)
+      .join("");
+    qvImages.scrollLeft = 0;
+    qvLatest.textContent = formatPrice(product.price);
+    comparePrice = Number(item.dataset.previousPrice) || 0;
+    qvPrevious.textContent = comparePrice ? formatPrice(comparePrice) : "";
+
+    // variants
+    variants = parseVariants(item.dataset.variants);
+    qvVariant.hidden = variants.length === 0;
+    qvVariantName.textContent = item.dataset.variantName || "Option";
+    qvVariantOptions.innerHTML = variants
+      .map((v, i) => `<button class="btn quick-view-variant-btn" type="button" data-index="${i}">${escapeHTML(v.label)}</button>`)
+      .join("");
+    selected = null;
+    if (variants.length) selectVariant(0);
+
+    qvCount.textContent = quantity;
+    qvDetails.href = product.url;
+
+    quickView.classList.add("active");
+    document.body.classList.add("active");
+    requestAnimationFrame(updateImageArrows);
+  };
+
+  const closeQuickView = () => {
+    quickView.classList.remove("active");
+    document.body.classList.remove("active");
+  };
+
+  document.querySelectorAll(".quick-view-open").forEach((btn) => {
+    btn.addEventListener("click", () => openQuickView(btn.closest("[data-images]")));
+  });
+
+  quickView
+    .querySelectorAll(".quick-view-close-window-btn, .quick-view-close-btn")
+    .forEach((btn) => btn.addEventListener("click", closeQuickView));
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && quickView.classList.contains("active")) closeQuickView();
+  });
+
+  qvVariantOptions.addEventListener("click", ({ target }) => {
+    const btn = target.closest(".quick-view-variant-btn");
+    if (btn) selectVariant(Number(btn.dataset.index));
+  });
+
+  // image scroll: arrows, mouse wheel, drag
+  qvPrevBtn.addEventListener("click", () => slideImages(-1));
+  qvNextBtn.addEventListener("click", () => slideImages(1));
+  qvImages.addEventListener("scroll", updateImageArrows, { passive: true });
+
+  qvImages.addEventListener(
+    "wheel",
+    (e) => {
+      if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+      e.preventDefault();
+      qvImages.scrollLeft += e.deltaY;
+    },
+    { passive: false },
+  );
+
+  let dragStartX = 0;
+  let dragStartScroll = 0;
+  let dragging = false;
+
+  qvImages.addEventListener("mousedown", (e) => {
+    dragging = true;
+    dragStartX = e.pageX;
+    dragStartScroll = qvImages.scrollLeft;
+    qvImages.classList.add("dragging");
+  });
+
+  window.addEventListener("mousemove", (e) => {
+    if (!dragging) return;
+    qvImages.scrollLeft = dragStartScroll - (e.pageX - dragStartX);
+  });
+
+  window.addEventListener("mouseup", () => {
+    if (!dragging) return;
+    dragging = false;
+    qvImages.classList.remove("dragging");
+  });
+
+  quickView.querySelector(".quick-view-quantity-increase").addEventListener("click", () => {
+    quantity = Math.min(99, quantity + 1);
+    qvCount.textContent = quantity;
+  });
+
+  quickView.querySelector(".quick-view-quantity-decrease").addEventListener("click", () => {
+    quantity = Math.max(1, quantity - 1);
+    qvCount.textContent = quantity;
+  });
+
+  // add to cart (with selected variant) → close quick view → open cart drawer
+  qvAddBtn.addEventListener("click", (event) => {
+    if (!product) return;
+
+    const item = selected
+      ? {
+          ...product,
+          id: `${product.id}-${selected.label}`,
+          title: `${product.title} (${selected.label})`,
+          price: selected.price,
+        }
+      : product;
+
+    addItemToCart(item, quantity);
+    closeQuickView();
+    openCartDrawer(event);
+  });
 })();
-// product-delivery-countdown js end--
+// quick-view js end--
 
 // product-tab js start--
 document.addEventListener("click", ({ target }) => {
@@ -943,7 +1441,9 @@ document.addEventListener("click", ({ target }) => {
   const quantityCount = popup.querySelector(".buy-now-popup-quantity-count");
   const quantityBadge = popup.querySelector(".buy-now-popup-qty-badge");
   const formSummary = form.querySelector(".buy-now-popup-summary");
-  const successSummary = popup.querySelector(".buy-now-popup-success .buy-now-popup-summary");
+  const successSummary = popup.querySelector(
+    ".buy-now-popup-success .buy-now-popup-summary",
+  );
 
   let quantity = 1;
 
@@ -974,13 +1474,16 @@ document.addEventListener("click", ({ target }) => {
     const totals = getTotals();
     const offerText = [];
 
-    if (totals.offer.discount) offerText.push(`Bundle offer · Save ${totals.offer.discount}%`);
+    if (totals.offer.discount)
+      offerText.push(`Bundle offer · Save ${totals.offer.discount}%`);
     if (totals.offer.freeDelivery) offerText.push("Free Delivery 🚚");
 
     quantityCount.textContent = quantity;
     quantityBadge.textContent = quantity;
-    popup.querySelector(".buy-now-popup-product-offer").textContent = offerText.join(" + ");
-    popup.querySelector(".buy-now-popup-product-price").textContent = formatPrice(totals.subtotal - totals.discount);
+    popup.querySelector(".buy-now-popup-product-offer").textContent =
+      offerText.join(" + ");
+    popup.querySelector(".buy-now-popup-product-price").textContent =
+      formatPrice(totals.subtotal - totals.discount);
     formSummary.innerHTML = summaryHTML(totals);
   };
 
@@ -1004,7 +1507,9 @@ document.addEventListener("click", ({ target }) => {
   });
 
   popup
-    .querySelectorAll(".buy-now-popup-close-window-btn, .buy-now-popup-close-btn, .buy-now-popup-continue-btn")
+    .querySelectorAll(
+      ".buy-now-popup-close-window-btn, .buy-now-popup-close-btn, .buy-now-popup-continue-btn",
+    )
     .forEach((btn) => {
       btn.addEventListener("click", closePopup);
     });
@@ -1013,23 +1518,31 @@ document.addEventListener("click", ({ target }) => {
     if (e.key === "Escape" && popup.classList.contains("active")) closePopup();
   });
 
-  popup.querySelector(".buy-now-popup-quantity-increase").addEventListener("click", () => {
-    quantity = Math.min(99, quantity + 1);
-    updatePopup();
-  });
+  popup
+    .querySelector(".buy-now-popup-quantity-increase")
+    .addEventListener("click", () => {
+      quantity = Math.min(99, quantity + 1);
+      updatePopup();
+    });
 
-  popup.querySelector(".buy-now-popup-quantity-decrease").addEventListener("click", () => {
-    quantity = Math.max(1, quantity - 1);
-    updatePopup();
-  });
+  popup
+    .querySelector(".buy-now-popup-quantity-decrease")
+    .addEventListener("click", () => {
+      quantity = Math.max(1, quantity - 1);
+      updatePopup();
+    });
 
   form.querySelectorAll("input[name=shipping]").forEach((input) => {
     input.addEventListener("change", updatePopup);
   });
 
   // form validation (bangla digits and +88 allowed)
-  const toEnglishDigit = (value) => value.replace(/[০-৯]/g, (digit) => "০১২৩৪৫৬৭৮৯".indexOf(digit));
-  const formatPhone = (value) => toEnglishDigit(value).replace(/[\s-]/g, "").replace(/^\+?88/, "");
+  const toEnglishDigit = (value) =>
+    value.replace(/[০-৯]/g, (digit) => "০১২৩৪৫৬৭৮৯".indexOf(digit));
+  const formatPhone = (value) =>
+    toEnglishDigit(value)
+      .replace(/[\s-]/g, "")
+      .replace(/^\+?88/, "");
 
   const rules = {
     phone: (value) => /^01[3-9]\d{8}$/.test(formatPhone(value)),
@@ -1046,7 +1559,10 @@ document.addEventListener("click", ({ target }) => {
   Object.keys(rules).forEach((name) => {
     const input = form.elements[name];
     input.addEventListener("blur", () => input.value && validateField(input));
-    input.addEventListener("input", () => input.closest(".invalid") && validateField(input));
+    input.addEventListener(
+      "input",
+      () => input.closest(".invalid") && validateField(input),
+    );
   });
 
   form.addEventListener("submit", (e) => {
@@ -1082,9 +1598,12 @@ document.addEventListener("click", ({ target }) => {
 
     setTimeout(() => {
       submitBtn.classList.remove("loading");
-      popup.querySelector(".buy-now-popup-customer-name").textContent = order.name;
-      popup.querySelector(".buy-now-popup-customer-phone").textContent = order.phone;
-      popup.querySelector(".buy-now-popup-order-id strong").textContent = order.id;
+      popup.querySelector(".buy-now-popup-customer-name").textContent =
+        order.name;
+      popup.querySelector(".buy-now-popup-customer-phone").textContent =
+        order.phone;
+      popup.querySelector(".buy-now-popup-order-id strong").textContent =
+        order.id;
       successSummary.innerHTML = summaryHTML(totals);
       popup.classList.add("success");
     }, 700);
@@ -1138,15 +1657,60 @@ document.addEventListener("click", ({ target }) => {
     const quantity = getBundleQuantity();
     const offer = getBundleOffer(quantity);
     const fullPrice = Number(productSection.dataset.price) * quantity;
-    const comparePrice = parsePrice(document.querySelector(".product-price-wrap .previous-price")?.textContent) * quantity;
+    const comparePrice =
+      parsePrice(
+        document.querySelector(".product-price-wrap .previous-price")
+          ?.textContent,
+      ) * quantity;
 
-    latestPrice.textContent = formatPrice(fullPrice * (1 - offer.discount / 100));
-    if (previousPrice) previousPrice.textContent = formatPrice(offer.discount ? fullPrice : comparePrice);
+    latestPrice.textContent = formatPrice(
+      fullPrice * (1 - offer.discount / 100),
+    );
+    if (previousPrice)
+      previousPrice.textContent = formatPrice(
+        offer.discount ? fullPrice : comparePrice,
+      );
+  };
+
+  // selected bundle shown under title (coral variant line)
+  const variantText = stickyCart.querySelector(".sticky-add-to-cart-variant");
+  const updateStickyVariant = () => {
+    const label = document.querySelector(
+      ".bundle-item input:checked + .bundle-label .bundle-title",
+    );
+    if (variantText)
+      variantText.textContent = label?.firstChild?.textContent.trim() || "";
   };
 
   updateStickyPrice();
+  updateStickyVariant();
   document.querySelectorAll(".bundle-item input").forEach((input) => {
-    input.addEventListener("change", updateStickyPrice);
+    input.addEventListener("change", () => {
+      updateStickyPrice();
+      updateStickyVariant();
+    });
+  });
+
+  // sticky quantity (- 1 +)
+  const qtyInput = stickyCart.querySelector(".sticky-quantity-input");
+  const getStickyQty = () =>
+    Math.min(99, Math.max(1, parseInt(qtyInput?.value, 10) || 1));
+
+  stickyCart
+    .querySelector(".sticky-quantity-decrease")
+    ?.addEventListener("click", () => (qtyInput.value = Math.max(1, getStickyQty() - 1)));
+  stickyCart
+    .querySelector(".sticky-quantity-increase")
+    ?.addEventListener("click", () => (qtyInput.value = Math.min(99, getStickyQty() + 1)));
+  qtyInput?.addEventListener("change", () => (qtyInput.value = getStickyQty()));
+
+  // sticky add to cart: selected bundle × sticky quantity
+  const stickyBtn = stickyCart.querySelector(".sticky-add-to-cart-btn");
+  stickyBtn?.addEventListener("click", (event) => {
+    const { item, quantity } = getProductPageItem();
+    addToCart(stickyBtn, event, item, quantity * getStickyQty());
+    addBuyWithItems();
+    qtyInput.value = 1;
   });
 })();
 // sticky-add-to-cart js end--
