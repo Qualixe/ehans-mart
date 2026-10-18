@@ -22,55 +22,12 @@
 }
 
 /* explore-slider-section section-bg css start (premium light blush) */
-.explore-slider-section.section-bg {
-    position: relative;
-    background:
-        radial-gradient(60% 80% at 0% 0%, var(--section-bg-glow), transparent 70%),
-        radial-gradient(50% 70% at 100% 100%, var(--section-bg-glow), transparent 70%),
-        linear-gradient(135deg, var(--section-bg-start) 0%, var(--section-bg-end) 100%);
-    overflow: hidden;
-}
 
 /* thin soft red lines on top and bottom edge */
-.explore-slider-section.section-bg::before,
-.explore-slider-section.section-bg::after {
-    position: absolute;
-    content: "";
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--section-bg-line), transparent);
-}
-
-.explore-slider-section.section-bg::before {
-    top: 0;
-}
-
-.explore-slider-section.section-bg::after {
-    bottom: 0;
-}
-
-.explore-slider-section.section-bg .card-slider-section-btn .btn {
-    background-color: var(--white);
-}
 
 /* keep same hover as other buttons (dark bg + white text) */
-.explore-slider-section.section-bg .card-slider-section-btn .btn:hover {
-    color: var(--white);
-    background-color: var(--btn-color);
-}
-
-.explore-slider-section.section-bg .product-card {
-    border-color: transparent;
-    box-shadow: 0 8px 24px rgba(237, 32, 36, 0.08);
-}
 
 /* explore-slider-section section-bg css end */
-
-.card-slider-section.section-bg {
-    padding: 42px 0;
-    background: var(--item-bg);
-}
 
 .card-slider-section-heading {
     margin-bottom: 20px;

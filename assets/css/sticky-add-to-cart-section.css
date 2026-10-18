@@ -53,10 +53,10 @@
 }
 
 .sticky-add-to-cart-title {
-    font-family: var(--heading-font);
+    font-family: var(--bangla-font);
     font-size: clamp(16px, 15px + .2vw, 18px);
     font-weight: 500;
-    line-height: 1.2;
+    line-height: 1.3;
     color: var(--black);
     overflow: hidden;
     text-overflow: ellipsis;

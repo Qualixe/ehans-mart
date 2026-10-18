@@ -19,7 +19,7 @@
 .product-slider-area {
     width: 55%;
     position: sticky;
-    top: 90px;
+    top: 20px;
     height: fit-content;
 }
 
@@ -210,10 +210,10 @@
 }
 
 .product-title {
-    font-family: var(--heading-font);
+    font-family: var(--bangla-font);
     font-size: 34px;
     font-weight: 400;
-    line-height: 1.12;
+    line-height: 1.3;
     letter-spacing: .6px;
     color: var(--product-text);
     text-transform: capitalize;
@@ -708,7 +708,7 @@
 .product-buy-with-name {
     flex: 1;
     min-width: 0;
-    font-family: var(--paragraph-font);
+    font-family: var(--bangla-font);
     font-size: 14px;
     font-weight: 500;
     line-height: 1.3;
@@ -777,7 +777,7 @@
 
 .product-upsell-title {
     width: 100%;
-    font-family: var(--paragraph-font);
+    font-family: var(--bangla-font);
     font-size: 15px;
     font-weight: 500;
     line-height: 1.35;
@@ -1174,8 +1174,10 @@
     display: block;
 }
 
+.product-tab-panel p,
 .product-tab-panel p+p {
     margin-top: 10px;
+    font-family: var(--bangla-font);
 }
 
 .product-spec-table {
@@ -1644,152 +1646,6 @@
 }
 
 /* buy-now-popup css end */
-
-/* size-chart-sidebar start */
-.size-sidebar-btn {
-    text-transform: capitalize;
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--brand-color);
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    text-wrap-mode: nowrap;
-    border-bottom: 1px solid var(--brand-color);
-}
-
-.size-sidebar-btn svg {
-    width: 16px;
-}
-
-.size-sidebar-btn svg path {
-    fill: var(--brand-color);
-}
-
-.size-chart-sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
-    height: 100dvh;
-    z-index: 99999;
-    transition: 300ms;
-    opacity: 0;
-    visibility: hidden;
-}
-
-.size-chart-sidebar.active {
-    opacity: 1;
-    visibility: visible;
-}
-
-.size-chart-sidebar-close-window-btn {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    right: 0px;
-    bottom: 0px;
-    z-index: 1;
-    width: 100vw;
-    height: 100vh;
-    user-select: none;
-    cursor: pointer;
-}
-
-.size-chart-sidebar-inner {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 340px;
-    z-index: 2;
-    transition: 300ms;
-    transform: translateX(100%);
-    opacity: 1;
-    visibility: visible;
-    height: 100%;
-    max-height: 100%;
-    background: var(--white);
-}
-
-.size-chart-sidebar-inner.active {
-    transform: translateX(0);
-}
-
-.size-chart-sidebar-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    padding: 20px;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.size-chart-title {
-    text-transform: capitalize;
-    font-size: 18px;
-    font-weight: 600;
-}
-
-.size-chart-close-btn {
-    display: flex;
-}
-
-.size-chart-close-btn svg path {
-    stroke: var(--black);
-}
-
-.size-chart-sidebar-content {
-    width: 100%;
-    height: calc(100dvh - 75px);
-    gap: 0;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    padding: 20px;
-}
-
-.size-chart-items {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}
-
-.size-chart-item-title {
-    font-size: 16px;
-    font-weight: 600;
-    margin: 0 0 10px 0;
-    text-transform: capitalize;
-}
-
-.size-chart-item-content {
-    width: 100%;
-}
-
-.size-chart-item-content,
-.size-chart-item-content th,
-.size-chart-item-content td {
-    border: 1px solid var(--border-color);
-    border-collapse: collapse;
-    padding: 8px;
-    text-align: center;
-    font-size: 14px;
-    color: var(--brand-color);
-}
-
-.size-chart-item-content th {
-    background: var(--black);
-    color: var(--white);
-    text-transform: uppercase;
-}
-
-
-.size-chart-item-content tbody tr:nth-child(even) {
-    background-color: var(--section-bg);
-}
-
-/* size-chart-sidebar end */
 
 /* product-slider-modal css start */
 .product-slider-modal {

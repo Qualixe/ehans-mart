@@ -546,7 +546,7 @@ document
 // cart-drawer js end---
 
 // hero slider js start--
-var swiper = new Swiper(".hero-slider", {
+var swiper = window.Swiper && new Swiper(".hero-slider", {
   slidesPerView: 1,
   grabCursor: true,
   spaceBetween: 16,
@@ -576,7 +576,7 @@ var swiper = new Swiper(".hero-slider", {
 // hero slider js end--
 
 // category js start--
-var swiper = new Swiper(".category-slider", {
+var swiper = window.Swiper && new Swiper(".category-slider", {
   slidesPerView: "auto",
   spaceBetween: 10,
   grabCursor: true,
@@ -589,7 +589,7 @@ var swiper = new Swiper(".category-slider", {
 // category js end--
 
 // card slider js start--
-var swiper = new Swiper(".explore-slider", {
+var swiper = window.Swiper && new Swiper(".explore-slider", {
   slidesPerView: 5,
   centeredSlides: false,
   spaceBetween: 10,
@@ -760,7 +760,7 @@ var swiper = new Swiper(".explore-slider", {
 // community-review popup js end--
 
 // collection-category-slider js start--
-var swiper = new Swiper(".collection-category-slider", {
+var swiper = window.Swiper && new Swiper(".collection-category-slider", {
   slidesPerView: "auto",
   spaceBetween: 20,
   grabCursor: true,
@@ -781,44 +781,199 @@ var swiper = new Swiper(".collection-category-slider", {
 // collection-category-slider js end--
 
 // collection filter js start---
-document.addEventListener("DOMContentLoaded", () => {
+(() => {
   const sidebar = document.querySelector(".collection-filter");
+  const form = document.querySelector(".filter-form");
+  const grid = document.querySelector(".product-items");
+  if (!sidebar || !form || !grid) return;
 
-  // Filter sidebar
-  document
-    .querySelectorAll(
-      ".filter-open-btn, .filter-window-close-btn, .filter-close-btn",
-    )
-    .forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const open = btn.classList.contains("filter-open-btn");
+  const items = [...grid.querySelectorAll(".product-item")];
+  const countText = document.querySelector(".collection-product-count");
+  const openCount = document.querySelector(".filter-open-count");
+  const sortSelect = document.querySelector("#sort_by");
+  const minInput = form.querySelector(".filter-price-min");
+  const maxInput = form.querySelector(".filter-price-max");
+  const minRange = form.querySelector(".filter-range-min");
+  const maxRange = form.querySelector(".filter-range-max");
+  const rangeTrack = form.querySelector(".filter-price-range");
 
-        sidebar?.classList.toggle("active", open);
-        document.body.classList.toggle("active", open);
-      });
+  const priceOf = (item) =>
+    Number(item.querySelector(".latest-price")?.textContent.replace(/[^0-9.]/g, "")) || 0;
+  const titleOf = (item) => item.querySelector(".card-title")?.textContent.trim() || "";
+
+  // keep original order for "featured"
+  items.forEach((item, i) => (item.dataset.order = i));
+
+  // price limits from products
+  const prices = items.map(priceOf);
+  const priceMin = Math.floor(Math.min(...prices) / 10) * 10;
+  const priceMax = Math.ceil(Math.max(...prices) / 10) * 10;
+  [minInput, maxInput, minRange, maxRange].forEach((el) => {
+    el.min = priceMin;
+    el.max = priceMax;
+  });
+  minInput.value = minRange.value = priceMin;
+  maxInput.value = maxRange.value = priceMax;
+
+  const updateTrack = () => {
+    const span = priceMax - priceMin || 1;
+    rangeTrack.style.setProperty("--range-min", `${((minRange.value - priceMin) / span) * 100}%`);
+    rangeTrack.style.setProperty("--range-max", `${((maxRange.value - priceMin) / span) * 100}%`);
+  };
+
+  const checked = (name) =>
+    [...form.querySelectorAll(`input[name="${name}"]:checked`)].map((i) => i.value);
+
+  // does an item pass every group except `skip` (used for option counts)
+  const matches = (item, state, skip) =>
+    ["availability", "category", "color"].every(
+      (key) => key === skip || !state[key].length || state[key].includes(item.dataset[key]),
+    ) &&
+    (skip === "price" || (priceOf(item) >= state.min && priceOf(item) <= state.max));
+
+  const applyFilters = () => {
+    const state = {
+      availability: checked("availability"),
+      category: checked("category"),
+      color: checked("color"),
+      min: Number(minInput.value) || priceMin,
+      max: Number(maxInput.value) || priceMax,
+    };
+
+    let visible = 0;
+    items.forEach((item) => {
+      const show = matches(item, state);
+      item.hidden = !show;
+      if (show) visible++;
     });
 
-  // Accordion
-  document.querySelectorAll(".accordion-toggle-btn").forEach((btn) => {
-    const content = btn.nextElementSibling;
+    // option counts + disable options that give 0 results
+    form.querySelectorAll(".filter-checkbox").forEach((input) => {
+      const n = items.filter((item) => item.dataset[input.name] === input.value && matches(item, state, input.name)).length;
+      input.nextElementSibling.querySelector(".filter-count").textContent = `(${n})`;
+      input.disabled = n === 0 && !input.checked;
+    });
 
-    content.style.maxHeight = `${content.scrollHeight}px`;
-    btn.parentElement.classList.add("active");
+    // active count per group + total
+    let total = 0;
+    form.querySelectorAll(".filter-accordion-item").forEach((group) => {
+      const key = group.dataset.filter;
+      let n = key === "price" ? Number(state.min > priceMin || state.max < priceMax) : state[key].length;
+      total += n;
+      group.querySelector(".filter-accordion-counter").textContent = n ? `(${n})` : "";
+    });
+    openCount.textContent = total || "";
 
-    btn.addEventListener("click", () => {
-      btn.parentElement.classList.toggle("active");
+    countText.textContent = `${visible} product${visible === 1 ? "" : "s"}`;
 
-      content.style.maxHeight = content.style.maxHeight
-        ? null
-        : `${content.scrollHeight}px`;
+    let empty = grid.querySelector(".collection-empty");
+    if (!visible && !empty) {
+      empty = document.createElement("p");
+      empty.className = "collection-empty";
+      empty.textContent = "No products match these filters.";
+      grid.appendChild(empty);
+    }
+    if (visible && empty) empty.remove();
+  };
+
+  const applySort = () => {
+    const value = sortSelect?.value || "featured";
+    const sorted = [...items].sort((a, b) => {
+      if (value === "price-asc") return priceOf(a) - priceOf(b);
+      if (value === "price-desc") return priceOf(b) - priceOf(a);
+      if (value === "title-asc") return titleOf(a).localeCompare(titleOf(b));
+      return a.dataset.order - b.dataset.order;
+    });
+    sorted.forEach((item) => grid.appendChild(item));
+  };
+
+  // checkbox changes
+  form.addEventListener("change", (e) => {
+    if (e.target.classList.contains("filter-checkbox")) applyFilters();
+  });
+
+  // price: range sliders ↔ number inputs
+  const syncFromRange = (e) => {
+    let min = Number(minRange.value);
+    let max = Number(maxRange.value);
+    if (min > max) e.target === minRange ? (min = max) : (max = min);
+    minRange.value = minInput.value = min;
+    maxRange.value = maxInput.value = max;
+    updateTrack();
+    applyFilters();
+  };
+
+  const syncFromInput = () => {
+    let min = Math.max(priceMin, Math.min(Number(minInput.value) || priceMin, priceMax));
+    let max = Math.max(priceMin, Math.min(Number(maxInput.value) || priceMax, priceMax));
+    if (min > max) [min, max] = [max, min];
+    minRange.value = minInput.value = min;
+    maxRange.value = maxInput.value = max;
+    updateTrack();
+    applyFilters();
+  };
+
+  minRange.addEventListener("input", syncFromRange);
+  maxRange.addEventListener("input", syncFromRange);
+  minInput.addEventListener("change", syncFromInput);
+  maxInput.addEventListener("change", syncFromInput);
+
+  // clear all
+  form.addEventListener("reset", () => {
+    setTimeout(() => {
+      minInput.value = minRange.value = priceMin;
+      maxInput.value = maxRange.value = priceMax;
+      updateTrack();
+      applyFilters();
     });
   });
-});
+
+  sortSelect?.addEventListener("change", applySort);
+
+  // accordion (closed by default, smooth height)
+  form.querySelectorAll(".filter-accordion-btn").forEach((btn) => {
+    const group = btn.closest(".filter-accordion-item");
+    const content = group.querySelector(".filter-accordion-content");
+
+    btn.addEventListener("click", () => {
+      const open = !group.classList.contains("active");
+      group.classList.toggle("active", open);
+      btn.setAttribute("aria-expanded", open);
+      content.style.height = `${content.scrollHeight}px`;
+      if (!open) requestAnimationFrame(() => (content.style.height = "0px"));
+    });
+
+    content.addEventListener("transitionend", () => {
+      if (group.classList.contains("active")) content.style.height = "auto";
+    });
+  });
+
+  // mobile drawer open / close
+  const toggleDrawer = (open) => {
+    sidebar.classList.toggle("active", open);
+    document.body.classList.toggle("active", open);
+  };
+
+  document.querySelector(".filter-open-btn")?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    toggleDrawer(true);
+  });
+
+  sidebar
+    .querySelectorAll(".filter-window-close-btn, .filter-close-btn, .filter-apply-btn")
+    .forEach((btn) => btn.addEventListener("click", () => toggleDrawer(false)));
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && sidebar.classList.contains("active")) toggleDrawer(false);
+  });
+
+  updateTrack();
+  applyFilters();
+})();
 // collection filter js end---
 
 // product-slider js start---
-var swiper = new Swiper(".product-slider-thumb", {
+var swiper = window.Swiper && new Swiper(".product-slider-thumb", {
   direction: "vertical",
   loop: false,
   spaceBetween: 8,
@@ -839,7 +994,7 @@ var swiper = new Swiper(".product-slider-thumb", {
     },
   },
 });
-var swiper2 = new Swiper(".product-slider", {
+var swiper2 = window.Swiper && new Swiper(".product-slider", {
   loop: true,
   autoHeight: true,
   spaceBetween: 10,
@@ -873,30 +1028,6 @@ document
 productModal?.addEventListener("click", () => {
   productModal.classList.remove("active");
 });
-
-// Size Chart Sidebar
-const sizeSidebar = document.querySelector(".size-chart-sidebar");
-const sizeSidebarInner = document.querySelector(".size-chart-sidebar-inner");
-
-const toggleSizeChart = (open, e) => {
-  e?.stopPropagation();
-
-  sizeSidebar?.classList.toggle("active", open);
-  sizeSidebarInner?.classList.toggle("active", open);
-  document.body.classList.toggle("active", open);
-};
-
-document
-  .querySelector(".size-sidebar-btn")
-  ?.addEventListener("click", (e) => toggleSizeChart(true, e));
-
-document
-  .querySelector(".size-chart-sidebar-close-window-btn")
-  ?.addEventListener("click", (e) => toggleSizeChart(false, e));
-
-document
-  .querySelector(".size-chart-close-btn")
-  ?.addEventListener("click", (e) => toggleSizeChart(false, e));
 
 // product accordion--
 document.addEventListener("click", ({ target }) => {
@@ -1041,6 +1172,9 @@ function renderCart(cart = getCart()) {
 
   const totalPrice = document.querySelector(".cart-drawer-total-price");
   if (totalPrice) totalPrice.textContent = formatPrice(total);
+
+  // cart page (cart.html) uses the same cart
+  renderCartPage(cart);
 
   if (!cartItemsWrap) return;
 
@@ -1225,6 +1359,104 @@ document.addEventListener("click", (event) => {
   popup.querySelector(".community-review-popup-close-btn")?.click();
   openCartDrawer(event);
 });
+
+// cart page js start--
+// cart.html shows the same saved cart as the drawer (quantity / remove / totals)
+const cartPageItems = document.querySelector(".cart-section .cart-product-items");
+
+const qtyBox = (qty) => `
+  <div class="product-quantity">
+    <button class="quantity-decrease" type="button" data-cart-action="minus" aria-label="decrease quantity">
+      <svg width="11" height="2" viewBox="0 0 11 2" fill="none"><path d="M0.75 0.75H10.0833" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <input class="quantity-count" type="number" min="1" max="99" value="${qty}" inputmode="numeric" aria-label="quantity">
+    <button class="quantity-increase" type="button" data-cart-action="plus" aria-label="increase quantity">
+      <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M0.75 5.41667H10.0833M5.41667 0.75V10.0833" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+  </div>`;
+
+function renderCartPage(cart = getCart()) {
+  if (!cartPageItems) return;
+
+  const section = cartPageItems.closest(".cart-section");
+  const empty = section.querySelector(".cart-page-empty");
+  const wrapper = section.querySelector(".cart-wrapper");
+  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+  empty.hidden = cart.length > 0;
+  wrapper.hidden = cart.length === 0;
+
+  cartPageItems.innerHTML = cart
+    .map(
+      (item, index) => `
+      <div class="cart-product-item" data-index="${index}">
+        <div class="cart-product-content">
+          <a href="${escapeHTML(item.url)}" class="cart-product-img">
+            <img src="${escapeHTML(item.img)}" alt="${escapeHTML(item.title)}">
+          </a>
+          <div class="content">
+            <a href="${escapeHTML(item.url)}" class="title">${escapeHTML(item.title)}</a>
+            <div class="cart-product-mobile-details">
+              <div class="price"><p class="cart-product-price">${formatPrice(item.price)}</p></div>
+              <div class="Quantity">${qtyBox(item.qty)}</div>
+            </div>
+          </div>
+        </div>
+        <div class="cart-product-details">
+          <div class="price"><p class="cart-product-price">${formatPrice(item.price)}</p></div>
+          <div class="Quantity">${qtyBox(item.qty)}</div>
+          <div class="Subtotal"><p class="cart-product-subtotal">${formatPrice(item.price * item.qty)}</p></div>
+          <div class="cart-remove">
+            <button class="cart-product-remove-btn" type="button" data-cart-action="remove" aria-label="remove item">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 23C18.0748 23 23 18.0748 23 12C23 5.92525 18.0748 1 12 1C5.92525 1 1 5.92525 1 12C1 18.0748 5.92525 23 12 23Z" stroke="#CCCCCC" stroke-miterlimit="10"/><path d="M16 8L8 16M16 16L8 8" stroke="#666666" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>`,
+    )
+    .join("");
+
+  section.querySelectorAll(".cart-summary-item").forEach((row) => {
+    const title = row.querySelector(".title")?.textContent.toLowerCase() || "";
+    if (title.includes("subtotal") || title.includes("total")) {
+      row.querySelector(".price").textContent = formatPrice(total);
+    }
+  });
+}
+
+if (cartPageItems) {
+  // - / + / remove
+  cartPageItems.addEventListener("click", ({ target }) => {
+    const btn = target.closest("[data-cart-action]");
+    if (!btn) return;
+
+    const cart = getCart();
+    const index = Number(btn.closest(".cart-product-item").dataset.index);
+    const item = cart[index];
+    if (!item) return;
+
+    if (btn.dataset.cartAction === "plus") item.qty = Math.min(99, item.qty + 1);
+    if (btn.dataset.cartAction === "minus") item.qty = Math.max(1, item.qty - 1);
+    if (btn.dataset.cartAction === "remove") cart.splice(index, 1);
+
+    saveCart(cart);
+  });
+
+  // typed quantity
+  cartPageItems.addEventListener("change", ({ target }) => {
+    if (!target.classList.contains("quantity-count")) return;
+
+    const cart = getCart();
+    const item = cart[Number(target.closest(".cart-product-item").dataset.index)];
+    if (!item) return;
+
+    item.qty = Math.min(99, Math.max(1, parseInt(target.value, 10) || 1));
+    saveCart(cart);
+  });
+
+  renderCartPage();
+}
+// cart page js end--
 
 renderCart();
 // cart js end--
@@ -1633,19 +1865,69 @@ document.addEventListener("click", ({ target }) => {
   const stickyCart = document.querySelector(".sticky-add-to-cart-section");
   if (!stickyCart) return;
 
-  // show only after the main add to cart button is scrolled out of view
-  const mainBtn = document.querySelector(".product-add-to-cart-btn");
+  // coral product-sticky-atc logic:
+  // show when main buy buttons are scrolled above the screen,
+  // hide while buy buttons are visible, and hide when footer comes near (160px)
+  const buyButtons =
+    document.querySelector(".product-btn-wrap") ||
+    document.querySelector(".product-add-to-cart-btn");
+  const footer = document.querySelector("footer.footer") || document.querySelector("footer");
+  let isVisible = false;
+  let hiddenByFooter = false;
 
-  const updateStickyCart = () => {
-    const passed = mainBtn
-      ? mainBtn.getBoundingClientRect().bottom < 0
-      : window.scrollY > 300;
-    stickyCart.classList.toggle("show", passed);
+  const show = () => {
+    if (isVisible) return;
+    isVisible = true;
+    stickyCart.classList.add("show");
+    stickyCart.setAttribute("aria-hidden", "false");
   };
 
-  updateStickyCart();
-  window.addEventListener("scroll", updateStickyCart, { passive: true });
-  window.addEventListener("resize", updateStickyCart, { passive: true });
+  const hide = () => {
+    if (!isVisible) return;
+    isVisible = false;
+    stickyCart.classList.remove("show");
+    stickyCart.setAttribute("aria-hidden", "true");
+  };
+
+  // buy buttons above the screen = user scrolled past them
+  const shouldShowFromLayout = () => {
+    if (!buyButtons) return false;
+    const rect = buyButtons.getBoundingClientRect();
+    return rect.bottom < 0 || rect.top < 0;
+  };
+
+  if (buyButtons) {
+    new IntersectionObserver(([entry]) => {
+      if (!entry) return;
+      if (entry.isIntersecting) return hide();
+      const rect = entry.boundingClientRect;
+      if (rect.bottom < 0 || rect.top < 0) {
+        if (!hiddenByFooter) show();
+        return;
+      }
+      hide();
+    }).observe(buyButtons);
+  }
+
+  if (footer) {
+    new IntersectionObserver(
+      ([entry]) => {
+        if (!entry) return;
+        if (entry.isIntersecting) {
+          hiddenByFooter = true;
+          hide();
+          return;
+        }
+        if (hiddenByFooter) {
+          hiddenByFooter = false;
+          if (shouldShowFromLayout()) show();
+        }
+      },
+      { rootMargin: "0px 0px 160px 0px" },
+    ).observe(footer);
+  }
+
+  stickyCart.setAttribute("aria-hidden", "true");
 
   // sticky price follows the selected bundle
   const productSection = document.querySelector(".product-section");
@@ -1777,3 +2059,419 @@ document.addEventListener("DOMContentLoaded", () => {
   breakpoint.addEventListener("change", setupAccordion);
 });
 // Footer dropdown responsive accordion js end --
+
+// about-stats count up js start--
+(() => {
+  const numbers = document.querySelectorAll(".about-stats-number[data-count]");
+  if (!numbers.length || !("IntersectionObserver" in window)) return;
+
+  const countUp = (el) => {
+    const target = Number(el.dataset.count);
+    const suffix = el.dataset.suffix || "";
+    const start = performance.now();
+    const duration = 1400;
+
+    const step = (now) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = `${Math.round(target * eased)}${suffix}`;
+      if (progress < 1) requestAnimationFrame(step);
+    };
+
+    requestAnimationFrame(step);
+  };
+
+  const observer = new IntersectionObserver(
+    (entries) =>
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        countUp(entry.target);
+        observer.unobserve(entry.target);
+      }),
+    { threshold: 0.5 },
+  );
+
+  numbers.forEach((el) => observer.observe(el));
+})();
+// about-stats count up js end--
+
+// contact form js start--
+(() => {
+  const form = document.querySelector(".contact-form");
+  const success = document.querySelector(".contact-success");
+  if (!form || !success) return;
+
+  // bangla digits and +88 allowed in phone
+  const toEnglishDigit = (value) =>
+    value.replace(/[০-৯]/g, (digit) => "০১২৩৪৫৬৭৮৯".indexOf(digit));
+  const formatPhone = (value) =>
+    toEnglishDigit(value).replace(/[\s-]/g, "").replace(/^\+?88/, "");
+
+  const rules = {
+    name: (value) => value.trim().length >= 2,
+    phone: (value) => /^01[3-9]\d{8}$/.test(formatPhone(value)),
+    email: (value) => !value.trim() || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim()),
+    message: (value) => value.trim().length >= 10,
+  };
+
+  const validateField = (input) => {
+    const isValid = rules[input.name](input.value);
+    input.closest(".contact-field-col").classList.toggle("invalid", !isValid);
+    return isValid;
+  };
+
+  Object.keys(rules).forEach((name) => {
+    const input = form.elements[name];
+    input.addEventListener("blur", () => input.value && validateField(input));
+    input.addEventListener("input", () => input.closest(".invalid") && validateField(input));
+  });
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const invalidFields = Object.keys(rules)
+      .map((name) => form.elements[name])
+      .filter((input) => !validateField(input));
+
+    if (invalidFields.length) return invalidFields[0].focus();
+
+    const message = {
+      name: form.elements.name.value.trim(),
+      phone: formatPhone(form.elements.phone.value),
+      email: form.elements.email.value.trim(),
+      subject: form.elements.subject.value,
+      message: form.elements.message.value.trim(),
+    };
+
+    // send this message to your server / email service here
+    document.dispatchEvent(new CustomEvent("contact-message", { detail: message }));
+
+    const submitBtn = form.querySelector(".contact-submit-btn");
+    submitBtn.classList.add("loading");
+
+    setTimeout(() => {
+      submitBtn.classList.remove("loading");
+      success.querySelector(".contact-success-name").textContent = message.name;
+      form.hidden = true;
+      success.hidden = false;
+      form.reset();
+    }, 700);
+  });
+
+  success.querySelector(".contact-again-btn").addEventListener("click", () => {
+    success.hidden = true;
+    form.hidden = false;
+    form.elements.name.focus();
+  });
+})();
+// contact form js end--
+
+// policy nav js start--
+(() => {
+  const links = [...document.querySelectorAll(".policy-nav-link")];
+  if (!links.length) return;
+
+  const items = links
+    .map((link) => document.querySelector(link.getAttribute("href")))
+    .filter(Boolean);
+
+  const setActive = (id) => {
+    links.forEach((link) => {
+      const isActive = link.getAttribute("href") === `#${id}`;
+      link.classList.toggle("active", isActive);
+      // keep active tab visible on mobile tab bar
+      if (isActive && window.innerWidth <= 992) {
+        link.parentElement.scrollTo({
+          left: link.offsetLeft - 16,
+          behavior: "smooth",
+        });
+      }
+    });
+  };
+
+  // smooth scroll with header offset
+  links.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      const target = document.querySelector(link.getAttribute("href"));
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      history.replaceState(null, "", link.getAttribute("href"));
+      setActive(target.id);
+    });
+  });
+
+  // highlight the section in view
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => entry.isIntersecting && setActive(entry.target.id));
+    },
+    { rootMargin: "-30% 0px -60% 0px" }
+  );
+  items.forEach((item) => observer.observe(item));
+
+  if (location.hash && items.some((item) => `#${item.id}` === location.hash)) {
+    setActive(location.hash.slice(1));
+  }
+})();
+// policy nav js end--
+
+// faq js start--
+(() => {
+  const faqItems = [...document.querySelectorAll(".faq-item")];
+  if (!faqItems.length) return;
+
+  const tabs = [...document.querySelectorAll(".faq-tab")];
+  const searchInput = document.querySelector(".faq-search-input");
+  const clearBtn = document.querySelector(".faq-search-clear");
+  const empty = document.querySelector(".faq-empty");
+  let activeTab = "all";
+
+  // keep original question text for highlight
+  faqItems.forEach((item) => {
+    const summary = item.querySelector("summary");
+    const tag = summary.querySelector(".faq-item-tag");
+    item.question = summary.textContent.replace(tag.textContent, "").trim();
+    item.searchText = item.textContent.toLowerCase();
+  });
+
+  // category counts
+  tabs.forEach((tab) => {
+    const cat = tab.dataset.faqTab;
+    tab.querySelector(".faq-tab-count").textContent =
+      cat === "all" ? faqItems.length : faqItems.filter((item) => item.dataset.faqCat === cat).length;
+  });
+
+  const escapeRegex = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+  const highlight = (item, word) => {
+    const summary = item.querySelector("summary");
+    const tag = summary.querySelector(".faq-item-tag").outerHTML;
+    const question = item.question.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+    const text = word
+      ? question.replace(new RegExp(`(${escapeRegex(word)})`, "gi"), "<mark>$1</mark>")
+      : question;
+    summary.innerHTML = `${tag}<span class="faq-item-question">${text}</span>`;
+  };
+
+  const filterFaq = () => {
+    const word = searchInput.value.trim().toLowerCase();
+    let visible = 0;
+
+    faqItems.forEach((item) => {
+      const matchTab = activeTab === "all" || item.dataset.faqCat === activeTab;
+      const matchWord = !word || item.searchText.includes(word);
+      item.hidden = !(matchTab && matchWord);
+      highlight(item, word);
+      if (!item.hidden) visible++;
+    });
+
+    // open the first result while searching
+    if (word) {
+      const first = faqItems.find((item) => !item.hidden);
+      if (first) first.open = true;
+    }
+
+    empty.hidden = visible > 0;
+    clearBtn.hidden = !searchInput.value;
+  };
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      activeTab = tab.dataset.faqTab;
+      tabs.forEach((t) => t.classList.toggle("active", t === tab));
+      tab.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+      filterFaq();
+    });
+  });
+
+  searchInput.addEventListener("input", filterFaq);
+
+  clearBtn.addEventListener("click", () => {
+    searchInput.value = "";
+    filterFaq();
+    searchInput.focus();
+  });
+
+  // only one answer open at a time
+  faqItems.forEach((item) => {
+    item.addEventListener("toggle", () => {
+      if (!item.open) return;
+      faqItems.forEach((other) => other !== item && (other.open = false));
+    });
+  });
+})();
+// faq js end--
+
+// footer year js start--
+document.querySelectorAll(".copyright-year").forEach((year) => {
+  year.textContent = new Date().getFullYear();
+});
+// footer year js end--
+
+// blog js start--
+(() => {
+  const cards = [...document.querySelectorAll(".blog-card")];
+  // only on blog list page (related cards on details page don't need filter)
+  if (!cards.length || !document.querySelector(".blog-more-btn")) return;
+
+  const tabs = [...document.querySelectorAll(".blog-tab")];
+  const searchInput = document.querySelector(".blog-search-input");
+  const empty = document.querySelector(".blog-empty");
+  const more = document.querySelector(".blog-more");
+  const moreBtn = document.querySelector(".blog-more-btn");
+  const pageSize = 6;
+  let activeTab = "all";
+  let showCount = pageSize;
+
+  const renderBlog = () => {
+    const word = searchInput ? searchInput.value.trim().toLowerCase() : "";
+    const matched = cards.filter((card) => {
+      const matchTab = activeTab === "all" || card.dataset.blogCat === activeTab;
+      const matchWord = !word || card.textContent.toLowerCase().includes(word);
+      return matchTab && matchWord;
+    });
+
+    cards.forEach((card) => (card.hidden = true));
+    matched.slice(0, showCount).forEach((card) => (card.hidden = false));
+
+    empty.hidden = matched.length > 0;
+    more.hidden = matched.length <= showCount;
+  };
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      activeTab = tab.dataset.blogTab;
+      showCount = pageSize;
+      tabs.forEach((t) => t.classList.toggle("active", t === tab));
+      renderBlog();
+    });
+  });
+
+  if (searchInput) {
+    searchInput.addEventListener("input", () => {
+      showCount = pageSize;
+      renderBlog();
+    });
+
+    // enter = jump to results
+    searchInput.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter") return;
+      document.querySelector(".blog-section").scrollIntoView({ behavior: "smooth" });
+    });
+  }
+
+  moreBtn.addEventListener("click", () => {
+    showCount += pageSize;
+    renderBlog();
+  });
+
+  // search coming from blog-details sidebar (?q=)
+  const query = new URLSearchParams(location.search).get("q");
+  if (query && searchInput) searchInput.value = query;
+
+  renderBlog();
+})();
+
+// blog newsletter
+(() => {
+  const form = document.querySelector(".blog-newsletter-form");
+  if (!form) return;
+
+  const msg = form.querySelector(".blog-newsletter-msg");
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const email = form.elements.email.value.trim();
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      msg.className = "blog-newsletter-msg error";
+      msg.textContent = "Please enter a valid email address.";
+      form.elements.email.focus();
+      return;
+    }
+
+    // send this email to your newsletter service here
+    document.dispatchEvent(new CustomEvent("newsletter-subscribe", { detail: { email } }));
+
+    msg.className = "blog-newsletter-msg success";
+    msg.textContent = "Thank you for subscribing! Check your inbox for our next tips.";
+    form.reset();
+  });
+})();
+// blog js end--
+
+// blog-details js start--
+(() => {
+  const article = document.querySelector(".blog-details-article");
+  if (!article) return;
+
+  // reading progress bar
+  const bar = document.querySelector(".blog-details-progress span");
+  const updateProgress = () => {
+    const rect = article.getBoundingClientRect();
+    const total = rect.height - window.innerHeight;
+    const done = Math.min(Math.max(-rect.top / (total > 0 ? total : 1), 0), 1);
+    bar.style.transform = `scaleX(${done})`;
+  };
+  window.addEventListener("scroll", updateProgress, { passive: true });
+  window.addEventListener("resize", updateProgress);
+  updateProgress();
+
+  // table of contents: smooth scroll + active heading
+  const tocLinks = [...document.querySelectorAll(".blog-toc-link")];
+  const headings = tocLinks
+    .map((link) => document.querySelector(link.getAttribute("href")))
+    .filter(Boolean);
+
+  const setActive = (id) => {
+    tocLinks.forEach((link) => link.classList.toggle("active", link.getAttribute("href") === `#${id}`));
+  };
+
+  tocLinks.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      const target = document.querySelector(link.getAttribute("href"));
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      setActive(target.id);
+    });
+  });
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => entry.isIntersecting && setActive(entry.target.id));
+    },
+    { rootMargin: "-20% 0px -70% 0px" }
+  );
+  headings.forEach((heading) => observer.observe(heading));
+
+  // share buttons
+  const shareMsg = document.querySelector(".blog-share-msg");
+  const pageUrl = encodeURIComponent(location.href);
+  const pageTitle = encodeURIComponent(document.title);
+  const shareUrls = {
+    facebook: `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`,
+    whatsapp: `https://wa.me/?text=${pageTitle}%20${pageUrl}`,
+  };
+
+  document.querySelectorAll("[data-share]").forEach((link) => {
+    link.href = shareUrls[link.dataset.share];
+    link.target = "_blank";
+    link.rel = "noopener";
+  });
+
+  const copyBtn = document.querySelector(".blog-share-copy");
+  if (copyBtn) {
+    copyBtn.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(location.href);
+        shareMsg.textContent = "Link copied!";
+      } catch {
+        shareMsg.textContent = "Copy failed";
+      }
+      setTimeout(() => (shareMsg.textContent = ""), 2000);
+    });
+  }
+})();
+// blog-details js end--
