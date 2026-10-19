@@ -1,0 +1,60 @@
+/* about-mission-section css start */
+.about-mission-section {
+    padding: 0 0 80px;
+}
+
+.about-mission-wrapper {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    align-items: center;
+    gap: 56px;
+}
+
+.about-mission-item {
+    margin-top: 24px;
+    padding-left: 20px;
+    border-left: 3px solid var(--brand-color);
+}
+
+.about-mission-title {
+    font-family: var(--heading-font);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--black);
+}
+
+.about-mission-item .about-text {
+    margin-top: 8px;
+}
+
+.about-mission-img img {
+    aspect-ratio: 4 / 3;
+    border-radius: 12px;
+}
+
+/* about-mission-section css end */
+
+@media only screen and (max-width: 992px) {
+
+    /* about-mission-section css start */
+    .about-mission-wrapper {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .about-mission-img {
+        order: -1;
+    }
+
+    /* about-mission-section css end */
+}
+
+@media only screen and (max-width: 575px) {
+
+    /* about-mission-section css start */
+    .about-mission-section {
+        padding: 0 0 48px;
+    }
+
+    /* about-mission-section css end */
+}

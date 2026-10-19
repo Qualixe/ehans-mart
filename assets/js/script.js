@@ -405,6 +405,12 @@ const searchPopular = ["apron", "hair clip", "fridge", "baby safety", "kitchen",
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && wrap.classList.contains("active")) closeSearch();
   });
+
+  // other sections can open search: dispatch "search-open" with { query }
+  document.addEventListener("search-open", (e) => {
+    openSearch();
+    if (e.detail?.query) setQuery(e.detail.query);
+  });
 })();
 // navbar search open js end ---
 
@@ -2475,3 +2481,21 @@ document.querySelectorAll(".copyright-year").forEach((year) => {
   }
 })();
 // blog-details js end--
+
+// 404 search js start--
+(() => {
+  const form = document.querySelector(".notfound-search");
+  if (!form) return;
+
+  const openSearch = (query) => document.dispatchEvent(new CustomEvent("search-open", { detail: { query } }));
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    openSearch(form.elements.q.value.trim());
+  });
+
+  document.querySelectorAll("[data-search-open]").forEach((tag) => {
+    tag.addEventListener("click", () => openSearch(tag.dataset.searchOpen));
+  });
+})();
+// 404 search js end--

@@ -1,18 +1,3 @@
-/* policy page css start (hero, buttons & cta come from about-section.css) */
-
-/* policy-hero-section css start */
-.policy-hero-section {
-    padding-bottom: 120px;
-}
-
-.policy-updated {
-    font-size: 13px;
-    letter-spacing: .5px;
-    color: rgba(255, 255, 255, .55);
-}
-
-/* policy-hero-section css end */
-
 /* policy-section css start */
 .policy-section {
     padding: 80px 0 0;
@@ -280,11 +265,9 @@
 
 /* policy-section css end */
 
-/* policy page css end */
-
 @media only screen and (max-width: 992px) {
 
-    /* policy page css start */
+    /* policy-section css start */
     .policy-wrapper {
         grid-template-columns: minmax(0, 1fr);
         gap: 24px;
@@ -328,12 +311,12 @@
         border-color: var(--brand-color);
     }
 
-    /* policy page css end */
+    /* policy-section css end */
 }
 
 @media only screen and (max-width: 575px) {
 
-    /* policy page css start */
+    /* policy-section css start */
     .policy-section {
         padding: 32px 0 0;
     }
@@ -383,5 +366,5 @@
         font-size: 11px;
     }
 
-    /* policy page css end */
+    /* policy-section css end */
 }

@@ -1,0 +1,48 @@
+/* product-slider-modal css start */
+.product-slider-modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 9999;
+    background: var(--white);
+    width: 100dvw;
+    height: 100dvh;
+    opacity: 0;
+    visibility: hidden;
+    transition: all ease .2s;
+    cursor: zoom-out;
+}
+
+.product-slider-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.product-slider-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all ease .3s;
+    border-radius: 50%;
+    box-shadow: 0 3px 12px rgb(0 0 0 / 30%);
+    background: var(--white);
+}
+
+.product-slider-modal-close svg {
+    width: 16px;
+    height: 16px;
+}
+
+.product-slider-modal-content {
+    width: 100%;
+    height: 100dvh;
+    overflow-y: auto;
+}
+
+/* product-slider-modal css end */

@@ -1,0 +1,192 @@
+/* notfound-hero-section css start */
+.notfound-hero-section {
+    padding-bottom: 190px;
+}
+
+.notfound-code {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--heading-font);
+    font-size: 150px;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--white);
+    text-shadow: 0 0 40px rgba(237, 32, 36, .45);
+}
+
+.notfound-code-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #ff4a4e, var(--brand-color) 60%, #a5080b);
+    box-shadow: 0 0 0 10px rgba(237, 32, 36, .15), 0 0 60px rgba(237, 32, 36, .6);
+    color: var(--white);
+    animation: notfound-float 3s ease-in-out infinite;
+}
+
+.notfound-code-icon svg {
+    width: 64px;
+    height: 64px;
+}
+
+@keyframes notfound-float {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(-6deg);
+    }
+
+    50% {
+        transform: translateY(-12px) rotate(6deg);
+    }
+}
+
+/* search */
+.notfound-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 560px;
+    margin-top: 8px;
+    padding: 6px;
+    border-radius: 50px;
+    background: var(--white);
+    box-shadow: 0 14px 40px rgba(0, 0, 0, .35);
+}
+
+.notfound-search svg {
+    position: absolute;
+    left: 22px;
+    width: 20px;
+    height: 20px;
+    color: var(--muted);
+    pointer-events: none;
+}
+
+.notfound-search .notfound-search-input {
+    flex: 1;
+    min-width: 0;
+    height: 46px;
+    padding: 0 12px 0 46px;
+    border: 0;
+    font-size: 15px;
+    color: var(--black);
+}
+
+.notfound-search-input::-webkit-search-cancel-button {
+    display: none;
+}
+
+.btn.notfound-search-btn {
+    width: auto;
+    min-height: 46px;
+    padding: 10px 26px;
+    border-color: var(--brand-color);
+    border-radius: 50px;
+    background: var(--brand-color);
+    color: var(--white);
+    font-family: var(--heading-font);
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.btn.notfound-search-btn:hover {
+    border-color: var(--black);
+    background: var(--black);
+    color: var(--white);
+}
+
+.notfound-tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, .6);
+}
+
+.notfound-tags button {
+    padding: 6px 14px;
+    border: 1px solid rgba(255, 255, 255, .2);
+    border-radius: 30px;
+    background: rgba(255, 255, 255, .06);
+    font-size: 13px;
+    color: var(--white);
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.notfound-tags button:hover {
+    border-color: var(--brand-color);
+    background: var(--brand-color);
+}
+
+/* notfound-hero-section css end */
+
+@media only screen and (max-width: 992px) {
+
+    /* notfound-hero-section css start */
+    .notfound-code {
+        font-size: 110px;
+    }
+
+    .notfound-code-icon {
+        width: 96px;
+        height: 96px;
+    }
+
+    .notfound-code-icon svg {
+        width: 48px;
+        height: 48px;
+    }
+
+    /* notfound-hero-section css end */
+}
+
+@media only screen and (max-width: 575px) {
+
+    /* notfound-hero-section css start */
+    .notfound-hero-section {
+        padding-bottom: 110px;
+    }
+
+    /* keep the red arc below the popular tags */
+    .notfound-hero-section::before {
+        top: 90%;
+    }
+
+    .notfound-code {
+        gap: 8px;
+        font-size: 84px;
+    }
+
+    .notfound-code-icon {
+        width: 72px;
+        height: 72px;
+        box-shadow: 0 0 0 6px rgba(237, 32, 36, .15), 0 0 40px rgba(237, 32, 36, .6);
+    }
+
+    .notfound-code-icon svg {
+        width: 36px;
+        height: 36px;
+    }
+
+    .notfound-search .notfound-search-input {
+        height: 42px;
+        font-size: 14px;
+    }
+
+    .btn.notfound-search-btn {
+        min-height: 42px;
+        padding: 8px 18px;
+    }
+
+    /* notfound-hero-section css end */
+}

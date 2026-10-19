@@ -1,0 +1,387 @@
+/* buy-now-popup css start */
+.buy-now-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(0, 0, 0, .55);
+    font-family: var(--paragraph-font);
+    opacity: 0;
+    visibility: hidden;
+    transition: all ease .3s;
+}
+
+.buy-now-popup.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.buy-now-popup-close-window-btn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
+.buy-now-popup-inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 480px;
+    max-height: calc(100dvh - 32px);
+    display: flex;
+    flex-direction: column;
+    border-radius: 14px;
+    background-color: #f6f6f6;
+    overflow: hidden;
+    transform: translateY(20px);
+    transition: transform .3s ease;
+}
+
+.buy-now-popup.active .buy-now-popup-inner {
+    transform: translateY(0);
+}
+
+.buy-now-popup-form {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.buy-now-popup.success .buy-now-popup-form {
+    display: none;
+}
+
+.buy-now-popup-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    border-bottom: 1px solid #eeeeee;
+    background-color: var(--white);
+}
+
+.buy-now-popup-title {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.buy-now-popup-close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #f1f1f1;
+    color: var(--black);
+}
+
+.buy-now-popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px 16px;
+    overflow-y: auto;
+}
+
+.buy-now-popup-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px;
+    border-radius: 10px;
+    background-color: var(--white);
+}
+
+.buy-now-popup-card-title {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.buy-now-popup-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.buy-now-popup-field label {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.buy-now-popup-field input,
+.buy-now-popup-field textarea {
+    padding: 11px 12px;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    background-color: var(--white);
+    font-size: 14px;
+    cursor: text;
+    resize: vertical;
+}
+
+.buy-now-popup-field input:focus,
+.buy-now-popup-field textarea:focus {
+    border-color: var(--brand-color);
+    box-shadow: 0 0 0 3px rgba(255, 84, 84, .15);
+}
+
+.buy-now-popup-error {
+    display: none;
+    font-size: 12px;
+    color: #d62020;
+}
+
+.buy-now-popup-field.invalid input {
+    border-color: #d62020;
+}
+
+.buy-now-popup-field.invalid .buy-now-popup-error {
+    display: block;
+}
+
+.buy-now-popup-product {
+    flex-direction: row;
+    align-items: center;
+}
+
+.buy-now-popup-product-img {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+    border: 1px solid #eeeeee;
+    border-radius: 8px;
+}
+
+.buy-now-popup-product-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.buy-now-popup-qty-badge {
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background-color: #333333;
+    color: var(--white);
+    font-size: 11px;
+}
+
+.buy-now-popup-product-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.buy-now-popup-product-title {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.buy-now-popup-product-offer {
+    margin-top: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--product-green);
+}
+
+.buy-now-popup-product-offer:empty {
+    display: none;
+}
+
+.buy-now-popup-quantity {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 8px;
+    border: 1px solid #dddddd;
+    border-radius: 6px;
+}
+
+.buy-now-popup-quantity button {
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
+}
+
+.buy-now-popup-quantity-count {
+    min-width: 26px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.buy-now-popup-product-price {
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.buy-now-popup-shipping {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 12px;
+    border: 1px solid #e3e3e3;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.buy-now-popup-shipping:has(input:checked) {
+    border-color: #333333;
+    background-color: #f7f7f7;
+}
+
+.buy-now-popup-shipping input {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 auto;
+    appearance: auto;
+    -webkit-appearance: radio;
+    accent-color: #333333;
+}
+
+.buy-now-popup-shipping span {
+    flex: 1;
+}
+
+.buy-now-popup-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    background-color: var(--white);
+    font-size: 14px;
+    text-align: left;
+}
+
+.buy-now-popup-summary p {
+    display: flex;
+    justify-content: space-between;
+}
+
+.buy-now-popup-summary .total {
+    padding-top: 8px;
+    border-top: 1px dashed #dddddd;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.buy-now-popup-bottom {
+    padding: 12px 16px 16px;
+    border-top: 1px solid #eeeeee;
+    background-color: var(--white);
+}
+
+.buy-now-popup-inner .btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px;
+    border-color: var(--brand-color);
+    background-color: var(--brand-color);
+    color: var(--white);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+}
+
+.buy-now-popup-inner .btn:hover {
+    border-color: var(--black);
+    background-color: var(--black);
+    color: var(--white);
+}
+
+.buy-now-popup-success {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 28px 20px 20px;
+    text-align: center;
+    overflow-y: auto;
+}
+
+.buy-now-popup.success .buy-now-popup-success {
+    display: flex;
+}
+
+.buy-now-popup-success-icon {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: var(--product-green);
+    color: var(--white);
+    font-size: 30px;
+}
+
+.buy-now-popup-success-subtitle {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--product-green);
+}
+
+.buy-now-popup-success-title {
+    font-size: 22px;
+}
+
+.buy-now-popup-success-text {
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.buy-now-popup-order-id {
+    padding: 6px 14px;
+    border-radius: 999px;
+    background-color: var(--white);
+    font-size: 13px;
+}
+
+/* buy-now-popup css end */
+
+@media only screen and (max-width: 767px) {
+
+    /* buy-now-popup css start */
+    .buy-now-popup {
+        align-items: flex-end;
+        padding: 0;
+    }
+
+    .buy-now-popup-inner {
+        max-width: 100%;
+        max-height: 94dvh;
+        border-radius: 16px 16px 0 0;
+    }
+
+    /* buy-now-popup css end */
+}

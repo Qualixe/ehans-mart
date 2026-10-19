@@ -1,0 +1,89 @@
+/* about-process-section css start */
+.about-process-section {
+    padding: 80px 0;
+    background: var(--white);
+}
+
+.about-process-items {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    counter-reset: step;
+}
+
+.about-process-item {
+    position: relative;
+    padding: 28px 24px;
+    border: 1px solid var(--border-color2);
+    border-radius: 12px;
+}
+
+/* dashed line between steps */
+.about-process-item:not(:last-child)::after {
+    position: absolute;
+    content: "";
+    top: 46px;
+    right: -22px;
+    width: 22px;
+    border-top: 2px dashed var(--brand-color);
+}
+
+.about-process-step {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(237, 32, 36, .1);
+    font-family: var(--heading-font);
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--brand-color);
+}
+
+.about-process-title {
+    margin-top: 18px;
+    font-family: var(--heading-font);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--black);
+}
+
+.about-process-text {
+    margin-top: 8px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--muted);
+}
+
+/* about-process-section css end */
+
+@media only screen and (max-width: 992px) {
+
+    /* about-process-section css start */
+    .about-process-items {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .about-process-item::after {
+        display: none;
+    }
+
+    /* about-process-section css end */
+}
+
+@media only screen and (max-width: 575px) {
+
+    /* about-process-section css start */
+    .about-process-section {
+        padding: 48px 0;
+    }
+
+    .about-process-items {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    /* about-process-section css end */
+}

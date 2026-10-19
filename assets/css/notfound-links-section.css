@@ -1,0 +1,109 @@
+/* notfound-links-section css start */
+.notfound-links-section {
+    position: relative;
+    z-index: 2;
+    margin-top: -56px;
+}
+
+.notfound-links-items {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.notfound-links-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 26px 22px;
+    border-radius: 12px;
+    background: var(--white);
+    box-shadow: 0 14px 36px rgba(0, 0, 0, .08);
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.notfound-links-item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 44px rgba(237, 32, 36, .15);
+}
+
+.notfound-links-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background: var(--section-bg-start);
+    color: var(--brand-color);
+    transition: all .3s ease;
+}
+
+.notfound-links-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.notfound-links-item:hover .notfound-links-icon {
+    background: var(--brand-color);
+    color: var(--white);
+}
+
+.notfound-links-title {
+    margin-top: 16px;
+    font-family: var(--heading-font);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--black);
+}
+
+.notfound-links-text {
+    margin-top: 6px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--muted);
+}
+
+/* notfound-links-section css end */
+
+@media only screen and (max-width: 992px) {
+
+    /* notfound-links-section css start */
+    .notfound-links-items {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* notfound-links-section css end */
+}
+
+@media only screen and (max-width: 575px) {
+
+    /* notfound-links-section css start */
+    .notfound-links-section {
+        margin-top: -40px;
+    }
+
+    .notfound-links-items {
+        gap: 10px;
+    }
+
+    .notfound-links-item {
+        padding: 18px 14px;
+    }
+
+    .notfound-links-icon {
+        width: 42px;
+        height: 42px;
+    }
+
+    .notfound-links-title {
+        margin-top: 12px;
+        font-size: 15px;
+    }
+
+    .notfound-links-text {
+        font-size: 12px;
+    }
+
+    /* notfound-links-section css end */
+}

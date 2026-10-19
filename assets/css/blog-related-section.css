@@ -1,0 +1,33 @@
+/* blog-related-section css start */
+.blog-related-section {
+    padding: 80px 0;
+    background:
+        radial-gradient(60% 80% at 0% 0%, var(--section-bg-glow), transparent 70%),
+        linear-gradient(135deg, var(--section-bg-start) 0%, var(--section-bg-end) 100%);
+}
+
+/* blog-related-section css end */
+
+@media only screen and (max-width: 992px) {
+
+    /* blog-related-section css start */
+    .blog-related-section .blog-items .blog-card:nth-child(3) {
+        display: none;
+    }
+
+    /* blog-related-section css end */
+}
+
+@media only screen and (max-width: 575px) {
+
+    /* blog-related-section css start */
+    .blog-related-section {
+        padding: 48px 0;
+    }
+
+    .blog-related-section .blog-items .blog-card:nth-child(3) {
+        display: flex;
+    }
+
+    /* blog-related-section css end */
+}

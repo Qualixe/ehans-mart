@@ -1,0 +1,111 @@
+/* about-hero-section css start */
+.about-hero-section {
+    position: relative;
+    overflow: hidden;
+    padding: 72px 0 80px;
+    background:
+        radial-gradient(60% 90% at 50% 120%, rgba(237, 32, 36, .35), transparent 70%),
+        linear-gradient(180deg, #0b0b0d 0%, #14080a 100%);
+}
+
+/* red planet arc like home hero banner */
+.about-hero-section::before {
+    position: absolute;
+    content: "";
+    left: 50%;
+    top: 78%;
+    width: 1400px;
+    height: 1400px;
+    border-top: 2px solid #ff3b3f;
+    border-radius: 50%;
+    box-shadow: 0 -10px 40px rgba(237, 32, 36, .7), 0 -40px 120px rgba(237, 32, 36, .35);
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+
+.about-hero-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.about-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, .6);
+}
+
+.about-breadcrumb a {
+    color: rgba(255, 255, 255, .85);
+}
+
+.about-breadcrumb a:hover {
+    color: var(--brand-color);
+}
+
+.about-hero-title {
+    font-family: var(--heading-font);
+    font-size: 52px;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--white);
+}
+
+.about-hero-title span {
+    display: block;
+    color: #ff2b30;
+    text-shadow: 0 0 30px rgba(237, 32, 36, .5);
+}
+
+.about-hero-text {
+    max-width: 600px;
+    font-size: 16px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, .8);
+}
+
+.about-hero-btns {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 6px;
+}
+
+/* about-hero-section css end */
+
+@media only screen and (max-width: 992px) {
+
+    /* about-hero-section css start */
+    .about-hero-title {
+        font-size: 40px;
+    }
+
+    /* about-hero-section css end */
+}
+
+@media only screen and (max-width: 575px) {
+
+    /* about-hero-section css start */
+    .about-hero-section {
+        padding: 48px 0 56px;
+    }
+
+    .about-hero-title {
+        font-size: 30px;
+    }
+
+    .about-hero-text {
+        font-size: 14px;
+    }
+
+    /* about-hero-section css end */
+}
