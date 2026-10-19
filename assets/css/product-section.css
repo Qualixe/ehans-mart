@@ -362,11 +362,6 @@
     transition: all ease .3s;
 }
 
-.bundle-item-promo .bundle-label {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-}
-
 .bundle-label:hover {
     border-color: var(--brand-color);
 }
@@ -420,7 +415,7 @@
 .bundle-savings {
     display: block;
     padding: 5px 10px;
-    border-radius: 50px;
+    border-radius: 4px;
     background-color: var(--brand-color);
     color: var(--white);
     font-family: var(--paragraph-font);
@@ -464,7 +459,7 @@
     font-weight: 600;
 }
 
-/* green pill badge on top right */
+/* black pill badge on top right */
 .bundle-badge {
     position: absolute;
     top: 0;
@@ -472,8 +467,8 @@
     z-index: 1;
     display: block;
     padding: 5px 10px;
-    border-radius: 50px;
-    background-color: var(--color-green);
+    border-radius: 4px;
+    background-color: var(--black);
     color: var(--white);
     font-family: var(--paragraph-font);
     font-size: 12px;
@@ -481,18 +476,6 @@
     line-height: 1;
     white-space: nowrap;
     pointer-events: none;
-}
-
-.bundle-promo {
-    padding: 6px 15px;
-    border: 1px solid var(--color-green);
-    border-top: 0;
-    border-radius: 0 0 8px 8px;
-    background-color: var(--color-green);
-    color: var(--white);
-    font-family: var(--paragraph-font);
-    font-size: 12px;
-    font-weight: 600;
 }
 
 /* product bundle css end */

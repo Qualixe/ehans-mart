@@ -32,6 +32,13 @@
     color: var(--muted);
 }
 
+/* sits right under "on this page" */
+.policy-updated {
+    margin-top: -10px;
+    font-size: 13px;
+    color: var(--muted);
+}
+
 .policy-nav-links {
     display: flex;
     flex-direction: column;

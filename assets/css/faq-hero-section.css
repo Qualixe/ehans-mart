@@ -1,6 +1,10 @@
 /* faq-hero-section css start */
-.faq-hero-section {
-    padding-bottom: 120px;
+.faq-hero-section.about-hero-compact {
+    padding-bottom: 88px;
+}
+
+.faq-hero-section.about-hero-compact::before {
+    top: 84%;
 }
 
 .faq-search {
@@ -71,8 +75,8 @@
 @media only screen and (max-width: 575px) {
 
     /* faq-hero-section css start */
-    .faq-hero-section {
-        padding-bottom: 72px;
+    .faq-hero-section.about-hero-compact {
+        padding-bottom: 64px;
     }
 
     .faq-search .faq-search-input {

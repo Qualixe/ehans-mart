@@ -1,0 +1,21 @@
+/* contact-hero-section css start */
+/* compact hero: room at the bottom for the info cards overlap */
+.contact-hero-section.about-hero-compact {
+    padding-bottom: 96px;
+}
+
+.contact-hero-section.about-hero-compact::before {
+    top: 80%;
+}
+
+/* contact-hero-section css end */
+
+@media only screen and (max-width: 575px) {
+
+    /* contact-hero-section css start */
+    .contact-hero-section.about-hero-compact {
+        padding-bottom: 72px;
+    }
+
+    /* contact-hero-section css end */
+}

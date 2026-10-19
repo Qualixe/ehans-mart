@@ -80,6 +80,19 @@
     margin-top: 6px;
 }
 
+/* compact hero: only a one line heading (about page) */
+.about-hero-section.about-hero-compact {
+    padding: 56px 0 64px;
+}
+
+.about-hero-compact::before {
+    top: 72%;
+}
+
+.about-hero-compact .about-hero-title span {
+    display: inline;
+}
+
 /* about-hero-section css end */
 
 @media only screen and (max-width: 992px) {
@@ -105,6 +118,10 @@
 
     .about-hero-text {
         font-size: 14px;
+    }
+
+    .about-hero-section.about-hero-compact {
+        padding: 36px 0 44px;
     }
 
     /* about-hero-section css end */

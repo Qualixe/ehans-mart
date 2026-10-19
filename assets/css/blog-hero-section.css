@@ -38,6 +38,15 @@
     border-color: var(--brand-color);
 }
 
+/* compact hero: keep room at the bottom for the featured card overlap */
+.blog-hero-section.about-hero-compact {
+    padding-bottom: 104px;
+}
+
+.blog-hero-section.about-hero-compact::before {
+    top: 80%;
+}
+
 /* blog-hero-section css end */
 
 @media only screen and (max-width: 575px) {
@@ -50,6 +59,10 @@
     .blog-search .blog-search-input {
         height: 50px;
         font-size: 14px;
+    }
+
+    .blog-hero-section.about-hero-compact {
+        padding-bottom: 80px;
     }
 
     /* blog-hero-section css end */

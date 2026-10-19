@@ -20,6 +20,69 @@
     box-shadow: 0 20px 50px rgba(0, 0, 0, .07);
 }
 
+/* article head: category, title, meta */
+.blog-details-head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 40px 48px 32px;
+}
+
+.blog-details-cat {
+    padding: 5px 12px;
+    border-radius: 30px;
+    background: var(--section-bg-start);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--brand-color);
+}
+
+.blog-details-title {
+    font-family: var(--heading-font);
+    font-size: 40px;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--black);
+}
+
+.blog-details-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 18px;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.blog-details-meta strong {
+    color: var(--black);
+}
+
+.blog-details-meta span + span:not(:nth-child(2)) {
+    position: relative;
+}
+
+.blog-details-meta span + span:not(:nth-child(2))::before {
+    position: absolute;
+    content: "";
+    left: -11px;
+    top: 50%;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--brand-color);
+    transform: translateY(-50%);
+}
+
+.blog-details-meta .blog-author-avatar {
+    width: 36px;
+    height: 36px;
+    font-size: 12px;
+}
+
 .blog-details-cover {
     aspect-ratio: 16 / 9;
     overflow: hidden;
@@ -630,6 +693,14 @@
         display: none;
     }
 
+    .blog-details-head {
+        padding: 32px 32px 26px;
+    }
+
+    .blog-details-title {
+        font-size: 32px;
+    }
+
     .blog-details-content {
         padding: 36px 32px 8px;
     }
@@ -655,6 +726,25 @@
     .blog-details-section {
         margin-top: -44px;
         padding-bottom: 48px;
+    }
+
+    .blog-details-head {
+        gap: 12px;
+        padding: 24px 18px 20px;
+    }
+
+    .blog-details-title {
+        font-size: 24px;
+    }
+
+    .blog-details-meta {
+        gap: 6px 14px;
+        font-size: 13px;
+    }
+
+    /* meta wraps on small screens: no dot at a line start */
+    .blog-details-meta span + span:not(:nth-child(2))::before {
+        display: none;
     }
 
     .blog-details-content {
