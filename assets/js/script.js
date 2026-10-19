@@ -2499,3 +2499,108 @@ document.querySelectorAll(".copyright-year").forEach((year) => {
   });
 })();
 // 404 search js end--
+
+// all-categories megamenu js start--
+(() => {
+  const wrap = document.querySelector(".all-categories");
+  if (!wrap) return;
+
+  const btn = wrap.querySelector(".all-categories-btn");
+  const tabs = [...wrap.querySelectorAll(".all-categories-tab")];
+  const panels = [...wrap.querySelectorAll(".all-categories-panel")];
+
+  const toggleMenu = (open) => {
+    wrap.classList.toggle("active", open);
+    btn.setAttribute("aria-expanded", open);
+  };
+
+  const showCategory = (id) => {
+    tabs.forEach((tab) => tab.classList.toggle("active", tab.dataset.allCat === id));
+    panels.forEach((panel) => panel.classList.toggle("active", panel.dataset.allCat === id));
+  };
+
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    toggleMenu(!wrap.classList.contains("active"));
+  });
+
+  // hover or click on a category shows its links
+  tabs.forEach((tab) => {
+    tab.addEventListener("mouseenter", () => showCategory(tab.dataset.allCat));
+    tab.addEventListener("click", () => showCategory(tab.dataset.allCat));
+  });
+
+  // close: outside click, Esc, header hides on scroll down
+  document.addEventListener("click", (e) => {
+    if (!wrap.contains(e.target)) toggleMenu(false);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && wrap.classList.contains("active")) {
+      toggleMenu(false);
+      btn.focus();
+    }
+  });
+
+  new MutationObserver(() => {
+    if (document.documentElement.classList.contains("page-scroll-down")) toggleMenu(false);
+  }).observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+})();
+// all-categories megamenu js end--
+
+// nav-dropdown js start--
+(() => {
+  const dropdowns = document.querySelectorAll(".nav-dropdown");
+  if (!dropdowns.length) return;
+
+  // deepest number of menu levels inside a menu
+  const depthOf = (menu) =>
+    1 + Math.max(0, ...[...menu.querySelectorAll(":scope > .has-sub > .nav-dropdown-sub")].map(depthOf));
+
+  // decide once for the whole chain: all sub levels open right, or all open left
+  const placeMenu = (dropdown) => {
+    const menu = dropdown.querySelector(":scope > .nav-dropdown-menu");
+    const viewW = document.documentElement.clientWidth - 12;
+    const gap = 15;
+
+    dropdown.classList.remove("align-right", "subs-left");
+    const linkRect = dropdown.getBoundingClientRect();
+    const menuW = menu.offsetWidth;
+    const subW = Math.max(...[...dropdown.querySelectorAll(".nav-dropdown-sub")].map((s) => s.offsetWidth), menuW);
+    const levels = depthOf(menu) - 1;
+
+    // first menu itself
+    const alignRight = linkRect.left + menuW > viewW;
+    dropdown.classList.toggle("align-right", alignRight);
+    const menuLeft = alignRight ? linkRect.right - menuW : linkRect.left;
+
+    // sub levels: right side needs room for every level, else go left
+    const needRight = menuLeft + menuW + levels * (subW + gap);
+    dropdown.classList.toggle("subs-left", needRight > viewW);
+  };
+
+  dropdowns.forEach((dropdown) => {
+    dropdown.addEventListener("mouseenter", () => placeMenu(dropdown));
+    dropdown.addEventListener("focusin", () => placeMenu(dropdown));
+  });
+  window.addEventListener("resize", () => dropdowns.forEach(placeMenu));
+
+  // keep aria-expanded in sync for screen readers
+  dropdowns.forEach((dropdown) => {
+    const btn = dropdown.querySelector(".nav-dropdown-btn");
+    const setOpen = (open) => btn.setAttribute("aria-expanded", open);
+    dropdown.addEventListener("mouseenter", () => setOpen(true));
+    dropdown.addEventListener("mouseleave", () => setOpen(dropdown.contains(document.activeElement)));
+    dropdown.addEventListener("focusout", (e) => {
+      if (!dropdown.contains(e.relatedTarget)) setOpen(false);
+    });
+    btn.addEventListener("focus", () => setOpen(true));
+    dropdown.addEventListener("keydown", (e) => {
+      if (e.key !== "Escape") return;
+      btn.focus();
+      btn.blur();
+      setOpen(false);
+    });
+  });
+})();
+// nav-dropdown js end--

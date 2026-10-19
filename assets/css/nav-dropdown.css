@@ -1,0 +1,141 @@
+/* nav-dropdown css start */
+.nav-dropdown {
+    position: relative;
+}
+
+.nav-dropdown-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: transparent;
+    color: var(--black);
+}
+
+.nav-dropdown-arrow {
+    width: 14px;
+    height: 14px;
+    transition: transform .3s ease;
+}
+
+.nav-dropdown:hover .nav-dropdown-arrow,
+.nav-dropdown:focus-within .nav-dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+/* menu (every level) */
+.nav-dropdown-menu {
+    position: absolute;
+    z-index: 4;
+    top: 100%;
+    left: 0;
+    min-width: 220px;
+    padding: 8px;
+    border: 1px solid var(--border-color2);
+    border-radius: 10px;
+    background: var(--white);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, .12);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity .25s ease, transform .25s ease, visibility .25s ease;
+}
+
+/* sub menu flies out to the right */
+.nav-dropdown-sub {
+    top: -9px;
+    left: calc(100% + 15px);
+    transform: translateX(10px);
+}
+
+/* invisible bridge so the mouse can cross the gap (menu padding + border + gap) */
+.nav-dropdown-sub::before {
+    position: absolute;
+    content: "";
+    top: 0;
+    bottom: 0;
+    left: -16px;
+    width: 16px;
+}
+
+/* no room on the right: every sub level opens to the left (js adds .subs-left) */
+.nav-dropdown.subs-left .nav-dropdown-sub {
+    left: auto;
+    right: calc(100% + 15px);
+    transform: translateX(-10px);
+}
+
+.nav-dropdown.subs-left .nav-dropdown-sub::before {
+    left: auto;
+    right: -16px;
+}
+
+/* first menu does not fit either: align it to the right of the link (js adds .align-right) */
+.nav-dropdown.align-right > .nav-dropdown-menu {
+    left: auto;
+    right: 0;
+}
+
+/* sub arrows point the way the menu opens (text stays left aligned) */
+.nav-dropdown.subs-left .nav-dropdown-item > a {
+    justify-content: flex-start;
+}
+
+.nav-dropdown.subs-left .nav-dropdown-sub-arrow {
+    order: -1;
+    transform: rotate(180deg);
+}
+
+.nav-dropdown.subs-left .nav-dropdown-item:hover > a .nav-dropdown-sub-arrow,
+.nav-dropdown.subs-left .nav-dropdown-item:focus-within > a .nav-dropdown-sub-arrow {
+    transform: rotate(180deg) translateX(3px);
+}
+
+.nav-dropdown:hover > .nav-dropdown-menu,
+.nav-dropdown:focus-within > .nav-dropdown-menu,
+.nav-dropdown-item:hover > .nav-dropdown-sub,
+.nav-dropdown-item:focus-within > .nav-dropdown-sub {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(0);
+}
+
+.nav-dropdown-item {
+    position: relative;
+}
+
+.nav-dropdown-item > a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 9px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--paragraph-text-color);
+    white-space: nowrap;
+    transition: background .2s ease, color .2s ease, padding .2s ease;
+}
+
+.nav-dropdown-sub-arrow {
+    flex-shrink: 0;
+    width: 14px;
+    height: 14px;
+    color: var(--muted);
+    transition: transform .2s ease, color .2s ease;
+}
+
+.nav-dropdown-item:hover > a,
+.nav-dropdown-item:focus-within > a {
+    padding-left: 16px;
+    background: var(--section-bg-start);
+    color: var(--brand-color);
+}
+
+.nav-dropdown-item:hover > a .nav-dropdown-sub-arrow,
+.nav-dropdown-item:focus-within > a .nav-dropdown-sub-arrow {
+    color: var(--brand-color);
+    transform: translateX(3px);
+}
+
+/* nav-dropdown css end */

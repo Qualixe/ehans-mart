@@ -22,6 +22,8 @@
 	<link rel="stylesheet" href="./assets/css/header.css">
 	<link rel="stylesheet" href="./assets/css/search-bar.css">
 	<link rel="stylesheet" href="./assets/css/mobile-menu.css">
+	<link rel="stylesheet" href="./assets/css/all-categories-menu.css">
+	<link rel="stylesheet" href="./assets/css/nav-dropdown.css">
 	<link rel="stylesheet" href="./assets/css/announcebar-section.css">
 	<link rel="stylesheet" href="./assets/css/main.css">
 	<link rel="stylesheet" href="./assets/css/cart-drawer.css">
@@ -172,6 +174,522 @@
 				</div>
 				<div class="navbar-link-area">
 					<ul class="navbar-links">
+						<!-- all-categories start -->
+						<li class="navbar-link all-categories">
+							<button type="button" class="all-categories-btn" aria-expanded="false" aria-controls="all-categories-menu">
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+									aria-hidden="true">
+									<path d="M4 7h16M4 12h16M4 17h16" />
+								</svg>
+								<span>All Categories</span>
+								<svg class="all-categories-btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+									stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+									<path d="m6 9 6 6 6-6" />
+								</svg>
+							</button>
+							<div class="all-categories-menu" id="all-categories-menu">
+								<ul class="all-categories-list">
+								<li>
+									<button type="button" class="all-categories-tab active" data-all-cat="baby-care">
+										<span>Baby Care</span>
+										<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+											stroke-linejoin="round" aria-hidden="true">
+											<path d="m9 6 6 6-6 6" />
+										</svg>
+									</button>
+								</li>
+								<li>
+									<button type="button" class="all-categories-tab" data-all-cat="baby-safety">
+										<span>Baby Safety</span>
+										<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+											stroke-linejoin="round" aria-hidden="true">
+											<path d="m9 6 6 6-6 6" />
+										</svg>
+									</button>
+								</li>
+								<li>
+									<button type="button" class="all-categories-tab" data-all-cat="home-kitchen">
+										<span>Home &amp; Kitchen</span>
+										<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+											stroke-linejoin="round" aria-hidden="true">
+											<path d="m9 6 6 6-6 6" />
+										</svg>
+									</button>
+								</li>
+								<li>
+									<button type="button" class="all-categories-tab" data-all-cat="womens-essentials">
+										<span>Women’s Essentials</span>
+										<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+											stroke-linejoin="round" aria-hidden="true">
+											<path d="m9 6 6 6-6 6" />
+										</svg>
+									</button>
+								</li>
+								<li>
+									<button type="button" class="all-categories-tab" data-all-cat="hair-accessories">
+										<span>Hair Accessories</span>
+										<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+											stroke-linejoin="round" aria-hidden="true">
+											<path d="m9 6 6 6-6 6" />
+										</svg>
+									</button>
+								</li>
+								<li>
+									<button type="button" class="all-categories-tab" data-all-cat="mens-essentials">
+										<span>Man’s Essentials</span>
+										<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+											stroke-linejoin="round" aria-hidden="true">
+											<path d="m9 6 6 6-6 6" />
+										</svg>
+									</button>
+								</li>
+								<li>
+									<button type="button" class="all-categories-tab" data-all-cat="garden-outdoor">
+										<span>Garden &amp; Outdoor</span>
+										<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+											stroke-linejoin="round" aria-hidden="true">
+											<path d="m9 6 6 6-6 6" />
+										</svg>
+									</button>
+								</li>
+								<li>
+									<button type="button" class="all-categories-tab" data-all-cat="tools">
+										<span>Tools</span>
+										<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+											stroke-linejoin="round" aria-hidden="true">
+											<path d="m9 6 6 6-6 6" />
+										</svg>
+									</button>
+								</li>
+								<li>
+									<button type="button" class="all-categories-tab" data-all-cat="lifestyle">
+										<span>Lifestyle</span>
+										<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+											stroke-linejoin="round" aria-hidden="true">
+											<path d="m9 6 6 6-6 6" />
+										</svg>
+									</button>
+								</li>
+								</ul>
+								<div class="all-categories-panels">
+								<div class="all-categories-panel active" data-all-cat="baby-care">
+									<div class="all-categories-content">
+										<div class="all-categories-head">
+											<p class="all-categories-title">Baby Care</p>
+											<a href="collections.html" class="all-categories-view">view all <span aria-hidden="true">→</span></a>
+										</div>
+										<ul class="all-categories-links">
+											<li><a href="collections.html">Baby Caps &amp; Hats</a></li>
+											<li><a href="collections.html">Baby Carriers</a></li>
+											<li><a href="collections.html">Tiffin Boxes</a></li>
+											<li><a href="collections.html">Sun Hats</a></li>
+											<li><a href="collections.html">Feeding Essentials</a></li>
+											<li><a href="collections.html">Baby Clothing</a></li>
+											<li><a href="collections.html">Bath &amp; Skin Care</a></li>
+											<li><a href="collections.html">Baby Toys</a></li>
+											<li><a href="collections.html">Diaper Bags</a></li>
+										</ul>
+									</div>
+									<a href="collections.html" class="all-categories-promo">
+										<img src="./assets/images/category-baby-care.jpg" alt="Baby Care" loading="lazy">
+										<span class="all-categories-promo-content">
+											<span class="all-categories-promo-label">explore</span>
+											<span class="all-categories-promo-title">Baby Care</span>
+											<span class="all-categories-promo-text">Soft, safe and useful picks for your little one — from caps to tiffin boxes.</span>
+											<span class="all-categories-promo-btn">shop now <span aria-hidden="true">→</span></span>
+											<span class="all-categories-promo-features">
+												<span>
+													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+														stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+														<rect x="2.5" y="6" width="19" height="12" rx="2" />
+														<circle cx="12" cy="12" r="2.5" />
+													</svg>
+													100% Cash on Delivery
+												</span>
+												<span>
+													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+														stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+														<path d="M3 7h11v9H3zM14 10h4l3 3v3h-7" />
+														<circle cx="7" cy="17.5" r="1.8" />
+														<circle cx="17" cy="17.5" r="1.8" />
+													</svg>
+													Fast home delivery
+												</span>
+											</span>
+										</span>
+									</a>
+								</div>
+								<div class="all-categories-panel" data-all-cat="baby-safety">
+									<div class="all-categories-content">
+										<div class="all-categories-head">
+											<p class="all-categories-title">Baby Safety</p>
+											<a href="collections.html" class="all-categories-view">view all <span aria-hidden="true">→</span></a>
+										</div>
+										<ul class="all-categories-links">
+											<li><a href="collections.html">Safety Helmets</a></li>
+											<li><a href="collections.html">Riding Safety Belts</a></li>
+											<li><a href="collections.html">Fridge Child Locks</a></li>
+											<li><a href="collections.html">Cabinet Locks</a></li>
+											<li><a href="collections.html">Drawer Locks</a></li>
+											<li><a href="collections.html">Corner Guards</a></li>
+											<li><a href="collections.html">Door Stoppers</a></li>
+											<li><a href="collections.html">Socket Covers</a></li>
+											<li><a href="collections.html">Safety Gates</a></li>
+										</ul>
+									</div>
+									<a href="collections.html" class="all-categories-promo">
+										<img src="./assets/images/category-baby-safety.jpg" alt="Baby Safety" loading="lazy">
+										<span class="all-categories-promo-content">
+											<span class="all-categories-promo-label">explore</span>
+											<span class="all-categories-promo-title">Baby Safety</span>
+											<span class="all-categories-promo-text">Child locks, helmets and belts that keep curious kids safe at home and on the road.</span>
+											<span class="all-categories-promo-btn">shop now <span aria-hidden="true">→</span></span>
+											<span class="all-categories-promo-features">
+												<span>
+													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+														stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+														<rect x="2.5" y="6" width="19" height="12" rx="2" />
+														<circle cx="12" cy="12" r="2.5" />
+													</svg>
+													100% Cash on Delivery
+												</span>
+												<span>
+													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+														stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+														<path d="M3 7h11v9H3zM14 10h4l3 3v3h-7" />
+														<circle cx="7" cy="17.5" r="1.8" />
+														<circle cx="17" cy="17.5" r="1.8" />
+													</svg>
+													Fast home delivery
+												</span>
+											</span>
+										</span>
+									</a>
+								</div>
+								<div class="all-categories-panel" data-all-cat="home-kitchen">
+									<div class="all-categories-content">
+										<div class="all-categories-head">
+											<p class="all-categories-title">Home &amp; Kitchen</p>
+											<a href="collections.html" class="all-categories-view">view all <span aria-hidden="true">→</span></a>
+										</div>
+										<ul class="all-categories-links">
+											<li><a href="collections.html">Kitchen Aprons</a></li>
+											<li><a href="collections.html">Oil Dispensers</a></li>
+											<li><a href="collections.html">Cleaning Sprays</a></li>
+											<li><a href="collections.html">Dish Washing Gloves</a></li>
+											<li><a href="collections.html">Drawer Organizers</a></li>
+											<li><a href="collections.html">Fridge Covers</a></li>
+											<li><a href="collections.html">Door Foam</a></li>
+											<li><a href="collections.html">Door Closers</a></li>
+											<li><a href="collections.html">Magic Erasers</a></li>
+											<li><a href="collections.html">Mouse Traps</a></li>
+											<li><a href="collections.html">Furniture Polish</a></li>
+											<li><a href="collections.html">Kitchen Face Shields</a></li>
+										</ul>
+									</div>
+									<a href="collections.html" class="all-categories-promo">
+										<img src="./assets/images/category-home-kitchen.jpg" alt="Home and Kitchen" loading="lazy">
+										<span class="all-categories-promo-content">
+											<span class="all-categories-promo-label">explore</span>
+											<span class="all-categories-promo-title">Home &amp; Kitchen</span>
+											<span class="all-categories-promo-text">Smart tools that make cooking, cleaning and organizing easier every day.</span>
+											<span class="all-categories-promo-btn">shop now <span aria-hidden="true">→</span></span>
+											<span class="all-categories-promo-features">
+												<span>
+													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+														stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+														<rect x="2.5" y="6" width="19" height="12" rx="2" />
+														<circle cx="12" cy="12" r="2.5" />
+													</svg>
+													100% Cash on Delivery
+												</span>
+												<span>
+													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+														stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+														<path d="M3 7h11v9H3zM14 10h4l3 3v3h-7" />
+														<circle cx="7" cy="17.5" r="1.8" />
+														<circle cx="17" cy="17.5" r="1.8" />
+													</svg>
+													Fast home delivery
+												</span>
+											</span>
+										</span>
+									</a>
+								</div>
+								<div class="all-categories-panel" data-all-cat="womens-essentials">
+									<div class="all-categories-content">
+										<div class="all-categories-head">
+											<p class="all-categories-title">Women’s Essentials</p>
+											<a href="collections.html" class="all-categories-view">view all <span aria-hidden="true">→</span></a>
+										</div>
+										<ul class="all-categories-links">
+											<li><a href="collections.html">Face Masks</a></li>
+											<li><a href="collections.html">Facial Hair Removers</a></li>
+											<li><a href="collections.html">Earring Supports</a></li>
+											<li><a href="collections.html">Clothing Tag Guns</a></li>
+											<li><a href="collections.html">Beauty Tools</a></li>
+											<li><a href="collections.html">Skin Care</a></li>
+											<li><a href="collections.html">Makeup Organizers</a></li>
+											<li><a href="collections.html">Handbag Accessories</a></li>
+											<li><a href="collections.html">Personal Care</a></li>
+										</ul>
+									</div>
+									<a href="collections.html" class="all-categories-promo">
+										<img src="./assets/images/category-womens-essentials.jpg" alt="Women’s Essentials" loading="lazy">
+										<span class="all-categories-promo-content">
+											<span class="all-categories-promo-label">explore</span>
+											<span class="all-categories-promo-title">Women’s Essentials</span>
+											<span class="all-categories-promo-text">Beauty and daily-care helpers loved by thousands of customers.</span>
+											<span class="all-categories-promo-btn">shop now <span aria-hidden="true">→</span></span>
+											<span class="all-categories-promo-features">
+												<span>
+													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+														stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+														<rect x="2.5" y="6" width="19" height="12" rx="2" />
+														<circle cx="12" cy="12" r="2.5" />
+													</svg>
+													100% Cash on Delivery
+												</span>
+												<span>
+													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+														stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+														<path d="M3 7h11v9H3zM14 10h4l3 3v3h-7" />
+														<circle cx="7" cy="17.5" r="1.8" />
+														<circle cx="17" cy="17.5" r="1.8" />
+													</svg>
+													Fast home delivery
+												</span>
+											</span>
+										</span>
+									</a>
+								</div>
+								<div class="all-categories-panel" data-all-cat="hair-accessories">
+									<div class="all-categories-content">
+										<div class="all-categories-head">
+											<p class="all-categories-title">Hair Accessories</p>
+											<a href="collections.html" class="all-categories-view">view all <span aria-hidden="true">→</span></a>
+										</div>
+										<ul class="all-categories-links">
+											<li><a href="collections.html">Bow Hair Clips</a></li>
+											<li><a href="collections.html">Spring Clips</a></li>
+											<li><a href="collections.html">Butterfly Clips</a></li>
+											<li><a href="collections.html">Tassel Hairpins</a></li>
+											<li><a href="collections.html">Princess Clips</a></li>
+											<li><a href="collections.html">Hair Oil Combs</a></li>
+											<li><a href="collections.html">Hair Bands</a></li>
+											<li><a href="collections.html">Scrunchies</a></li>
+											<li><a href="collections.html">Kids Hair Clips</a></li>
+										</ul>
+									</div>
+									<a href="collections.html" class="all-categories-promo">
+										<img src="./assets/images/category-hair-accessories.jpg" alt="Hair Accessories" loading="lazy">
+										<span class="all-categories-promo-content">
+											<span class="all-categories-promo-label">explore</span>
+											<span class="all-categories-promo-title">Hair Accessories</span>
+											<span class="all-categories-promo-text">Cute bows, clips and pins for school, parties and every day.</span>
+											<span class="all-categories-promo-btn">shop now <span aria-hidden="true">→</span></span>
+											<span class="all-categories-promo-features">
+												<span>
+													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+														stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+														<rect x="2.5" y="6" width="19" height="12" rx="2" />
+														<circle cx="12" cy="12" r="2.5" />
+													</svg>
+													100% Cash on Delivery
+												</span>
+												<span>
+													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+														stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+														<path d="M3 7h11v9H3zM14 10h4l3 3v3h-7" />
+														<circle cx="7" cy="17.5" r="1.8" />
+														<circle cx="17" cy="17.5" r="1.8" />
+													</svg>
+													Fast home delivery
+												</span>
+											</span>
+										</span>
+									</a>
+								</div>
+								<div class="all-categories-panel" data-all-cat="mens-essentials">
+									<div class="all-categories-content">
+										<div class="all-categories-head">
+											<p class="all-categories-title">Man’s Essentials</p>
+											<a href="collections.html" class="all-categories-view">view all <span aria-hidden="true">→</span></a>
+										</div>
+										<ul class="all-categories-links">
+											<li><a href="collections.html">White Hair Cover</a></li>
+											<li><a href="collections.html">Grooming Tools</a></li>
+											<li><a href="collections.html">Beard Care</a></li>
+											<li><a href="collections.html">Hair Care</a></li>
+											<li><a href="collections.html">Wallets</a></li>
+											<li><a href="collections.html">Personal Care</a></li>
+										</ul>
+									</div>
+									<a href="collections.html" class="all-categories-promo">
+										<img src="./assets/images/category-mens-essentials.jpg" alt="Man’s Essentials" loading="lazy">
+										<span class="all-categories-promo-content">
+											<span class="all-categories-promo-label">explore</span>
+											<span class="all-categories-promo-title">Man’s Essentials</span>
+											<span class="all-categories-promo-text">Simple grooming and daily essentials made for men.</span>
+											<span class="all-categories-promo-btn">shop now <span aria-hidden="true">→</span></span>
+											<span class="all-categories-promo-features">
+												<span>
+													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+														stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+														<rect x="2.5" y="6" width="19" height="12" rx="2" />
+														<circle cx="12" cy="12" r="2.5" />
+													</svg>
+													100% Cash on Delivery
+												</span>
+												<span>
+													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+														stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+														<path d="M3 7h11v9H3zM14 10h4l3 3v3h-7" />
+														<circle cx="7" cy="17.5" r="1.8" />
+														<circle cx="17" cy="17.5" r="1.8" />
+													</svg>
+													Fast home delivery
+												</span>
+											</span>
+										</span>
+									</a>
+								</div>
+								<div class="all-categories-panel" data-all-cat="garden-outdoor">
+									<div class="all-categories-content">
+										<div class="all-categories-head">
+											<p class="all-categories-title">Garden &amp; Outdoor</p>
+											<a href="collections.html" class="all-categories-view">view all <span aria-hidden="true">→</span></a>
+										</div>
+										<ul class="all-categories-links">
+											<li><a href="collections.html">Branch Cutters</a></li>
+											<li><a href="collections.html">Pruning Tools</a></li>
+											<li><a href="collections.html">Garden Gloves</a></li>
+											<li><a href="collections.html">Plant Care</a></li>
+											<li><a href="collections.html">Watering Tools</a></li>
+											<li><a href="collections.html">Outdoor Essentials</a></li>
+										</ul>
+									</div>
+									<a href="collections.html" class="all-categories-promo">
+										<img src="./assets/images/category-garden-outdoor.jpg" alt="Garden and Outdoor" loading="lazy">
+										<span class="all-categories-promo-content">
+											<span class="all-categories-promo-label">explore</span>
+											<span class="all-categories-promo-title">Garden &amp; Outdoor</span>
+											<span class="all-categories-promo-text">Easy tools to keep your plants, roof garden and balcony healthy.</span>
+											<span class="all-categories-promo-btn">shop now <span aria-hidden="true">→</span></span>
+											<span class="all-categories-promo-features">
+												<span>
+													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+														stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+														<rect x="2.5" y="6" width="19" height="12" rx="2" />
+														<circle cx="12" cy="12" r="2.5" />
+													</svg>
+													100% Cash on Delivery
+												</span>
+												<span>
+													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+														stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+														<path d="M3 7h11v9H3zM14 10h4l3 3v3h-7" />
+														<circle cx="7" cy="17.5" r="1.8" />
+														<circle cx="17" cy="17.5" r="1.8" />
+													</svg>
+													Fast home delivery
+												</span>
+											</span>
+										</span>
+									</a>
+								</div>
+								<div class="all-categories-panel" data-all-cat="tools">
+									<div class="all-categories-content">
+										<div class="all-categories-head">
+											<p class="all-categories-title">Tools</p>
+											<a href="collections.html" class="all-categories-view">view all <span aria-hidden="true">→</span></a>
+										</div>
+										<ul class="all-categories-links">
+											<li><a href="collections.html">Hand Tools</a></li>
+											<li><a href="collections.html">Cutting Tools</a></li>
+											<li><a href="collections.html">Measuring Tools</a></li>
+											<li><a href="collections.html">Repair Kits</a></li>
+											<li><a href="collections.html">Tool Organizers</a></li>
+											<li><a href="collections.html">DIY Essentials</a></li>
+										</ul>
+									</div>
+									<a href="collections.html" class="all-categories-promo">
+										<img src="./assets/images/category-tools.jpg" alt="Tools" loading="lazy">
+										<span class="all-categories-promo-content">
+											<span class="all-categories-promo-label">explore</span>
+											<span class="all-categories-promo-title">Tools</span>
+											<span class="all-categories-promo-text">Handy tools for small repairs and everyday jobs around the house.</span>
+											<span class="all-categories-promo-btn">shop now <span aria-hidden="true">→</span></span>
+											<span class="all-categories-promo-features">
+												<span>
+													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+														stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+														<rect x="2.5" y="6" width="19" height="12" rx="2" />
+														<circle cx="12" cy="12" r="2.5" />
+													</svg>
+													100% Cash on Delivery
+												</span>
+												<span>
+													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+														stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+														<path d="M3 7h11v9H3zM14 10h4l3 3v3h-7" />
+														<circle cx="7" cy="17.5" r="1.8" />
+														<circle cx="17" cy="17.5" r="1.8" />
+													</svg>
+													Fast home delivery
+												</span>
+											</span>
+										</span>
+									</a>
+								</div>
+								<div class="all-categories-panel" data-all-cat="lifestyle">
+									<div class="all-categories-content">
+										<div class="all-categories-head">
+											<p class="all-categories-title">Lifestyle</p>
+											<a href="collections.html" class="all-categories-view">view all <span aria-hidden="true">→</span></a>
+										</div>
+										<ul class="all-categories-links">
+											<li><a href="collections.html">Travel Accessories</a></li>
+											<li><a href="collections.html">Storage &amp; Organizers</a></li>
+											<li><a href="collections.html">Gift Items</a></li>
+											<li><a href="collections.html">Daily Essentials</a></li>
+											<li><a href="collections.html">Home Decor</a></li>
+											<li><a href="collections.html">Gadget Accessories</a></li>
+										</ul>
+									</div>
+									<a href="collections.html" class="all-categories-promo">
+										<img src="./assets/images/category-lifestyle.jpg" alt="Lifestyle" loading="lazy">
+										<span class="all-categories-promo-content">
+											<span class="all-categories-promo-label">explore</span>
+											<span class="all-categories-promo-title">Lifestyle</span>
+											<span class="all-categories-promo-text">Useful everyday products that make life a little smarter.</span>
+											<span class="all-categories-promo-btn">shop now <span aria-hidden="true">→</span></span>
+											<span class="all-categories-promo-features">
+												<span>
+													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+														stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+														<rect x="2.5" y="6" width="19" height="12" rx="2" />
+														<circle cx="12" cy="12" r="2.5" />
+													</svg>
+													100% Cash on Delivery
+												</span>
+												<span>
+													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+														stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+														<path d="M3 7h11v9H3zM14 10h4l3 3v3h-7" />
+														<circle cx="7" cy="17.5" r="1.8" />
+														<circle cx="17" cy="17.5" r="1.8" />
+													</svg>
+													Fast home delivery
+												</span>
+											</span>
+										</span>
+									</a>
+								</div>
+								</div>
+							</div>
+						</li>
+						<!-- all-categories end -->
 						<li class="navbar-link">
 							<p class="navbar-link-btn">bedding</p>
 							<div class="megamenu">
@@ -904,6 +1422,55 @@
 								</div>
 							</div>
 						</li>
+						<!-- nav-dropdown start -->
+						<li class="navbar-link nav-dropdown">
+							<button type="button" class="navbar-link-btn nav-dropdown-btn" aria-haspopup="true" aria-expanded="false">
+								pages
+								<svg class="nav-dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+									<path d="m6 9 6 6 6-6" />
+								</svg>
+							</button>
+							<ul class="nav-dropdown-menu">
+								<li class="nav-dropdown-item"><a href="about.html">About Us</a></li>
+								<li class="nav-dropdown-item has-sub">
+									<a href="blog.html">Blog <svg class="nav-dropdown-sub-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+										stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+										<path d="m9 6 6 6-6 6" />
+									</svg></a>
+									<ul class="nav-dropdown-menu nav-dropdown-sub">
+										<li class="nav-dropdown-item"><a href="blog.html">Blog Page</a></li>
+										<li class="nav-dropdown-item"><a href="blog-details.html">Blog Details</a></li>
+									</ul>
+								</li>
+								<li class="nav-dropdown-item has-sub">
+									<a href="faq.html">Help Center <svg class="nav-dropdown-sub-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+										stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+										<path d="m9 6 6 6-6 6" />
+									</svg></a>
+									<ul class="nav-dropdown-menu nav-dropdown-sub">
+										<li class="nav-dropdown-item"><a href="faq.html">FAQ</a></li>
+										<li class="nav-dropdown-item"><a href="contact.html">Contact Us</a></li>
+										<li class="nav-dropdown-item has-sub">
+											<a href="policy.html">Policies <svg class="nav-dropdown-sub-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+										stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+										<path d="m9 6 6 6-6 6" />
+									</svg></a>
+											<ul class="nav-dropdown-menu nav-dropdown-sub">
+												<li class="nav-dropdown-item"><a href="policy.html#shipping">Shipping Policy</a></li>
+												<li class="nav-dropdown-item"><a href="policy.html#refund">Refund Policy</a></li>
+												<li class="nav-dropdown-item"><a href="policy.html#exchange">Exchange Policy</a></li>
+												<li class="nav-dropdown-item"><a href="policy.html#privacy">Privacy Policy</a></li>
+												<li class="nav-dropdown-item"><a href="policy.html#terms">Terms of Service</a></li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li class="nav-dropdown-item"><a href="cart.html">Cart</a></li>
+								<li class="nav-dropdown-item"><a href="404.html">404 Page</a></li>
+							</ul>
+						</li>
+						<!-- nav-dropdown end -->
 					</ul>
 				</div>
 			</nav>
