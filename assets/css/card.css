@@ -54,7 +54,7 @@
     line-height: 1;
     color: var(--white);
     background-color: var(--product-card-accent);
-    border-radius: 50px;
+    border-radius: 4px;
     pointer-events: none;
 }
 
